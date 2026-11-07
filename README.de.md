@@ -15,6 +15,10 @@
 
 **Wichtiger Teststand:** Der automatische Bau wurde auf einem frisch eingerichteten Windows-PC noch **nicht** praktisch verifiziert. Eine funktionierende EXE lässt sich daher noch nicht garantieren. Die Modellgewichte und die fertige EXE liegen **nicht** im Repository. Das automatische Skript lädt die Modelle nach Zustimmung von **externen Drittanbietern** herunter: DPRNet aus dem Repository von Raspberry Pi und die konvertierte SCUNet-ONNX-Version von Heliosoph auf Hugging Face, nicht vom ursprünglichen SCUNet-Projekt. Siehe [Lizenzhinweise](THIRD_PARTY_NOTICES.md) und [Windows-Bauanleitung](windows/offline-v4.1.1/README_OFFLINE.txt).
 
+## Sprache der Windows-Oberfläche
+
+Im aktuellen Windows-Quellcode lässt sich die grafische Oberfläche über das Auswahlfeld **„Sprache / Language“** zwischen **Deutsch** und **English** umschalten. Die Auswahl wirkt sofort, auch in der Stapelverarbeitung; ein Neustart ist nicht nötig. Die Übersetzungen sind lokal eingebaut und benötigen keine Internetverbindung. **Bereits erstellte EXE-Dateien enthalten diese neue Funktion nicht automatisch:** Dazu muss mit dem aktualisierten Quellcode eine neue EXE gebaut werden. Der neue Sprachwechsel wurde noch nicht auf einem Windows-PC praktisch geprüft.
+
 ## Ziel
 
 Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößert**. Die bisherige Entwicklung konzentriert sich auf Aufhellung dunkler Bereiche, Rauschreduzierung und Stapelverarbeitung hochauflösender Fotos. Zwei Quellcode-Ausgaben sind bereits vorhanden: Python v3.3 und das Windows-Offline-Baupaket v4.1.1. Eine fertige Windows-Version zum direkten Herunterladen gibt es derzeit nicht.
