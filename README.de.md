@@ -25,6 +25,10 @@ Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößer
 
 Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und die Einzelheiten der Offline-Testumgebung müssen noch dokumentiert werden; laut Entwickler funktioniert die vorhandene Windows-EXE auch ohne Internetverbindung. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder Bildformaten. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
 
+## Bekannte Einschränkung: nur Bilder im Seitenverhältnis 2:1
+
+Nach aktuellen Entwicklertests verarbeitet die Windows-Version **nur Bilder mit dem Breiten-Höhen-Verhältnis 2:1** (zum Beispiel 11.904 × 5.952 Pixel). **Bei anderen Seitenverhältnissen tritt während der Verarbeitung eine Fehlermeldung auf, sowohl bei Einzelbildern als auch bei der Stapelverarbeitung.** Die Ursache ist noch ungeklärt. Bis zur Behebung sind nur 2:1-Bilder als funktionierend gemeldet. Siehe [bekannte Fehler](KNOWN_ISSUES.md).
+
 ## Bekannte Einschränkung: lange Verzeichnispfade unter Windows
 
 Die Windows-EXE funktioniert laut Entwickler unter Windows 11 **vollständig ohne Internetverbindung**. Beim Entpacken oder Ausführen aus sehr tief verschachtelten Ordnern traten jedoch Probleme auf. **Vorläufige Lösung:** Das Programm unter einem möglichst kurzen Pfad wie `C:\LIQE\` entpacken und von dort aus starten. Die genaue Ursache und eine mögliche Pfadlängengrenze sind noch nicht geklärt. Weitere Hinweise: [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
