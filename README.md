@@ -25,6 +25,10 @@ Large Image Quality Enhancer is intended to improve image quality rather than en
 
 A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and details of the offline test environment remain to be documented; the developer reports that the existing Windows EXE works without internet access. This does **not** establish compatibility with other Windows versions or input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
 
+## Known limitation: 2:1 aspect ratio only
+
+According to the latest developer tests, the Windows version currently **processes only images with a 2:1 width-to-height ratio** (for example, 11,904 × 5,952 pixels). **Other aspect ratios cause an error during processing, both for individual images and batch jobs.** The root cause is not yet known. Until fixed, successful processing is only reported for 2:1 inputs. See [known issues](KNOWN_ISSUES.md).
+
 ## Known limitation: long Windows paths
 
 The Windows EXE reportedly runs **fully offline** on Windows 11, but problems have occurred when extracting or using it from deeply nested folders. **Workaround:** unpack it to a short path such as `C:\LIQE\` and run it there. The underlying cause and exact path-length limit are not yet confirmed. See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
