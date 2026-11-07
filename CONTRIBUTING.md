@@ -2,7 +2,7 @@
 
 Thank you for helping build **Large Image Quality Enhancer**. / Danke für deine Mitarbeit!
 
-**Current status:** Documentation-only repository. Existing Python and Windows sources are still being prepared for a verified import. Please do not assume there is a working public release.
+**Current status:** Python v3.3 source and Windows v4.1.1 build scripts are available under [`python/v3.3`](python/v3.3/) and [`windows/offline-v4.1.1`](windows/offline-v4.1.1/). Compiled binaries and model weights are not distributed, and the Windows build has not been independently verified here. / Quellcode und Bauskripte vorhanden; fertige EXE und Modellgewichte sind nicht veröffentlicht.
 
 ## How to contribute / So kannst du helfen
 
@@ -15,8 +15,8 @@ Thank you for helping build **Large Image Quality Enhancer**. / Danke für deine
 
 ## Priority work / Nächste Aufgaben
 
-1. Review/import original Python v3.3 source without overwriting existing history.
-2. Review/import Windows offline v4.1.1 sources and build instructions.
+1. Review and improve the published Python v3.3 code while preserving a working version.
+2. Test and document the Windows offline v4.1.1 build on a clean Windows machine.
 3. Verify model provenance, licenses, and exact binaries before any model release.
 4. Add reproducible JPEG tests and stress tests at 100/200/500 MP.
 5. Test portable Windows build on a clean disconnected machine.
