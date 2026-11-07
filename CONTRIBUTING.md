@@ -20,4 +20,4 @@ Thank you for helping build **Large Image Quality Enhancer**. / Danke für deine
 3. Verify model provenance, licenses, and exact binaries before any model release.
 4. Add reproducible JPEG tests and stress tests at 100/200/500 MP.
 5. Test portable Windows build on a clean disconnected machine.
-6. Document results for other camera models and image formats only after testing.
+6. Extend real-world testing to more cameras and image formats; document only verified results.
