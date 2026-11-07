@@ -20,6 +20,10 @@ Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten
 
 Die Windows-EXE kann mehrfach gestartet werden, sodass mehrere Bildverarbeitungen gleichzeitig laufen können, sofern ausreichend Rechnerressourcen vorhanden sind. Nach Angaben des Entwicklers laufen **zwei Instanzen parallel auf einem Rechner mit Intel Core i5-14400**; auf einem **leistungsstärkeren Rechner sind fünf bis sechs Instanzen möglich**. Diese Werte sind Erfahrungsbeispiele, **keine garantierte Leistung und keine feststehende Softwaregrenze**. Wie viele Instanzen sinnvoll sind, hängt unter anderem von CPU-Auslastung, verfügbarem Arbeitsspeicher, Datenträgergeschwindigkeit, Bildgröße und Einstellungen ab. Die Systemauslastung sollte beobachtet werden; zusätzliche Instanzen können die Verarbeitung auch verlangsamen oder zu Speichermangel führen.
 
+## Berichtete Bearbeitungszeit
+
+Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPEG-Bildes der Insta360 X5 mit rund 71 Megapixeln auf einem Intel Core i5-14400 etwa 45–50 Minuten**. Dies ist ein **berichteter Praxiswert, kein standardisierter Benchmark und keine garantierte Laufzeit**. Der Einfluss gleichzeitig gestarteter Instanzen, der RAM-Ausstattung, der Modelle/Einstellungen und der EXE-Version wurde für diese Zeitangabe noch nicht systematisch dokumentiert.
+
 ## Vorgesehene Ausgaben (noch nicht hochgeladen)
 
 - **Python-Version v3.3:** bestehende Version, deren Quellen nach Prüfung übernommen werden sollen.
