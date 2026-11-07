@@ -20,6 +20,10 @@ A Windows EXE build was successfully run on a second and third PC, both running 
 
 The Windows executable can be launched multiple times to process jobs in parallel, provided the computer has sufficient resources. According to developer experience, **two instances run simultaneously on a computer with an Intel Core i5-14400 processor**, and **five to six instances are possible on a more powerful machine**. These are example configurations, **not guaranteed performance figures or a fixed software limit**. Effective parallelism depends on CPU load, available RAM, disk throughput, image size, and settings. Monitor resource use; more instances may reduce performance or cause memory pressure.
 
+## Reported processing time
+
+According to developer experience, **processing one complete Insta360 X5 JPEG image of approximately 71 MP takes about 45–50 minutes on an Intel Core i5-14400**. This is a **reported real-world observation, not a standardized benchmark or a guaranteed runtime**. The effect of concurrent instances, RAM configuration, model/settings, and EXE build on this timing has not been systematically recorded.
+
 ## Editions (not published yet)
 
 - **Python edition v3.3:** existing version to be imported after source review.
