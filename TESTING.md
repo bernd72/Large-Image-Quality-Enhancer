@@ -36,7 +36,7 @@ Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Win
 ## GUI language selector / Sprachauswahl der Oberfläche
 
 - **Implementation / Umsetzung:** The Windows v4.1.1 source now includes an offline German/English selector that updates interface labels and dialog text without restarting / Der Windows-v4.1.1-Quellcode enthält jetzt eine Offline-Umschaltung Deutsch/Englisch, die Oberfläche und Dialogtexte ohne Neustart aktualisiert.
-- **Verification / Teststand:** Code and translation entries reviewed statically; on 2026-11-07 the developer reported an ongoing, apparently successful Windows 11 application test, but the language switch, exact build and full processing have **not yet been separately confirmed** / Code und Übersetzungseinträge statisch geprüft; am 07.11.2026 meldete der Entwickler einen laufenden, vorläufig positiv verlaufenden Anwendungstest unter Windows 11. Sprachwechsel, genaue Build-Version und vollständige Verarbeitung sind **noch nicht gesondert bestätigt**.
+- **Verification / Teststand:** Image processing reportedly works for a 4:3 smartphone JPEG under Windows 11; language switching remains unconfirmed / Bildverarbeitung mit einem 4:3-Smartphone-JPEG funktioniert laut Rückmeldung unter Windows 11; die Sprachumschaltung ist noch nicht ausdrücklich bestätigt.
 - **Existing EXEs / Bestehende EXE-Dateien:** Rebuild required / Neubau erforderlich.
 
 ## Parallel-instance test guidance / Hinweise zu Tests mit mehreren Instanzen
