@@ -1,67 +1,61 @@
-# Testing and compatibility / Tests und Kompatibilität
+# Tests und Kompatibilität / Testing and compatibility
 
-## Reported status / Bisheriger Stand
+## Deutsch
 
-- **Camera / Kamera:** Insta360 X5 and a smartphone JPEG / Insta360 X5 und ein Smartphone-JPEG.
-- **Input format / Eingabeformat:** JPEG only / ausschließlich JPEG.
-- **Aspect-ratio fix in source / Korrektur der Seitenverhältnisse im Quellcode (2026-11-07):** Hard-coded 2:1 restrictions removed from both editions; geometry-preserving model input and non-wrapping photo denoising added. New regression tests cover 3:2, 4:3, square and portrait JPEGs with mock inference; **broader real-model verification pending** / Explizite 2:1-Sperren in beiden Quellcode-Ausgaben entfernt; geometrieerhaltende KI-Eingabe und passende Randbehandlung ergänzt. Regressionstests mit simulierten Modellen für 3:2, 4:3, quadratische und Hochformat-JPEGs ergänzt; **weitere Praxistests mit echten Modellen stehen noch aus**.
-- **Reported tested image dimensions / Berichtete getestete Bildgröße:** 11,904 × 5,952 pixels, approx. 70.86 MP / 11.904 × 5.952 Pixel, ca. 70,86 MP.
-- **Larger than 71 MP / Über 71 MP:** Not yet tested with the complete AI pipeline / Noch nicht mit der vollständigen KI-Verarbeitung getestet.
-- **Other camera models / Andere Kameras:** One smartphone photo tested; others not verified / Ein Smartphone-Foto getestet; weitere Kameras nicht geprüft.
-- **Other formats / Andere Formate:** Not yet verified / Noch nicht verifiziert.
-- **Windows EXE on additional PCs / Windows-EXE auf weiteren PCs:** Reported working on a second and third PC, both running Windows 11 / Nach Angabe des Entwicklers auf einem zweiten und dritten PC unter Windows 11 erfolgreich getestet.
-- **Exact tested EXE build / Genau getestete EXE-Version:** Not yet recorded / Noch nicht dokumentiert.
-- **Disconnected operation / Betrieb ohne Netzwerk:** Existing Windows EXE reportedly runs without an internet connection; precise test conditions and build version not recorded / Vorhandene Windows-EXE läuft laut Entwickler ohne Internetverbindung; genaue Testbedingungen und Build-Version nicht dokumentiert.
-- **Other Windows versions / Andere Windows-Versionen:** Not verified / Nicht verifiziert.
-- **Long Windows directory paths / Lange Windows-Verzeichnispfade:** Problems reported during extraction or use from deeply nested folders; a short folder path is recommended; root cause unconfirmed / Probleme beim Entpacken oder Betrieb in tief verschachtelten Ordnern berichtet; kurzer Pfad empfohlen; genaue Ursache ungeklärt. See / Siehe [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
-- **Parallel runs / Gleichzeitige Instanzen:** Two on a computer with an Intel Core i5-14400; reportedly up to five or six on a stronger computer (developer experience, not a benchmark) / Zwei auf einem Rechner mit Intel Core i5-14400; nach Erfahrungswerten bis zu fünf oder sechs auf leistungsfähigerem Rechner (keine Benchmarkmessung).
+### Bisheriger Teststand
 
-- **Reported time per complete image / Berichtete Zeit pro vollständig verarbeitetem Bild:** Approx. **45–50 minutes** for an Insta360 X5 JPEG image (~71 MP) on an **Intel Core i5-14400**, per developer experience / Ca. **45–50 Minuten** für ein Insta360-X5-JPEG (~71 MP) auf einem **Intel Core i5-14400**, laut Entwicklererfahrung.
+- **Kameras und Dateiformat:** Insta360 X5 und ein Smartphone; bislang JPEG.
+- **Bildgrößen:** Insta360 X5 mit 11.904 × 5.952 Pixeln (ca. 70,86 MP) und Smartphone-Foto mit 3.246 × 2.448 Pixeln (ca. 4:3) getestet.
+- **Windows 11:** Die portable EXE wurde laut Entwickler auch auf einem zweiten und dritten PC erfolgreich verwendet. Einzelbild- und Stapelverarbeitung funktionieren laut Rückmeldung vom 07.11.2026 auch mit einem Smartphone-Foto.
+- **Offlinebetrieb:** Die bereits lauffähige Windows-EXE funktioniert laut Rückmeldung ohne Internet. Genaue Testbedingungen und EXE-Buildnummer sind nicht dokumentiert.
+- **Noch offen:** Weitere Kameras und Dateiformate, Bilder über 71 MP mit vollständiger KI-Verarbeitung sowie andere Windows-Versionen sind nicht ausreichend geprüft.
+- **Verzeichnispfade:** Bei tief verschachtelten Windows-Ordnern wurden Probleme berichtet. Kurze Pfade empfohlen; Ursache noch unklar. Siehe [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
+- **Gleichzeitige Instanzen:** Zwei auf einem Intel Core i5-14400; auf einem leistungsfähigeren PC laut Erfahrungsbericht bis zu fünf oder sechs. Keine Benchmarkmessung.
+- **Laufzeit:** Ein vollständiges Insta360-X5-JPEG mit rund 71 MP benötigte laut Entwickler auf einem Intel Core i5-14400 ungefähr **45–50 Minuten**. Kein standardisierter Benchmark.
 
-These entries reflect the **previously reported development tests**, including Windows 11 tests on two additional PCs, not reproducible tests executed in this GitHub repository. The processing time above is an approximate user-reported observation, not a standardized benchmark. No verified memory ceiling or supported maximum resolution is claimed.
+Diese Angaben beruhen auf berichteten Praxistests, nicht auf reproduzierbaren Messungen innerhalb des Repositories. Eine garantierte maximale Bildauflösung oder Speicherobergrenze ist nicht ermittelt.
 
-Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Die oben genannte Bearbeitungszeit ist ein ungefährer Praxiswert, kein standardisierter Benchmark. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
+### Seitenverhältnisse und Sprachumschaltung
 
-## Latest developer feedback / Aktueller Praxistest
+- **Seitenverhältnisse:** Die feste 2:1-Beschränkung wurde am 07.11.2026 im Quellcode beider Versionen entfernt. Die Bildgeometrie und die Randbehandlung bei normalen Fotos wurden angepasst. Regressionstests mit simulierter KI-Verarbeitung decken 3:2, 4:3, quadratische und Hochformat-JPEGs ab; weitere vollständige Praxistests mit echten Modellen stehen aus.
+- **Windows v4.1.1:** Im Quellcode ist eine offline nutzbare Deutsch-Englisch-Umschaltung ohne Neustart enthalten. Die Bildverarbeitung mit einem 4:3-Smartphone-Foto wurde unter Windows 11 positiv berichtet; die Sprachumschaltung wurde noch nicht ausdrücklich bestätigt. Für Quellcodeänderungen muss eine bestehende EXE neu gebaut werden.
+- **Python v3.3:** Sprachumschaltung in der Tkinter-Oberfläche einschließlich Modell-Downloads und Stapeldialog umgesetzt. Übersetzungszuordnungen statisch geprüft; Tests unter [`python/v3.3/tests/test_i18n.py`](python/v3.3/tests/test_i18n.py). Praktische Tests der Windows-GUI, des Starts mit lokalen Modellen und der vollständigen Bildverarbeitung stehen noch aus.
 
-- **2026-11-07, Windows 11:** Single-image and batch processing reportedly work; tested with a smartphone JPEG (3246 × 2448 px, approximately 4:3) / Einzelbild- und Stapelverarbeitung funktionieren laut Rückmeldung; getestet mit einem Smartphone-JPEG (3246 × 2448 Pixel, ungefähr 4:3).
-- **Open / Offen:** Language switch and Python edition not yet practically confirmed / Sprachumschaltung und Python-Version noch nicht praktisch bestätigt.
+### Hinweise für weitere Tests
 
-## Python v3.3 GUI language selector / Python-v3.3-Sprachumschaltung
+**Parallele Verarbeitung:** Die gemeldete Anzahl gleichzeitig laufender Instanzen ist keine garantierte Kapazität. Grenzen hängen von CPU, RAM, Datenträger, Bildgröße und Modellen ab. Bei Tests mit einer, zwei oder mehr Instanzen CPU-Last, Spitzen-RAM, Laufzeit und Fehler erfassen.
 
-- **Implemented / Eingebaut:** A live Deutsch/English selector was added to the Python v3.3 Tkinter GUI, including its model-download buttons and batch dialog / Deutsch-Englisch-Umschaltung in der Python-v3.3-Oberfläche einschließlich Modell-Downloads und Stapeldialog.
-- **Translation tests / Übersetzungstests:** Dedicated dependency-free test cases are provided in [`python/v3.3/tests/test_i18n.py`](python/v3.3/tests/test_i18n.py). Translation mappings were checked statically / Eigenständige Tests für die Übersetzungstexte sind vorhanden; die Zuordnungen wurden statisch abgeglichen.
-- **Still pending / Noch offen:** Native Windows GUI test, Python startup with local models, and end-to-end image processing have **not** been verified for this change / Windows-GUI, Start mit lokalen Modellen und vollständiger Bildverarbeitungslauf wurden für diese Änderung **noch nicht** praktisch getestet.
+**Sicherheit großer Bilddateien:** Die Einstiegspunkte von Python v3.3 und Windows v4.1.1 setzen `Image.MAX_IMAGE_PIXELS = None`. Damit entfällt die standardmäßige Schutzprüfung von Pillow gegen extrem große Bilder. Das ist kein nachgewiesener Fehler in bisherigen Tests. Bis zur Einführung einer eigenen Größen- und Speicherprüfung nur vertrauenswürdige Eingabedateien verwenden; siehe [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
-## GUI language selector / Sprachauswahl der Oberfläche
+**Geplanter Belastungstest:** 100 MP, 200 MP und 500 MP. Für nachvollziehbare Ergebnisse bitte Bildmaße und Dateityp, Programm- und Modellversionen (mit Hashes), CPU/RAM/Windows/Python, Laufzeit und Speicherspitzen, Ergebnisqualität einschließlich Kachelgrenzen sowie Fehlerprotokolle dokumentieren. Mit Kopien arbeiten, Originale schützen und ausreichend freien Speicher vorsehen. Die Pillow-Schutzprüfung sollte nicht ohne angemessene alternative Eingabe- und Speicherbegrenzung deaktiviert werden. Schätzungen nicht als durchgeführte Tests ausgeben.
 
-- **Implementation / Umsetzung:** The Windows v4.1.1 source now includes an offline German/English selector that updates interface labels and dialog text without restarting / Der Windows-v4.1.1-Quellcode enthält jetzt eine Offline-Umschaltung Deutsch/Englisch, die Oberfläche und Dialogtexte ohne Neustart aktualisiert.
-- **Verification / Teststand:** Image processing reportedly works for a 4:3 smartphone JPEG under Windows 11; language switching remains unconfirmed / Bildverarbeitung mit einem 4:3-Smartphone-JPEG funktioniert laut Rückmeldung unter Windows 11; die Sprachumschaltung ist noch nicht ausdrücklich bestätigt.
-- **Existing EXEs / Bestehende EXE-Dateien:** Rebuild required / Neubau erforderlich.
+---
 
-## Parallel-instance test guidance / Hinweise zu Tests mit mehreren Instanzen
+## English
 
-Reported concurrent use is **not** a guaranteed capacity or a measured throughput improvement. Practical limits depend on CPU, RAM, storage I/O, image sizes and model runtime. Record peak RAM, CPU utilization, elapsed time, and any failures for one, two and higher instance counts.
+### Reported test status
 
-Die gemeldete parallele Nutzung ist **keine** garantierte Kapazität oder gemessene Beschleunigung. Die Anzahl sinnvoller Instanzen hängt von CPU, RAM, Massenspeicher und Bild- bzw. Modelllast ab. Bei künftigen Tests bitte CPU-Auslastung, maximalen Arbeitsspeicher, Gesamtlaufzeit und Fehler bei einer, zwei und mehr Instanzen erfassen.
+- **Cameras and input format:** Insta360 X5 and one smartphone; JPEG so far.
+- **Image sizes:** Insta360 X5 at 11,904 × 5,952 pixels (approx. 70.86 MP) and a smartphone photo at 3,246 × 2,448 pixels (approx. 4:3).
+- **Windows 11:** According to the developer, the portable EXE also worked on a second and third PC. Single-image and batch processing reportedly worked with a smartphone photo on November 7, 2026.
+- **Offline use:** An existing working Windows EXE reportedly runs without an internet connection. Exact test conditions and EXE build number were not recorded.
+- **Still open:** Other cameras and file formats, images above 71 MP using the complete AI pipeline, and other Windows versions have not been sufficiently verified.
+- **Directory paths:** Problems were reported with deeply nested Windows folders. Short paths are recommended; the cause remains unknown. See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
+- **Concurrent instances:** Two on an Intel Core i5-14400; reportedly up to five or six on a stronger PC. Not a benchmark.
+- **Processing time:** A complete Insta360 X5 JPEG of about 71 MP reportedly took **45–50 minutes** on an Intel Core i5-14400. Not a standardized benchmark.
 
-## Source review: image validation / Quellcode-Prüfung: Eingabevalidierung
+These are developer-reported practical observations, not reproducible measurements carried out in this repository. No guaranteed maximum resolution or memory ceiling has been established.
 
-The current Python v3.3 and Windows v4.1.1 entry points set `Image.MAX_IMAGE_PIXELS = None`. This allows very large images, but disables Pillow's default decompression-bomb size safeguard. It is **not** a measured failure in existing tests. Until appropriate explicit pixel/memory validation is implemented, test with trusted inputs only. See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
+### Aspect ratios and language selection
 
-Die aktuellen Python-Einstiegspunkte in v3.3 und Windows v4.1.1 setzen `Image.MAX_IMAGE_PIXELS = None`. Damit lassen sich große Bilder öffnen, aber Pillow prüft die Bildgröße nicht mehr standardmäßig auf ungewöhnlich hohe Speicheranforderungen. Das ist **kein** nachgewiesener Fehler bei den bisherigen Bildern. Bis zu einer eigenen Eingabeprüfung nur vertrauenswürdige Bilder verwenden.
+- **Aspect ratios:** The hard-coded 2:1 restriction was removed from both source editions on November 7, 2026. Image geometry and edge handling for ordinary photos were updated. Mock-inference regression tests cover 3:2, 4:3, square and portrait JPEGs; broader end-to-end testing with real models is still pending.
+- **Windows v4.1.1:** The source includes an offline German/English selector that updates the UI without restarting. Processing a 4:3 smartphone photo on Windows 11 was reported successful; language switching has not been explicitly confirmed. Existing EXEs must be rebuilt to incorporate source changes.
+- **Python v3.3:** Language selection was added to the Tkinter UI, including model downloads and the batch dialog. Translation mappings were statically checked; see [`python/v3.3/tests/test_i18n.py`](python/v3.3/tests/test_i18n.py). Native Windows GUI tests, startup with local models, and complete image processing remain unverified for this update.
 
-## Planned large-image stress test / Geplanter Belastungstest
+### Guidance for further tests
 
-Target sizes / Zielgrößen: **100 MP, 200 MP and 500 MP**. For future reproducible tests with the published source, record:
+**Parallel processing:** Reported instance counts do not establish guaranteed capacity. Limits depend on CPU, RAM, storage I/O, image dimensions and model runtimes. For one, two and more instances, record CPU usage, peak RAM, elapsed time and failures.
 
-1. exact image dimensions and file type / Auflösung und Dateiformat;
-2. software version, model versions and hashes / Programm- und Modellversionen;
-3. CPU, RAM, Windows/Python details / Hardware und Umgebung;
-4. runtime, peak RAM and storage usage / Laufzeit und maximalen Speicherbedarf;
-5. output correctness and visible tile seams / Ergebnisqualität und Kachelgrenzen;
-6. crash logs and reproducible steps / Fehlerprotokolle und Wiederholungsschritte.
+**Large-image safety:** Python v3.3 and Windows v4.1.1 entry points set `Image.MAX_IMAGE_PIXELS = None`, disabling Pillow's standard oversized-image safeguard. This is not a confirmed failure in previous tests. Until explicit image-size and memory validation is implemented, use trusted inputs only; see [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
-**Safety / Sicherheit:** Start from copies of test images, protect originals, and check enough free disk space. Pillow's decompression-bomb safeguards must not be disabled globally without a considered input-validation and memory policy.
-
-Testing results should be added here with dates and reproducible parameters; do not substitute estimates for completed measurements.
+**Planned stress tests:** 100 MP, 200 MP and 500 MP. For reproducible results, record image dimensions and format, software and model versions (including hashes), CPU/RAM/Windows/Python environment, runtime and peak resource usage, output quality including tile seams, and failure logs. Work from copies, protect originals and ensure sufficient disk space. Do not disable Pillow's safeguard without an appropriate alternative input-validation and memory policy. Do not present estimates as completed tests.
