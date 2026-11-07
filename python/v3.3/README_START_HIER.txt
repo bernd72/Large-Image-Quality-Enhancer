@@ -1,6 +1,17 @@
 Insta360 X5 · DPRNet + SCUNet KI-Optimierer v3.3
 ================================================
 
+SPRACHAUSWAHL / LANGUAGE SELECTION (AKTUALISIERTER QUELLCODE)
+- Oben in der grafischen Oberfläche „Sprache / Language“ auswählen.
+- Die Oberfläche kann ohne Neustart zwischen Deutsch und English wechseln.
+- Auch Modell-Downloads, Rückfragen und die Stapelverarbeitung werden übersetzt.
+- Die Sprachdatei x5_i18n.py muss zusammen mit x5_dprnet.py im Programmordner liegen.
+- Für die Sprachumschaltung ist kein Internet nötig; Modell-Downloads können weiterhin
+  eine Internetverbindung erfordern.
+- Änderungen am KI-Verarbeitungsablauf sind hierfür nicht erforderlich.
+- Teststand: Übersetzungstexte statisch geprüft; ein vollständiger GUI-Test auf
+  einem Windows-Rechner steht noch aus.
+
 NEU IN VERSION 3.3
 - STAPELVERARBEITUNG: mehrere JPGs auf einmal auswählen und bearbeiten.
 - Restzeitanzeige bei Einzel- und Stapelverarbeitung in Stunden/Minuten.
