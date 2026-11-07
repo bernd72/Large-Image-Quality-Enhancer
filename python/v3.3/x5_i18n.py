@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 EN_TEXT = {
+    "Insta360 X5 – Low-Light-KI DPRNet + SCUNet v3.3": "Insta360 X5 – Low-Light AI DPRNet + SCUNet v3.3",
     "DPRNet_512.tflite auswählen": "Select DPRNet_512.tflite",
     "DPRNet_1024.tflite auswählen": "Select DPRNet_1024.tflite",
     "SCUNet-Modell unvollständig. Beide Dateien müssen im selben Ordner liegen.": "SCUNet model incomplete. Both files must be in the same folder.",
