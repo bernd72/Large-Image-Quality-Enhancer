@@ -12,9 +12,9 @@ Auch uebliche JPG-Fotos in 4:3, 3:2, quadratisch und Hochformat sind
 jetzt fuer Einzelbild- und Stapelverarbeitung vorgesehen.
 Die Aufloesung und das Seitenverhaeltnis der Ausgabedatei bleiben erhalten.
 Fuer 2:1-Panoramen bleibt die spezielle Rand-/Nahtbehandlung erhalten.
-Der neue Bildformat-Code ist mit echten KI-Modellen und Windows 11 noch
-nicht vollstaendig getestet. Bestehende EXE-Dateien enthalten die Aenderung
-erst nach einem vollstaendigen Neubau mit den aktualisierten Quellen.
+Ein Smartphone-JPEG (ca. 4:3) wurde unter Windows 11 laut Entwicklertest
+im Einzelbild- und Stapelmodus erfolgreich verarbeitet. Weitere Bildformen
+sind noch nicht alle praktisch geprueft. Aeltere EXEs neu bauen.
 Eingaben bleiben JPG/JPEG; HEIC, RAW und PNG sind nicht direkt unterstuetzt.
 
 HINWEIS ZUR SPRACHE DES BAUPROGRAMMS
@@ -96,16 +96,12 @@ BETRIEB AUF EINEM ANDEREN PC OHNE INTERNET
   z. B. D:\Apps\Insta360_X5_KI_Offline.
 
 TECHNISCHE HINWEISE
-- Bekannter Fehler laut Entwicklertests: Die Bildverarbeitung funktioniert derzeit
-  nur bei einem Breiten-Hoehen-Verhaeltnis von 2:1 (z. B. 11904 x 5952).
-  Bei anderen Seitenverhaeltnissen tritt eine Fehlermeldung auf - sowohl
-  bei Einzelbildern als auch in der Stapelverarbeitung. Ursache noch offen.
 - EXE und Bibliotheken sind fuer Windows 64 Bit konzipiert.
 - Wie bisher erfolgt die Modellberechnung auf der CPU; Vollbild-SCUNet kann
   bei rund 71 MP sehr lange dauern.
-- Das Baupaket wurde unter Linux statisch/simulierend getestet; der
-  native Windows-Bau und die echte KI-Inferenz muessen auf Windows
-  abschliessend getestet werden.
+- Der komplette automatische Bau auf einem frisch eingerichteten Windows-PC
+  ist noch nicht unabhaengig verifiziert; ein Windows-11-Praxistest der
+  Anwendung mit einem Smartphone-JPEG war laut Entwickler erfolgreich.
 - Unternehmensrichtlinien koennen das Ausfuehren unbekannter, nicht signierter
   EXE-Dateien blockieren. Die EXE ist nicht digital signiert.
 
