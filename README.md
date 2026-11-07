@@ -15,6 +15,10 @@
 
 **Build status:** the automated build has **not** been verified on a clean Windows PC; build success is not guaranteed. No EXE or model weights are hosted in this repository. The automatic script downloads model files from **separate third-party hosts** only after consent; the SCUNet ONNX conversion is hosted by Heliosoph on Hugging Face, not by the original SCUNet authors. Review [model notices](THIRD_PARTY_NOTICES.md) and [Windows build instructions](windows/offline-v4.1.1/README_OFFLINE.txt).
 
+## Windows interface language
+
+The current Windows source code provides a **„Sprache / Language“** selector for switching the graphical interface between **Deutsch** and **English**. The change takes effect immediately, including in the batch dialog, without restarting the app. Translations are bundled locally; no internet connection is required to switch languages. **Existing EXE builds are not updated automatically:** rebuild the executable from the latest source to obtain this feature. The new language switch has not yet been tested on a Windows PC.
+
 ## Purpose
 
 Large Image Quality Enhancer is intended to improve image quality rather than enlarge image dimensions. The existing project has been developed around low-light/shadow enhancement, noise reduction, and batch processing of high-resolution photographs. Two source editions are available here: Python v3.3 and the Windows offline v4.1.1 build kit. Neither is a prebuilt Windows release.
