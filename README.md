@@ -6,9 +6,18 @@
 
 > **Source available — no ready-to-run release yet.** Python v3.3 source and Windows v4.1.1 EXE build scripts are published. **AI model weights and a compiled EXE are not provided**. You must obtain the required model files through sources whose terms permit your intended use. An existing Windows EXE was reportedly tested on two additional Windows 11 PCs; the GitHub build has not been independently verified.
 
+## Quick start (Windows 11, 64-bit)
+
+1. Download the repository using **Code → Download ZIP**, then extract it to a short location such as `C:\\LIQE\\`.
+2. Open `windows/offline-v4.1.1/` and run **[ALLES_AUTOMATISCH_BAUEN.bat](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)**. The script can install Python 3.12 for the current user, request your consent to download external model files, install Python dependencies, and build a portable application. **An internet connection is generally required for the initial build.**
+3. Alternatively, install **Python 3.12 x64** yourself, obtain the three required model files lawfully in the local `models` folder, and run `BAUE_WINDOWS_EXE.bat`.
+4. After a successful build, copy the **entire** `dist/Insta360_X5_KI_Offline/` folder to a Windows PC. Running the generated EXE does not require a Python installation or an internet connection.
+
+**Build status:** the automated build has **not** been verified on a clean Windows PC; build success is not guaranteed. No EXE or model weights are hosted in this repository. The automatic script downloads model files from **separate third-party hosts** only after consent; the SCUNet ONNX conversion is hosted by Heliosoph on Hugging Face, not by the original SCUNet authors. Review [model notices](THIRD_PARTY_NOTICES.md) and [Windows build instructions](windows/offline-v4.1.1/README_OFFLINE.txt).
+
 ## Purpose
 
-Large Image Quality Enhancer is intended to improve image quality rather than enlarge image dimensions. The existing project has been developed around low-light/shadow enhancement, noise reduction, and batch processing of high-resolution photographs. Python and offline Windows distributions are planned.
+Large Image Quality Enhancer is intended to improve image quality rather than enlarge image dimensions. The existing project has been developed around low-light/shadow enhancement, noise reduction, and batch processing of high-resolution photographs. Two source editions are available here: Python v3.3 and the Windows offline v4.1.1 build kit. Neither is a prebuilt Windows release.
 
 ## Compatibility and testing
 
@@ -20,6 +29,10 @@ A Windows EXE build was successfully run on a second and third PC, both running 
 
 The Windows EXE reportedly runs **fully offline** on Windows 11, but problems have occurred when extracting or using it from deeply nested folders. **Workaround:** unpack it to a short path such as `C:\LIQE\` and run it there. The underlying cause and exact path-length limit are not yet confirmed. See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
+## Security and build caveats
+
+Both source editions currently disable Pillow's default image-size protection (`Image.MAX_IMAGE_PIXELS = None`) to handle very large photos. **Only open trusted image files** until explicit input-size and memory safeguards are in place. The automatic model bootstrap currently checks the sizes of all three model files but verifies a fixed SHA-256 hash for **only one** SCUNet file; the remaining artifacts are not fully checksum-pinned. See [known issues](KNOWN_ISSUES.md). The generated Windows EXE is not digitally signed.
+
 ## Running multiple instances
 
 The Windows executable can be launched multiple times to process jobs in parallel, provided the computer has sufficient resources. According to developer experience, **two instances run simultaneously on a computer with an Intel Core i5-14400 processor**, and **five to six instances are possible on a more powerful machine**. These are example configurations, **not guaranteed performance figures or a fixed software limit**. Effective parallelism depends on CPU load, available RAM, disk throughput, image size, and settings. Monitor resource use; more instances may reduce performance or cause memory pressure.
@@ -30,7 +43,7 @@ According to developer experience, **processing one complete Insta360 X5 JPEG im
 
 ## Automatic Windows build without pre-installed Python
 
-**New: one-click build for Windows 11 x64.** In the [Windows build kit](windows/offline-v4.1.1/), double-click **[`ALLES_AUTOMATISCH_BAUEN.bat`](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)**. The launcher checks for Python 3.12, installs a per-user copy if needed, asks permission to download the third-party DPRNet and SCUNet AI models from their respective providers, installs build dependencies, and builds the portable EXE. Internet access is needed for missing components **during the build**, and a corporate proxy may block downloads. No administrator privileges are normally needed, although organizational policies may restrict installation. The resulting EXE runs offline on target PCs and needs no Python installation.
+**New: one-click build for Windows 11 x64.** In the [Windows build kit](windows/offline-v4.1.1/), double-click **[`ALLES_AUTOMATISCH_BAUEN.bat`](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)**. The launcher checks for Python 3.12, installs a per-user copy if needed, asks permission to download the third-party DPRNet and SCUNet AI models from the referenced third-party hosts (Raspberry Pi's repository and Heliosoph's converted SCUNet model on Hugging Face), installs build dependencies, and builds the portable EXE. Internet access is needed for missing components **during the build**, and a corporate proxy may block downloads. No administrator privileges are normally needed, although organizational policies may restrict installation. The resulting EXE runs offline on target PCs and needs no Python installation.
 
 **Important:** Python is installed automatically as a build prerequisite, rather than being eliminated from the build process. The automatic build has not yet been independently tested on a clean Windows system. The existing manual workflow remains available. See [Windows build instructions](windows/offline-v4.1.1/README_OFFLINE.txt).
 
