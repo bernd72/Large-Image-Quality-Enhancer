@@ -13,14 +13,14 @@ $distRoot = Join-Path $project 'dist'
 $exeDir = Join-Path $distRoot $appName
 
 function Fail($message, $code=1) {
-    Write-Host "FEHLER: $message" -ForegroundColor Red
+    Write-Host "ERROR: $message" -ForegroundColor Red
     exit $code
 }
 Write-Host '======================================================='
-Write-Host 'Insta360 X5 KI v4.1.1 - EXE fuer den OFFLINE-Betrieb'
+Write-Host 'Insta360 X5 AI v4.1.1 - OFFLINE EXE build'
 Write-Host '======================================================='
-Write-Host 'Die alte Version 3.3 und die Proxy-EXE v4.0 bleiben unveraendert.'
-Write-Host 'Keine Modell-Downloads, Proxy- oder Zertifikatsabfragen in der EXE.'
+Write-Host 'The existing v3.3 edition and proxy EXE v4.0 remain unchanged.'
+Write-Host 'The finished EXE requires no model downloads, proxy, or certificate prompts.'
 Write-Host ''
 
 # Zuerst Modell-Dateien pruefen, damit keine Pakete unnoetig geladen werden.
@@ -32,11 +32,11 @@ $required = @(
 foreach($entry in $required) {
     $p = Join-Path $models $entry.name
     if (-not (Test-Path -LiteralPath $p -PathType Leaf)) {
-        Fail "Modell fehlt: models\$($entry.name). Erst aus deiner vorhandenen v3.3-Installation kopieren." 2
+        Fail "Model missing: models\$($entry.name). First copy it from your existing v3.3 installation." 2
     }
     $size = (Get-Item -LiteralPath $p).Length
     if ($size -lt $entry.min) {
-        Fail "Modelldatei zu klein oder unvollstaendig: $($entry.name) ($size Bytes)" 2
+        Fail "Model file too small or incomplete: $($entry.name) ($size bytes)" 2
     }
     if ($entry.name -like '*.tflite') {
         $f = [System.IO.File]::OpenRead($p)
@@ -45,14 +45,14 @@ foreach($entry in $required) {
             $count = $f.Read($bytes, 0, 8)
         } finally { $f.Dispose() }
         if ($count -ne 8 -or [System.Text.Encoding]::ASCII.GetString($bytes,4,4) -ne 'TFL3') {
-            Fail "Kein gueltiges TFLite-Modell: $($entry.name)" 2
+            Fail "Not a valid TFLite model: $($entry.name)" 2
         }
     }
-    Write-Host ("Modell vorhanden: {0} ({1:N1} MB)" -f $entry.name,($size / 1MB))
+    Write-Host ("Model found: {0} ({1:N1} MB)" -f $entry.name,($size / 1MB))
 }
 $extra = Join-Path $models 'DPRNet_512.tflite'
 if (Test-Path -LiteralPath $extra -PathType Leaf) {
-    Write-Host 'Optionales Modell DPRNet_512.tflite ist vorhanden.'
+    Write-Host 'Optional DPRNet_512.tflite model is available.'
 }
 
 # The automatic build launcher can pass a private per-user Python installation.
@@ -61,7 +61,7 @@ $pythonCommand = 'py'
 $pythonCommandArgs = @('-3.12')
 if ($PythonExe) {
     if (-not (Test-Path -LiteralPath $PythonExe -PathType Leaf)) {
-        Fail "Die uebergebene Python-Datei fehlt: $PythonExe" 3
+        Fail "The supplied Python executable does not exist: $PythonExe" 3
     }
     $pythonCommand = $PythonExe
     $pythonCommandArgs = @()
@@ -69,57 +69,57 @@ if ($PythonExe) {
 try {
     & $pythonCommand @pythonCommandArgs -c 'import sys; assert sys.version_info[:2] == (3, 12) and sys.maxsize > 2**32; print(sys.version)'
 }
-catch { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht. Nutze AUTO_BUILD_WINDOWS_EXE.bat.' 3 }
-if ($LASTEXITCODE -ne 0) { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht.' 3 }
+catch { Fail 'Python 3.12 (64-bit) is missing or cannot run. Use AUTO_BUILD_WINDOWS_EXE.bat.' 3 }
+if ($LASTEXITCODE -ne 0) { Fail 'Python 3.12 (64-bit) is missing or cannot run.' 3 }
 
 if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
-    Write-Host 'Erstelle eigene Build-Umgebung ...'
+    Write-Host 'Creating a private build environment...'
     & $pythonCommand @pythonCommandArgs -m venv $venv
-    if ($LASTEXITCODE -ne 0) { Fail 'Erstellen der Build-Umgebung fehlgeschlagen.' 3 }
+    if ($LASTEXITCODE -ne 0) { Fail 'Failed to create build environment.' 3 }
 }
 Write-Host ''
-Write-Host 'Pruefe vorhandene Python-Bibliotheken ...'
+Write-Host 'Checking installed Python packages...'
 # PowerShell 5.1 kann doppelte Anfuehrungszeichen in -c an Python verlieren.
 # Deshalb enthaelt dieser Python-Pruefcode KEINE inneren Anfuehrungszeichen.
 $checkCode = 'import numpy, PIL, cv2, onnxruntime, tkinter; from ai_edge_litert.interpreter import Interpreter; import PyInstaller'
 & $python -c $checkCode
 $needInstall = ($LASTEXITCODE -ne 0)
 if ($needInstall) {
-    Write-Host 'Installiere fehlende Python-Bibliotheken fuer den EXE-Bau.'
-    Write-Host 'Vorhandene PIP_PROXY/PIP_CERT-Umgebungsvariablen werden von pip verwendet.'
+    Write-Host 'Installing missing Python packages required for building the EXE.'
+    Write-Host 'Existing PIP_PROXY/PIP_CERT environment variables are used by pip.'
     $wheelhouse = Join-Path $project 'wheelhouse'
     $installArgs = @('-m','pip','install','--disable-pip-version-check')
     if ((Test-Path $wheelhouse) -and @(Get-ChildItem -Path $wheelhouse -Filter '*.whl' -File).Count -gt 0) {
-        Write-Host 'Lokales Wheelhouse gefunden: Paketinstallation erfolgt ohne Internet.'
+        Write-Host 'Local wheelhouse found: package installation will not require internet.'
         $installArgs += @('--no-index','--find-links',$wheelhouse)
     }
     $installArgs += @('-r',(Join-Path $source 'requirements.txt'),'pyinstaller>=6.14,<7')
     & $python @installArgs
     if ($LASTEXITCODE -ne 0) {
-        Fail 'Paketinstallation fehlgeschlagen. Nur zum EXE-Bau sind ggf. Internet, PIP_PROXY oder ein lokales wheelhouse erforderlich.' 4
+        Fail 'Package installation failed. Building may require internet access, PIP_PROXY, or a local wheelhouse.' 4
     }
     & $python -c $checkCode
-    if ($LASTEXITCODE -ne 0) { Fail 'Eine benoetigte Python-Bibliothek ist nicht startfaehig.' 4 }
+    if ($LASTEXITCODE -ne 0) { Fail 'A required Python package cannot be imported.' 4 }
 } else {
-    Write-Host 'Alle Bibliotheken sind bereits installiert. Kein erneuter Download erforderlich.' -ForegroundColor Green
+    Write-Host 'All required packages are already installed. No download needed.' -ForegroundColor Green
 }
-Write-Host 'Alle Laufzeitbibliotheken OK' -ForegroundColor Green
+Write-Host 'All required runtime libraries are available' -ForegroundColor Green
 
 # Das spec-Verzeichnis beim allerersten Bau explizit anlegen.
 $specDir = Join-Path $project 'spec'
 New-Item -ItemType Directory -Force -Path $specDir | Out-Null
-Write-Host 'Erstelle vollstaendige Windows-EXE (PyInstaller onedir) ...'
+Write-Host 'Building portable Windows EXE (PyInstaller onedir)...'
 Push-Location $source
 try {
     & $python -m PyInstaller --noconfirm --clean --onedir --windowed --name $appName `
       --distpath $distRoot --workpath (Join-Path $project 'build') --specpath (Join-Path $project 'spec') `
       --collect-all ai_edge_litert --collect-all onnxruntime --collect-all cv2 `
-      --hidden-import tkinter --hidden-import x5_denoise --hidden-import x5_batch `
+      --hidden-import tkinter --hidden-import x5_denoise --hidden-import x5_batch --hidden-import x5_i18n `
       x5_dprnet.py
-    if ($LASTEXITCODE -ne 0) { Fail 'PyInstaller konnte die Windows-EXE nicht erstellen.' 5 }
+    if ($LASTEXITCODE -ne 0) { Fail 'PyInstaller failed to create the Windows EXE.' 5 }
 } finally { Pop-Location }
 $exe = Join-Path $exeDir ($appName + '.exe')
-if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { Fail 'Die erwartete EXE wurde nicht erstellt.' 5 }
+if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { Fail 'The expected EXE was not created.' 5 }
 
 # KI-Gewichte werden NICHT in die EXE hineingepackt; sie liegen daneben und
 # koennen ohne Internet zu jeder Zeit verwendet werden.
@@ -137,20 +137,20 @@ Copy-Item -LiteralPath (Join-Path $project 'README_OFFLINE.txt') -Destination (J
 foreach ($entry in $required) {
     $a = (Get-Item -LiteralPath (Join-Path $models $entry.name)).Length
     $b = (Get-Item -LiteralPath (Join-Path $outModels $entry.name)).Length
-    if ($a -ne $b) { Fail "Modelldatei wurde nicht vollstaendig kopiert: $($entry.name)" 6 }
+    if ($a -ne $b) { Fail "Model file was not copied completely: $($entry.name)" 6 }
 }
 
 $portableZip = Join-Path $project 'Insta360_X5_KI_Offline_Portable.zip'
 try {
     if (Test-Path $portableZip) { Remove-Item $portableZip -Force }
     Compress-Archive -Path (Join-Path $exeDir '*') -DestinationPath $portableZip -CompressionLevel Optimal
-    Write-Host "Transport-ZIP: $portableZip"
+    Write-Host "Portable ZIP: $portableZip"
 } catch {
-    Write-Host 'Transport-ZIP konnte nicht geschrieben werden. Der EXE-Ordner ist trotzdem fertig.' -ForegroundColor Yellow
+    Write-Host 'Could not create the portable ZIP. The EXE folder was created successfully.' -ForegroundColor Yellow
 }
 Write-Host ''
-Write-Host 'FERTIG: Windows-EXE fuer vollstaendig lokalen Betrieb.' -ForegroundColor Green
+Write-Host 'DONE: Windows EXE ready for fully offline operation.' -ForegroundColor Green
 Write-Host $exe
-Write-Host 'Den GESAMTEN dist-Programmordner auf den anderen Windows-PC kopieren.'
-Write-Host 'Kein Python, kein Proxy, keine Zertifikate, kein Internet auf dem ZIEL-PC erforderlich.'
+Write-Host 'Copy the ENTIRE dist application folder to the destination Windows PC.'
+Write-Host 'The destination PC needs no Python, proxy settings, certificates, or internet access.'
 exit 0
