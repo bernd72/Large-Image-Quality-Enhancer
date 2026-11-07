@@ -22,6 +22,12 @@ These entries reflect the **previously reported development tests**, including W
 
 Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Die oben genannte Bearbeitungszeit ist ein ungefährer Praxiswert, kein standardisierter Benchmark. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
 
+## GUI language selector / Sprachauswahl der Oberfläche
+
+- **Implementation / Umsetzung:** The Windows v4.1.1 source now includes an offline German/English selector that updates interface labels and dialog text without restarting / Der Windows-v4.1.1-Quellcode enthält jetzt eine Offline-Umschaltung Deutsch/Englisch, die Oberfläche und Dialogtexte ohne Neustart aktualisiert.
+- **Verification / Teststand:** Code and translation entries reviewed statically; **no native Windows GUI test or rebuild has yet been performed for this change** / Code und Übersetzungseinträge statisch geprüft; **für diese Änderung wurde noch kein nativer Windows-GUI-Test oder EXE-Neubau durchgeführt**.
+- **Existing EXEs / Bestehende EXE-Dateien:** Rebuild required / Neubau erforderlich.
+
 ## Parallel-instance test guidance / Hinweise zu Tests mit mehreren Instanzen
 
 Reported concurrent use is **not** a guaranteed capacity or a measured throughput improvement. Practical limits depend on CPU, RAM, storage I/O, image sizes and model runtime. Record peak RAM, CPU utilization, elapsed time, and any failures for one, two and higher instance counts.
