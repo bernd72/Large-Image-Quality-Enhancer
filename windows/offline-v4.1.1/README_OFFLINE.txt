@@ -71,6 +71,10 @@ BETRIEB AUF EINEM ANDEREN PC OHNE INTERNET
   z. B. D:\Apps\Insta360_X5_KI_Offline.
 
 TECHNISCHE HINWEISE
+- Bekannter Fehler laut Entwicklertests: Die Bildverarbeitung funktioniert derzeit
+  nur bei einem Breiten-Hoehen-Verhaeltnis von 2:1 (z. B. 11904 x 5952).
+  Bei anderen Seitenverhaeltnissen tritt eine Fehlermeldung auf - sowohl
+  bei Einzelbildern als auch in der Stapelverarbeitung. Ursache noch offen.
 - EXE und Bibliotheken sind fuer Windows 64 Bit konzipiert.
 - Wie bisher erfolgt die Modellberechnung auf der CPU; Vollbild-SCUNet kann
   bei rund 71 MP sehr lange dauern.
