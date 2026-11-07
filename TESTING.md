@@ -22,6 +22,12 @@ These entries reflect the **previously reported development tests**, including W
 
 Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Die oben genannte Bearbeitungszeit ist ein ungefährer Praxiswert, kein standardisierter Benchmark. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
 
+## Python v3.3 GUI language selector / Python-v3.3-Sprachumschaltung
+
+- **Implemented / Eingebaut:** A live Deutsch/English selector was added to the Python v3.3 Tkinter GUI, including its model-download buttons and batch dialog / Deutsch-Englisch-Umschaltung in der Python-v3.3-Oberfläche einschließlich Modell-Downloads und Stapeldialog.
+- **Translation tests / Übersetzungstests:** Dedicated dependency-free test cases are provided in [`python/v3.3/tests/test_i18n.py`](python/v3.3/tests/test_i18n.py). Translation mappings were checked statically / Eigenständige Tests für die Übersetzungstexte sind vorhanden; die Zuordnungen wurden statisch abgeglichen.
+- **Still pending / Noch offen:** Native Windows GUI test, Python startup with local models, and end-to-end image processing have **not** been verified for this change / Windows-GUI, Start mit lokalen Modellen und vollständiger Bildverarbeitungslauf wurden für diese Änderung **noch nicht** praktisch getestet.
+
 ## GUI language selector / Sprachauswahl der Oberfläche
 
 - **Implementation / Umsetzung:** The Windows v4.1.1 source now includes an offline German/English selector that updates interface labels and dialog text without restarting / Der Windows-v4.1.1-Quellcode enthält jetzt eine Offline-Umschaltung Deutsch/Englisch, die Oberfläche und Dialogtexte ohne Neustart aktualisiert.
