@@ -8,11 +8,21 @@
 - **Larger than 71 MP / Über 71 MP:** Not yet tested with the complete AI pipeline / Noch nicht mit der vollständigen KI-Verarbeitung getestet.
 - **Other camera models / Andere Kameras:** Not yet verified / Noch nicht verifiziert.
 - **Other formats / Andere Formate:** Not yet verified / Noch nicht verifiziert.
-- **Offline Windows EXE on a second PC / Offline-EXE auf zweitem PC:** Not yet verified / Noch nicht verifiziert.
+- **Windows EXE on additional PCs / Windows-EXE auf weiteren PCs:** Reported working on a second and third PC, both running Windows 11 / Nach Angabe des Entwicklers auf einem zweiten und dritten PC unter Windows 11 erfolgreich getestet.
+- **Exact tested EXE build / Genau getestete EXE-Version:** Not yet recorded / Noch nicht dokumentiert.
+- **Disconnected operation / Betrieb ohne Netzwerk:** Not separately verified / Nicht gesondert bestätigt.
+- **Other Windows versions / Andere Windows-Versionen:** Not verified / Nicht verifiziert.
+- **Parallel runs / Gleichzeitige Instanzen:** Two on an office PC; reportedly up to five or six on a stronger computer (developer experience, not a benchmark) / Zwei auf einem Büro-PC; nach Erfahrungswerten bis zu fünf oder sechs auf leistungsfähigerem Rechner (keine Benchmarkmessung).
 
-These entries reflect the **previously reported development tests**, not reproducible tests executed in this GitHub repository. No benchmark results, processing time, memory ceiling, or supported maximum resolution are currently claimed.
+These entries reflect the **previously reported development tests**, including Windows 11 tests on two additional PCs, not reproducible tests executed in this GitHub repository. No benchmark results, processing time, memory ceiling, or supported maximum resolution are currently claimed.
 
-Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, nicht auf in diesem Repository reproduzierten Messungen. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
+Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
+
+## Parallel-instance test guidance / Hinweise zu Tests mit mehreren Instanzen
+
+Reported concurrent use is **not** a guaranteed capacity or a measured throughput improvement. Practical limits depend on CPU, RAM, storage I/O, image sizes and model runtime. Record peak RAM, CPU utilization, elapsed time, and any failures for one, two and higher instance counts.
+
+Die gemeldete parallele Nutzung ist **keine** garantierte Kapazität oder gemessene Beschleunigung. Die Anzahl sinnvoller Instanzen hängt von CPU, RAM, Massenspeicher und Bild- bzw. Modelllast ab. Bei künftigen Tests bitte CPU-Auslastung, maximalen Arbeitsspeicher, Gesamtlaufzeit und Fehler bei einer, zwei und mehr Instanzen erfassen.
 
 ## Planned large-image stress test / Geplanter Belastungstest
 
