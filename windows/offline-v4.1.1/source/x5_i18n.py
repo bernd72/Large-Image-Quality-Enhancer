@@ -2,6 +2,10 @@
 from __future__ import annotations
 
 EN_TEXT = {
+    "GESAMTES BILD OPTIMIEREN": "ENHANCE ENTIRE IMAGE",
+    "Erst Testbereich im Bild anklicken, dann oben KI-VERGLEICH STARTEN.  Strg+P: Vergleich · Strg+E: Export": "First click a test area in the image, then select START AI COMPARISON. Ctrl+P: Compare · Ctrl+E: Export",
+    "6. Gewuenschten Testbereich im Bild anklicken": "6. Click the desired test area in the image",
+    "Gesamtbild als KI-Eingabe vorbereiten": "Preparing image for AI processing",
     "Sprache / Language:": "Language / Sprache:",
     "Sprache geändert.": "Language switched to English.",
     "Bitte ein JPG-Bild auswählen.": "Please select a JPEG image.",
