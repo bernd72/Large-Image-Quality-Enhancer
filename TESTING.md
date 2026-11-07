@@ -12,7 +12,7 @@
 - **Exact tested EXE build / Genau getestete EXE-Version:** Not yet recorded / Noch nicht dokumentiert.
 - **Disconnected operation / Betrieb ohne Netzwerk:** Not separately verified / Nicht gesondert bestätigt.
 - **Other Windows versions / Andere Windows-Versionen:** Not verified / Nicht verifiziert.
-- **Parallel runs / Gleichzeitige Instanzen:** Two on an office PC; reportedly up to five or six on a stronger computer (developer experience, not a benchmark) / Zwei auf einem Büro-PC; nach Erfahrungswerten bis zu fünf oder sechs auf leistungsfähigerem Rechner (keine Benchmarkmessung).
+- **Parallel runs / Gleichzeitige Instanzen:** Two on a computer with an Intel Core i5-14400; reportedly up to five or six on a stronger computer (developer experience, not a benchmark) / Zwei auf einem Rechner mit Intel Core i5-14400; nach Erfahrungswerten bis zu fünf oder sechs auf leistungsfähigerem Rechner (keine Benchmarkmessung).
 
 These entries reflect the **previously reported development tests**, including Windows 11 tests on two additional PCs, not reproducible tests executed in this GitHub repository. No benchmark results, processing time, memory ceiling, or supported maximum resolution are currently claimed.
 
