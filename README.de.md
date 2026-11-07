@@ -2,7 +2,7 @@
 
 **Open-Source-Software zur KI-gestützten Qualitätsverbesserung großer, hochauflösender Fotos.**
 
-[English](README.md) · [Mitarbeit / Contributing](CONTRIBUTING.md) · [Fremdlizenzen](THIRD_PARTY_NOTICES.md) · [Teststand](TESTING.md)
+[English](README.md) · [Mitarbeit / Contributing](CONTRIBUTING.md) · [Fremdlizenzen](THIRD_PARTY_NOTICES.md) · [Teststand](TESTING.md) · [Bekannte Einschränkungen](KNOWN_ISSUES.md)
 
 > **Projektaufbau / noch keine Veröffentlichung der Software.** Dieses Repository enthält derzeit nur Dokumentation. Die vorhandenen Python- und Windows-Programmdateien, KI-Modelle und die Windows-EXE wurden noch nicht hochgeladen oder vollständig für eine öffentliche Weitergabe geprüft. Eine bestehende Windows-EXE wurde nach Angabe des Entwicklers erfolgreich auf zwei weiteren PCs unter Windows 11 verwendet; dies ist noch keine Freigabe eines öffentlichen Releases.
 
@@ -14,7 +14,11 @@ Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößer
 
 **Bisher wurde die Software ausschließlich mit JPEG-Aufnahmen einer Insta360 X5 bis etwa 71 Megapixel (11.904 × 5.952 Pixel) getestet.** Sie soll grundsätzlich herstellerunabhängig einsetzbar sein; **andere Kameras, andere Bildformate und Bilder über 71 MP sind bisher nicht verifiziert**. Eine garantierte maximale Bildgröße wird ausdrücklich nicht angegeben.
 
-Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und ein gesonderter Test ohne Netzwerkverbindung müssen noch dokumentiert werden. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder Bildformaten. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
+Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und die Einzelheiten der Offline-Testumgebung müssen noch dokumentiert werden; laut Entwickler funktioniert die vorhandene Windows-EXE auch ohne Internetverbindung. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder Bildformaten. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
+
+## Bekannte Einschränkung: lange Verzeichnispfade unter Windows
+
+Die Windows-EXE funktioniert laut Entwickler unter Windows 11 **vollständig ohne Internetverbindung**. Beim Entpacken oder Ausführen aus sehr tief verschachtelten Ordnern traten jedoch Probleme auf. **Vorläufige Lösung:** Das Programm unter einem möglichst kurzen Pfad wie `C:\LIQE\` entpacken und von dort aus starten. Die genaue Ursache und eine mögliche Pfadlängengrenze sind noch nicht geklärt. Weitere Hinweise: [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
 ## Mehrere Instanzen parallel verwenden
 
@@ -30,7 +34,7 @@ Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPE
 - **Windows-Offline-Version v4.1.1:** als portable Windows-Ausgabe vorgesehen. Eine bestehende Windows-EXE lief auf zwei weiteren Windows-11-PCs; die genaue getestete Build-Version ist noch nicht dokumentiert und darf daher nicht automatisch v4.1.1 zugeordnet werden.
 - Bestehende ältere Versionen sollen bei der Übernahme unverändert bleiben.
 
-Die vorgesehene lokale Bildverarbeitung benötigt keinen Cloud-Upload der Fotos. Für Installation und Erstellung der Software kann dennoch Internet erforderlich sein.
+Der Offlinebetrieb einer vorhandenen Windows-EXE wurde vom Entwickler berichtet; die Bildverarbeitung erfolgt lokal ohne Cloud-Upload der Fotos. Für die Installation von Abhängigkeiten oder das Erstellen der Software kann dennoch Internet erforderlich sein.
 
 ## Open Source und Mitarbeit
 
