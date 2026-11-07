@@ -1,3 +1,4 @@
+param([string]$PythonExe = '')
 # Eigenstaendiger EXE-Bau fuer Windows x64; die FERTIGE EXE arbeitet vollständig OFFLINE.
 # Keine Proxy-/Zertifikatsdialoge im Programm und keine Modell-Downloads zur Laufzeit.
 # Nur beim BAUEN koennen Python-Pakete aus dem Internet benoetigt werden.
@@ -54,13 +55,26 @@ if (Test-Path -LiteralPath $extra -PathType Leaf) {
     Write-Host 'Optionales Modell DPRNet_512.tflite ist vorhanden.'
 }
 
-try { & py -3.12 -c 'import sys; assert sys.maxsize > 2**32; print(sys.version)' }
-catch { Fail 'Python 3.12 (64 Bit) fehlt. Verwende den offiziellen Windows-Installer.' 3 }
+# The automatic build launcher can pass a private per-user Python installation.
+# Without this argument, the existing py -3.12 workflow remains unchanged.
+$pythonCommand = 'py'
+$pythonCommandArgs = @('-3.12')
+if ($PythonExe) {
+    if (-not (Test-Path -LiteralPath $PythonExe -PathType Leaf)) {
+        Fail "Die uebergebene Python-Datei fehlt: $PythonExe" 3
+    }
+    $pythonCommand = $PythonExe
+    $pythonCommandArgs = @()
+}
+try {
+    & $pythonCommand @pythonCommandArgs -c 'import sys; assert sys.version_info[:2] == (3, 12) and sys.maxsize > 2**32; print(sys.version)'
+}
+catch { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht. Nutze ALLES_AUTOMATISCH_BAUEN.bat.' 3 }
 if ($LASTEXITCODE -ne 0) { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht.' 3 }
 
 if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
     Write-Host 'Erstelle eigene Build-Umgebung ...'
-    & py -3.12 -m venv $venv
+    & $pythonCommand @pythonCommandArgs -m venv $venv
     if ($LASTEXITCODE -ne 0) { Fail 'Erstellen der Build-Umgebung fehlgeschlagen.' 3 }
 }
 Write-Host ''
