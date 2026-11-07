@@ -4,6 +4,7 @@
 
 - **Camera / Kamera:** Insta360 X5 only / ausschließlich Insta360 X5.
 - **Input format / Eingabeformat:** JPEG only / ausschließlich JPEG.
+- **Current aspect-ratio limitation / Aktuelle Einschränkung beim Seitenverhältnis:** Developer reports successful processing only with 2:1 width:height images; other ratios cause errors in both single-image and batch processing (root cause not yet confirmed) / Laut Entwickler gelingt die Verarbeitung derzeit nur mit Bildern im Seitenverhältnis 2:1 (Breite:Höhe); andere Seitenverhältnisse führen sowohl bei Einzelbildern als auch bei Stapelverarbeitung zu Fehlermeldungen (Ursache noch ungeklärt).
 - **Reported tested image dimensions / Berichtete getestete Bildgröße:** 11,904 × 5,952 pixels, approx. 70.86 MP / 11.904 × 5.952 Pixel, ca. 70,86 MP.
 - **Larger than 71 MP / Über 71 MP:** Not yet tested with the complete AI pipeline / Noch nicht mit der vollständigen KI-Verarbeitung getestet.
 - **Other camera models / Andere Kameras:** Not yet verified / Noch nicht verifiziert.
