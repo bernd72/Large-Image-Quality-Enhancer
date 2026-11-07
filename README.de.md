@@ -4,7 +4,7 @@
 
 [English](README.md) · [Mitarbeit / Contributing](CONTRIBUTING.md) · [Fremdlizenzen](THIRD_PARTY_NOTICES.md) · [Teststand](TESTING.md) · [Bekannte Einschränkungen](KNOWN_ISSUES.md)
 
-> **Projektaufbau / noch keine Veröffentlichung der Software.** Dieses Repository enthält derzeit nur Dokumentation. Die vorhandenen Python- und Windows-Programmdateien, KI-Modelle und die Windows-EXE wurden noch nicht hochgeladen oder vollständig für eine öffentliche Weitergabe geprüft. Eine bestehende Windows-EXE wurde nach Angabe des Entwicklers erfolgreich auf zwei weiteren PCs unter Windows 11 verwendet; dies ist noch keine Freigabe eines öffentlichen Releases.
+> **Quellcode vorhanden – noch keine fertige EXE zum Herunterladen.** Die Python-Version 3.3 und die Windows-Bauskripte für v4.1.1 sind veröffentlicht. **KI-Modellgewichte und eine fertige EXE sind nicht enthalten.** Für die Modelle sind die Nutzungs- und Weitergaberechte gesondert zu beachten. Eine bestehende Windows-EXE wurde laut Entwickler auf zwei weiteren Windows-11-PCs getestet; ein unabhängig überprüfter Build aus diesem Repository liegt noch nicht vor.
 
 ## Ziel
 
@@ -28,13 +28,14 @@ Die Windows-EXE kann mehrfach gestartet werden, sodass mehrere Bildverarbeitunge
 
 Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPEG-Bildes der Insta360 X5 mit rund 71 Megapixeln auf einem Intel Core i5-14400 etwa 45–50 Minuten**. Dies ist ein **berichteter Praxiswert, kein standardisierter Benchmark und keine garantierte Laufzeit**. Der Einfluss gleichzeitig gestarteter Instanzen, der RAM-Ausstattung, der Modelle/Einstellungen und der EXE-Version wurde für diese Zeitangabe noch nicht systematisch dokumentiert.
 
-## Vorgesehene Ausgaben (noch nicht hochgeladen)
+## Programmquellen und EXE-Bau
 
-- **Python-Version v3.3:** bestehende Version, deren Quellen nach Prüfung übernommen werden sollen.
-- **Windows-Offline-Version v4.1.1:** als portable Windows-Ausgabe vorgesehen. Eine bestehende Windows-EXE lief auf zwei weiteren Windows-11-PCs; die genaue getestete Build-Version ist noch nicht dokumentiert und darf daher nicht automatisch v4.1.1 zugeordnet werden.
-- Bestehende ältere Versionen sollen bei der Übernahme unverändert bleiben.
+- **[Python-Version 3.3](python/v3.3/):** Quellcode, `requirements.txt` und `STARTEN.bat`. Benötigt eine geeignete 64-Bit-Python-Version, die Python-Bibliotheken sowie lokal bereitgestellte DPRNet-/SCUNet-Modelldateien im Unterordner `models`. Einzelheiten: [`README_START_HIER.txt`](python/v3.3/README_START_HIER.txt).
+- **[Windows-Baupaket 4.1.1](windows/offline-v4.1.1/):** Python-Quellen und `BAUE_WINDOWS_EXE.bat` / `.ps1`. Auf einem Windows-64-Bit-Rechner Python 3.12 (64 Bit) bereitstellen, die erforderlichen Modellgewichte unter `windows/offline-v4.1.1/models/` ablegen und `BAUE_WINDOWS_EXE.bat` starten. PyInstaller erstellt daraus die portable EXE. Siehe [`README_OFFLINE.txt`](windows/offline-v4.1.1/README_OFFLINE.txt) und [`Hinweise zu den Modellen`](windows/offline-v4.1.1/MODELLE_HIER_EINFUEGEN.txt). Nur der Bau kann einen Internetzugang für Pakete benötigen, die fertige Anwendung ist für den Offlinebetrieb vorgesehen.
 
-Der Offlinebetrieb einer vorhandenen Windows-EXE wurde vom Entwickler berichtet; die Bildverarbeitung erfolgt lokal ohne Cloud-Upload der Fotos. Für die Installation von Abhängigkeiten oder das Erstellen der Software kann dennoch Internet erforderlich sein.
+**Nicht enthalten:** fertige EXE, KI-Modellgewichte, Python-Umgebungen oder Build-Ausgaben. Ein erfolgreicher Windows-Bau der v4.1.1 wurde hier **nicht** unabhängig bestätigt; die Version der zuvor getesteten EXE ist nicht dokumentiert. Die beiden Quellcode-Ausgaben bleiben getrennt.
+
+Der Offlinebetrieb einer vorhandenen Windows-EXE wurde vom Entwickler berichtet; die Bildverarbeitung erfolgt lokal ohne Cloud-Upload der Fotos. Für die Installation von Abhängigkeiten oder das Erstellen der Software kann dennoch Internet erforderlich sein. Bitte keine ungeprüften Modellgewichte öffentlich hochladen.
 
 ## Open Source und Mitarbeit
 
