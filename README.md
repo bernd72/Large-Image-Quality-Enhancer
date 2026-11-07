@@ -9,7 +9,7 @@
 ## Quick start (Windows 11, 64-bit)
 
 1. Download the repository using **Code → Download ZIP**, then extract it to a short location such as `C:\\LIQE\\`.
-2. Open `windows/offline-v4.1.1/` and run **[ALLES_AUTOMATISCH_BAUEN.bat](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)**. The script can install Python 3.12 for the current user, request your consent to download external model files, install Python dependencies, and build a portable application. **An internet connection is generally required for the initial build.**
+2. Open `windows/offline-v4.1.1/` and run **[AUTO_BUILD_WINDOWS_EXE.bat](windows/offline-v4.1.1/AUTO_BUILD_WINDOWS_EXE.bat)**. The script can install Python 3.12 for the current user, request your consent to download external model files, install Python dependencies, and build a portable application. **An internet connection is generally required for the initial build.**
 3. Alternatively, install **Python 3.12 x64** yourself, obtain the three required model files lawfully in the local `models` folder, and run `BAUE_WINDOWS_EXE.bat`.
 4. After a successful build, copy the **entire** `dist/Insta360_X5_KI_Offline/` folder to a Windows PC. Running the generated EXE does not require a Python installation or an internet connection.
 
@@ -51,7 +51,7 @@ According to developer experience, **processing one complete Insta360 X5 JPEG im
 
 ## Automatic Windows build without pre-installed Python
 
-**New: one-click build for Windows 11 x64.** In the [Windows build kit](windows/offline-v4.1.1/), double-click **[`ALLES_AUTOMATISCH_BAUEN.bat`](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)**. The launcher checks for Python 3.12, installs a per-user copy if needed, asks permission to download the third-party DPRNet and SCUNet AI models from the referenced third-party hosts (Raspberry Pi's repository and Heliosoph's converted SCUNet model on Hugging Face), installs build dependencies, and builds the portable EXE. Internet access is needed for missing components **during the build**, and a corporate proxy may block downloads. No administrator privileges are normally needed, although organizational policies may restrict installation. The resulting EXE runs offline on target PCs and needs no Python installation.
+**New: one-click build for Windows 11 x64.** In the [Windows build kit](windows/offline-v4.1.1/), double-click **[`AUTO_BUILD_WINDOWS_EXE.bat`](windows/offline-v4.1.1/AUTO_BUILD_WINDOWS_EXE.bat)**. The launcher checks for Python 3.12, installs a per-user copy if needed, asks permission to download the third-party DPRNet and SCUNet AI models from the referenced third-party hosts (Raspberry Pi's repository and Heliosoph's converted SCUNet model on Hugging Face), installs build dependencies, and builds the portable EXE. Internet access is needed for missing components **during the build**, and a corporate proxy may block downloads. No administrator privileges are normally needed, although organizational policies may restrict installation. The resulting EXE runs offline on target PCs and needs no Python installation.
 
 **Important:** Python is installed automatically as a build prerequisite, rather than being eliminated from the build process. The automatic build has not yet been independently tested on a clean Windows system. The existing manual workflow remains available. See [Windows build instructions](windows/offline-v4.1.1/README_OFFLINE.txt).
 
