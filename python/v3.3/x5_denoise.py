@@ -178,8 +178,6 @@ def denoise_full_export(original_path: Path, ratio, dest: Path, exposure: float,
     """
     with Image.open(original_path) as im:
         w,h = im.size
-        if w != 2*h:
-            raise RuntimeError('Für den vollständigen 360°-Export ist 2:1 erforderlich')
         exif, icc = im.info.get('exif'), im.info.get('icc_profile')
         xmp = extract_xmp(original_path)
         workdir = here / '_temp'
@@ -201,7 +199,8 @@ def denoise_full_export(original_path: Path, ratio, dest: Path, exposure: float,
                 def prog(pct,msg):
                     progress(int(2+84*(ib+pct/100)/len(bands)),
                              f'Abschnitt {ib+1}/{len(bands)}: {msg}')
-                filtered = denoise_rgb(bright,session,strength,sharpen,prog,cancelled,wrap_horizontal=True)
+                filtered = denoise_rgb(bright,session,strength,sharpen,prog,cancelled,
+                                       wrap_horizontal=(w == 2*h))
                 start,end=y0-a,y1-a
                 core = filtered[start:end].copy()
                 if prior_halo is not None:
@@ -213,7 +212,7 @@ def denoise_full_export(original_path: Path, ratio, dest: Path, exposure: float,
                 prior_halo = filtered[end:min(end+halo,filtered.shape[0])].copy()
                 del bright,filtered,core
             mm.flush()
-            progress(91,'JPG in 71-MP-Originalauflösung speichern')
+            progress(91,'JPG in voller Auflösung schreiben')
             opts=dict(format='JPEG',quality=95,subsampling=0)
             if exif: opts['exif']=exif
             if icc: opts['icc_profile']=icc
