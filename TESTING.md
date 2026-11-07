@@ -10,8 +10,9 @@
 - **Other formats / Andere Formate:** Not yet verified / Noch nicht verifiziert.
 - **Windows EXE on additional PCs / Windows-EXE auf weiteren PCs:** Reported working on a second and third PC, both running Windows 11 / Nach Angabe des Entwicklers auf einem zweiten und dritten PC unter Windows 11 erfolgreich getestet.
 - **Exact tested EXE build / Genau getestete EXE-Version:** Not yet recorded / Noch nicht dokumentiert.
-- **Disconnected operation / Betrieb ohne Netzwerk:** Not separately verified / Nicht gesondert bestätigt.
+- **Disconnected operation / Betrieb ohne Netzwerk:** Existing Windows EXE reportedly runs without an internet connection; precise test conditions and build version not recorded / Vorhandene Windows-EXE läuft laut Entwickler ohne Internetverbindung; genaue Testbedingungen und Build-Version nicht dokumentiert.
 - **Other Windows versions / Andere Windows-Versionen:** Not verified / Nicht verifiziert.
+- **Long Windows directory paths / Lange Windows-Verzeichnispfade:** Problems reported during extraction or use from deeply nested folders; a short folder path is recommended; root cause unconfirmed / Probleme beim Entpacken oder Betrieb in tief verschachtelten Ordnern berichtet; kurzer Pfad empfohlen; genaue Ursache ungeklärt. See / Siehe [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 - **Parallel runs / Gleichzeitige Instanzen:** Two on a computer with an Intel Core i5-14400; reportedly up to five or six on a stronger computer (developer experience, not a benchmark) / Zwei auf einem Rechner mit Intel Core i5-14400; nach Erfahrungswerten bis zu fünf oder sechs auf leistungsfähigerem Rechner (keine Benchmarkmessung).
 
 - **Reported time per complete image / Berichtete Zeit pro vollständig verarbeitetem Bild:** Approx. **45–50 minutes** for an Insta360 X5 JPEG image (~71 MP) on an **Intel Core i5-14400**, per developer experience / Ca. **45–50 Minuten** für ein Insta360-X5-JPEG (~71 MP) auf einem **Intel Core i5-14400**, laut Entwicklererfahrung.
