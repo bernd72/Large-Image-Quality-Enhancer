@@ -33,9 +33,11 @@ Large Image Quality Enhancer is intended to improve image quality rather than en
 
 A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and details of the offline test environment remain to be documented; the developer reports that the existing Windows EXE works without internet access. This does **not** establish compatibility with other Windows versions or input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
 
-## Known limitation: 2:1 aspect ratio only
+## Other aspect ratios: source code fix (2026-11-07)
 
-According to the latest developer tests, the Windows version currently **processes only images with a 2:1 width-to-height ratio** (for example, 11,904 × 5,952 pixels). **Other aspect ratios cause an error during processing, both for individual images and batch jobs.** The root cause is not yet known. Until fixed, successful processing is only reported for 2:1 inputs. See [known issues](KNOWN_ISSUES.md).
+The previous **2:1-only** checks have been removed in the current source code of **both editions**. Regular **4:3, 3:2, 1:1 and portrait JPEG photographs** can now enter both individual and batch processing. Normal photos are fitted to the AI model input **without stretching**, while output files retain the **original width and height**. The joined-edge treatment remains for 2:1 panoramas only.
+
+**Not yet confirmed end to end:** This change still needs testing with the real AI weights and a newly built Windows 11 executable. Existing EXE files are not updated automatically: [download the latest source](https://github.com/bernd72/Large-Image-Quality-Enhancer) and run `AUTO_BUILD_WINDOWS_EXE.bat` again. Input is still **JPEG/JPG only**; native HEIC, RAW and PNG input is not provided. See [testing](TESTING.md) and [known issues](KNOWN_ISSUES.md).
 
 ## Known limitation: long Windows paths
 
