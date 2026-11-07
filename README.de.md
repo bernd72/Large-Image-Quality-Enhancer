@@ -49,6 +49,10 @@ Die Windows-EXE kann mehrfach gestartet werden, sodass mehrere Bildverarbeitunge
 
 Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPEG-Bildes der Insta360 X5 mit rund 71 Megapixeln auf einem Intel Core i5-14400 etwa 45–50 Minuten**. Dies ist ein **berichteter Praxiswert, kein standardisierter Benchmark und keine garantierte Laufzeit**. Der Einfluss gleichzeitig gestarteter Instanzen, der RAM-Ausstattung, der Modelle/Einstellungen und der EXE-Version wurde für diese Zeitangabe noch nicht systematisch dokumentiert.
 
+## Sprache des Windows-Bauprogramms
+
+Die Startdatei [`AUTO_BUILD_WINDOWS_EXE.bat`](windows/offline-v4.1.1/AUTO_BUILD_WINDOWS_EXE.bat) und die nachgelagerten PowerShell-Bauschritte geben Rückfragen, Fortschrittsmeldungen und Fehler jetzt **auf Englisch** aus. Das betrifft auch die Python-Installation und den Modelldownload. Die Sprachauswahl in der späteren Programmoberfläche ist davon unabhängig. Die englischen Texte wurden im Quellcode überprüft; ein kompletter Praxistest auf einem englischsprachigen Windows-System steht noch aus.
+
 ## Automatischer Windows-Bau ohne vorherige Python-Installation
 
 Das Baupaket enthält **`AUTO_BUILD_WINDOWS_EXE.bat`**. Es erkennt vorhandenes Python 3.12 oder installiert es nach Zustimmung für den aktuellen Benutzer. Anschließend können die externen KI-Modelle mit Zustimmung heruntergeladen und die benötigten Pakete für den EXE-Bau eingerichtet werden. **Python wird für den Bau weiterhin benötigt**, muss aber nicht vorher installiert sein. Der automatische Ablauf ist noch nicht auf einem frischen Windows-System verifiziert; Netzwerksperren oder Unternehmensrichtlinien können ihn verhindern.
