@@ -56,6 +56,14 @@ MANUELLES BAUEN AUF DEINEM WINDOWS-RECHNER (ALTERNATIVE)
    dist\Insta360_X5_KI_Offline\Insta360_X5_KI_Offline.exe
 6. Die ZIP-Datei Insta360_X5_KI_Offline_Portable.zip wird optional erstellt.
 
+SPRACHE DER PROGRAMMOBERFLAECHE (NEU IM AKTUELLEN QUELLCODE)
+- Oben im Programmfenster gibt es die Auswahl Sprache / Language.
+- Hier kann zwischen Deutsch und English ohne Neustart umgeschaltet werden.
+- Die Uebersetzungen sind offline enthalten; kein Download noetig.
+- Bereits zuvor erstellte EXE-Dateien muessen mit dem aktualisierten Quellcode
+  neu gebaut werden, damit die Sprachauswahl vorhanden ist.
+- Diese GUI-Aenderung wurde noch nicht unter Windows praktisch erprobt.
+
 BETRIEB AUF EINEM ANDEREN PC OHNE INTERNET
 - Den GESAMTEN Ordner dist\Insta360_X5_KI_Offline kopieren oder das
   fertige Portable-ZIP vollstaendig entpacken.
