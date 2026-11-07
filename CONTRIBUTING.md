@@ -16,8 +16,8 @@ Thank you for helping build **Large Image Quality Enhancer**. / Danke für deine
 ## Priority work / Nächste Aufgaben
 
 1. Review and improve the published Python v3.3 code while preserving a working version.
-2. Test and document the Windows offline v4.1.1 build on a clean Windows machine.
+2. Independently verify the **automated EXE build process** on a fresh Windows installation; the developer has already tested the **portable Windows application** on a clean Windows 11 PC.
 3. Verify model provenance, licenses, and exact binaries before any model release.
 4. Add reproducible JPEG tests and stress tests at 100/200/500 MP.
-5. Test portable Windows build on a clean disconnected machine.
+5. Extend portable EXE compatibility testing beyond Windows 11 and record reproducible test details; clean-machine use under Windows 11 has already been reported.
 6. Extend real-world testing to more cameras and image formats; document only verified results.
