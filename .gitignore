@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.buildvenv/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+*.spec
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+# Local logs, temporary outputs and private configuration
+*.log
+*.tmp
+.env
+.env.*
+!*.example
+*.pem
+*.key
+*.pfx
+*.p12
+# Local test imagery and model binaries: review license and privacy before publication
+*.jpg
+*.jpeg
+*.png
+*.tif
+*.tiff
+*.webp
+*.tflite
+*.onnx
+*.onnx.data
+*.pth
+*.pt
+*.ckpt
+*.exe
+*.zip
