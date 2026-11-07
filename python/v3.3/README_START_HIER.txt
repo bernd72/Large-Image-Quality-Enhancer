@@ -26,8 +26,8 @@ NEU IN VERSION 3.3
 
 UPDATE EINER FUNKTIONIERENDEN VERSION 3.2
 1. Programm schließen.
-2. Die beiden Update-Dateien x5_dprnet.py und x5_batch.py in den
-   bisherigen Programmordner kopieren; x5_dprnet.py ersetzen.
+2. Die drei Update-Dateien x5_dprnet.py, x5_batch.py und x5_i18n.py in den
+   bisherigen Programmordner kopieren; vorhandene gleichnamige Dateien ersetzen.
 3. Ordner .venv und models UNVERÄNDERT LASSEN.
 4. STARTEN.bat wie gewohnt starten.
 
