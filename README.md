@@ -4,7 +4,7 @@
 
 [Deutsch](README.de.md) · [Contributing](CONTRIBUTING.md) · [Third-party licenses](THIRD_PARTY_NOTICES.md) · [Testing status](TESTING.md) · [Known issues](KNOWN_ISSUES.md)
 
-> **Project setup / no release yet.** This repository currently contains documentation, not a downloadable or functioning application. The existing Python and Windows sources, model files, and Windows executable have not yet been added or legally cleared for public distribution. An existing Windows EXE build has been reported as working on two additional Windows 11 PCs; this is user-reported testing, not a release verification.
+> **Source available — no ready-to-run release yet.** Python v3.3 source and Windows v4.1.1 EXE build scripts are published. **AI model weights and a compiled EXE are not provided**. You must obtain the required model files through sources whose terms permit your intended use. An existing Windows EXE was reportedly tested on two additional Windows 11 PCs; the GitHub build has not been independently verified.
 
 ## Purpose
 
@@ -28,13 +28,14 @@ The Windows executable can be launched multiple times to process jobs in paralle
 
 According to developer experience, **processing one complete Insta360 X5 JPEG image of approximately 71 MP takes about 45–50 minutes on an Intel Core i5-14400**. This is a **reported real-world observation, not a standardized benchmark or a guaranteed runtime**. The effect of concurrent instances, RAM configuration, model/settings, and EXE build on this timing has not been systematically recorded.
 
-## Editions (not published yet)
+## Source editions and how to start
 
-- **Python edition v3.3:** existing version to be imported after source review.
-- **Windows offline edition v4.1.1:** intended portable Windows build. A Windows EXE build has been reported working on two additional Windows 11 PCs; the precise tested build/version has not yet been recorded and must not be assumed to be v4.1.1.
-- Older versions should remain unchanged when the source is imported.
+- **[Python edition v3.3](python/v3.3/):** source code, `requirements.txt`, and Windows `STARTEN.bat`. Requires compatible 64-bit Python, Python dependencies, and DPRNet/SCUNet model files in a local `models` directory. See [`README_START_HIER.txt`](python/v3.3/README_START_HIER.txt).
+- **[Windows offline EXE build kit v4.1.1](windows/offline-v4.1.1/):** sources and `BAUE_WINDOWS_EXE.bat` / `.ps1`. On a Windows x64 computer, install Python 3.12 x64, provide the required model files in `windows/offline-v4.1.1/models/`, then run `BAUE_WINDOWS_EXE.bat` to build your own portable executable using PyInstaller. See [`README_OFFLINE.txt`](windows/offline-v4.1.1/README_OFFLINE.txt) and [`model instructions`](windows/offline-v4.1.1/MODELLE_HIER_EINFUEGEN.txt). The build may need internet for Python dependencies; the resulting executable is intended to operate offline.
 
-Offline use has been reported for an existing Windows EXE, and photos are processed locally without cloud uploads. This does not imply that installing dependencies or building the application can be performed without an internet connection.
+**Not included:** compiled EXE, AI model weights, Python virtual environments, and generated build outputs. A successful v4.1.1 build has **not** been verified here on Windows; the version of the previously tested Windows EXE was not recorded. The original source editions are kept separately.
+
+Offline use has been reported for an existing Windows EXE, and photos are processed locally without cloud uploads. Installing dependencies or building the application may require an internet connection. Follow model redistribution rules; please do not upload unverified model files.
 
 ## Open source and contributions
 
