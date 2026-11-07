@@ -2,12 +2,12 @@
 
 ## Reported status / Bisheriger Stand
 
-- **Camera / Kamera:** Insta360 X5 only / ausschließlich Insta360 X5.
+- **Camera / Kamera:** Insta360 X5 and a smartphone JPEG / Insta360 X5 und ein Smartphone-JPEG.
 - **Input format / Eingabeformat:** JPEG only / ausschließlich JPEG.
-- **Aspect-ratio fix in source / Korrektur der Seitenverhältnisse im Quellcode (2026-11-07):** Hard-coded 2:1 restrictions removed from both editions; geometry-preserving model input and non-wrapping photo denoising added. New regression tests cover 3:2, 4:3, square and portrait JPEGs with mock inference; **real-model and rebuilt Windows EXE tests pending** / Explizite 2:1-Sperren in beiden Quellcode-Ausgaben entfernt; geometrieerhaltende KI-Eingabe und passende Randbehandlung ergänzt. Regressionstests mit simulierten Modellen für 3:2, 4:3, quadratische und Hochformat-JPEGs ergänzt; **Tests mit echten Modellen und neu gebauter Windows-EXE stehen noch aus**.
+- **Aspect-ratio fix in source / Korrektur der Seitenverhältnisse im Quellcode (2026-11-07):** Hard-coded 2:1 restrictions removed from both editions; geometry-preserving model input and non-wrapping photo denoising added. New regression tests cover 3:2, 4:3, square and portrait JPEGs with mock inference; **broader real-model verification pending** / Explizite 2:1-Sperren in beiden Quellcode-Ausgaben entfernt; geometrieerhaltende KI-Eingabe und passende Randbehandlung ergänzt. Regressionstests mit simulierten Modellen für 3:2, 4:3, quadratische und Hochformat-JPEGs ergänzt; **weitere Praxistests mit echten Modellen stehen noch aus**.
 - **Reported tested image dimensions / Berichtete getestete Bildgröße:** 11,904 × 5,952 pixels, approx. 70.86 MP / 11.904 × 5.952 Pixel, ca. 70,86 MP.
 - **Larger than 71 MP / Über 71 MP:** Not yet tested with the complete AI pipeline / Noch nicht mit der vollständigen KI-Verarbeitung getestet.
-- **Other camera models / Andere Kameras:** Not yet verified / Noch nicht verifiziert.
+- **Other camera models / Andere Kameras:** One smartphone photo tested; others not verified / Ein Smartphone-Foto getestet; weitere Kameras nicht geprüft.
 - **Other formats / Andere Formate:** Not yet verified / Noch nicht verifiziert.
 - **Windows EXE on additional PCs / Windows-EXE auf weiteren PCs:** Reported working on a second and third PC, both running Windows 11 / Nach Angabe des Entwicklers auf einem zweiten und dritten PC unter Windows 11 erfolgreich getestet.
 - **Exact tested EXE build / Genau getestete EXE-Version:** Not yet recorded / Noch nicht dokumentiert.
@@ -22,13 +22,10 @@ These entries reflect the **previously reported development tests**, including W
 
 Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Die oben genannte Bearbeitungszeit ist ein ungefährer Praxiswert, kein standardisierter Benchmark. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
 
-## Latest developer feedback: Windows test / Aktuelle Entwicklerrueckmeldung: Windows-Test
+## Latest developer feedback / Aktueller Praxistest
 
-- **Date / Datum:** 2026-11-07.
-- **Tested edition / Getestete Ausgabe:** Windows application on **Windows 11** only / Ausschliesslich die **Windows-Version unter Windows 11**.
-- **Preliminary result / Vorlaeufiges Ergebnis:** Developer reports that the Windows application **appears to work** during an ongoing test; this is **not** yet confirmation of a complete image-processing run, all features, or the language switch / Der Entwickler berichtet, dass die Windows-Anwendung beim laufenden Test **zu funktionieren scheint**. Dies bestaetigt noch **keinen** vollstaendigen Bildverarbeitungslauf, alle Funktionen oder die Sprachumschaltung.
-- **Python edition / Python-Version:** The newly added Python v3.3 language selector was **not tested** in this report / Die neu ergaenzte Sprachumschaltung der Python-Version 3.3 wurde bei diesem Test **nicht geprueft**.
-- **Still needed / Weiterhin offen:** Exact build identifier and explicit confirmation of German/English switching, single-image and batch processing / Genaue Build-Kennung und ausdrueckliche Bestaetigung der Deutsch/Englisch-Umschaltung sowie Einzel- und Stapelverarbeitung.
+- **2026-11-07, Windows 11:** Single-image and batch processing reportedly work; tested with a smartphone JPEG (3246 × 2448 px, approximately 4:3) / Einzelbild- und Stapelverarbeitung funktionieren laut Rückmeldung; getestet mit einem Smartphone-JPEG (3246 × 2448 Pixel, ungefähr 4:3).
+- **Open / Offen:** Language switch and Python edition not yet practically confirmed / Sprachumschaltung und Python-Version noch nicht praktisch bestätigt.
 
 ## Python v3.3 GUI language selector / Python-v3.3-Sprachumschaltung
 
