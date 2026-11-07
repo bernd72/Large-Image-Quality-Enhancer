@@ -6,6 +6,12 @@ DPRNet + SCUNet, Vergleich, 360-Export, Stapelverarbeitung und Restzeit,
 OHNE Internetverbindung auf dem Ziel-PC. Keine Proxy-/Zertifikatabfragen.
 Die bisherige Python-Version 3.3 und die fruehere Proxy-Version bleiben unberuehrt.
 
+HINWEIS ZUR SPRACHE DES BAUPROGRAMMS
+Die Startdatei AUTO_BUILD_WINDOWS_EXE.bat sowie die Meldungen und Rueckfragen
+beim automatischen Bau sind nun auf Englisch. Die fertige Anwendung hat davon
+unabhaengig eine Deutsch/Englisch-Umschaltung in der grafischen Oberflaeche.
+Der englische Bauablauf wurde noch nicht auf englischem Windows erprobt.
+
 AUTOMATISCHER WEG (AUCH OHNE VORHER INSTALLIERTES PYTHON)
 1. GitHub-Repository herunterladen (Code -> Download ZIP), z. B. nach C:\LIQE entpacken.
 2. In windows\offline-v4.1.1 die Datei AUTO_BUILD_WINDOWS_EXE.bat starten.
