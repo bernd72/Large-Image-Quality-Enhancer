@@ -15,6 +15,10 @@
 
 **Build status:** the automated build has **not** been verified on a clean Windows PC; build success is not guaranteed. No EXE or model weights are hosted in this repository. The automatic script downloads model files from **separate third-party hosts** only after consent; the SCUNet ONNX conversion is hosted by Heliosoph on Hugging Face, not by the original SCUNet authors. Review [model notices](THIRD_PARTY_NOTICES.md) and [Windows build instructions](windows/offline-v4.1.1/README_OFFLINE.txt).
 
+## Python v3.3 interface language
+
+The [Python v3.3 edition](python/v3.3/) now also offers a **„Sprache / Language“** selector to switch its interface between **Deutsch** and **English** without restarting. This includes model-download controls and batch-processing dialogs. Keep the added [`python/v3.3/x5_i18n.py`](python/v3.3/x5_i18n.py) file alongside `x5_dprnet.py`; the existing `STARTEN.bat` remains unchanged. **Switching languages works offline**, while downloading missing AI models may require internet access. A complete native Windows GUI test is still pending.
+
 ## Windows interface language
 
 The current Windows source code provides a **„Sprache / Language“** selector for switching the graphical interface between **Deutsch** and **English**. The change takes effect immediately, including in the batch dialog, without restarting the app. Translations are bundled locally; no internet connection is required to switch languages. **Existing EXE builds are not updated automatically:** rebuild the executable from the latest source to obtain this feature. The new language switch has not yet been tested on a Windows PC.
