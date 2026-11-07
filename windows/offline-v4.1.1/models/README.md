@@ -2,7 +2,7 @@
 
 Model weights are **not distributed** with this repository. / Dieses Repository verteilt **keine KI-Modellgewichte**.
 
-Before running `BAUE_WINDOWS_EXE.bat`, put these files in **this** `models` directory:
+For the **manual** build (`BAUE_WINDOWS_EXE.bat`), put these files in **this** `models` directory. Alternatively, use **`ALLES_AUTOMATISCH_BAUEN.bat`** from the parent directory, which asks permission to download missing model files from their original providers:
 
 - `DPRNet_1024.tflite`
 - `scunet_color_real_psnr.onnx`
