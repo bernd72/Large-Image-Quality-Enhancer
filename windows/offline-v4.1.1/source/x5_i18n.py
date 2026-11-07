@@ -108,6 +108,20 @@ EN_TEXT = {
 # Phrase substitutions also translate messages containing filenames, counts and paths.
 # Exact translations above take precedence. Image data and filenames are never changed.
 EN_PHRASES = {
+    "KI-Bild in Originalauflösung gespeichert:": "AI image saved at original resolution:",
+    "KI-Vergleich gespeichert:": "AI comparison saved:",
+    "Unverändertes Original gesichert unter:": "Unmodified original backed up at:",
+    "Bei SCUNet: Original / nur DPRNet / DPRNet + SCUNet.": "With SCUNet: original / DPRNet only / DPRNet + SCUNet.",
+    "Vortrainiertes KI-Modell laden": "Loading pretrained AI model",
+    "360°-Gesamtbild als KI-Eingabe vorbereiten": "Preparing full 360° panorama for AI input",
+    "Neuronale DPRNet-KI berechnet das Gesamtbild": "DPRNet neural model processing the whole image",
+    "Globale KI-Belichtungskorrektur berechnen": "Calculating global AI exposure adjustment",
+    "Globale KI-Korrektur bereit": "Global AI correction ready",
+    "SCUNet-KI (ONNX) laden": "Loading SCUNet AI (ONNX)",
+    "KI-Verarbeitung vorbereiten": "Preparing AI processing",
+    "Originale ersetzt.": "Originals replaced.",
+    "Sicherungskopien angelegt.": "Backups created.",
+    "OHNE Sicherungen.": "WITHOUT backups.",
     "Die bearbeitete Datei ersetzt das Original-JPG.": "The processed image will replace the original JPEG.",
     "Vorher wird automatisch eine unveränderte Sicherungskopie erstellt.": "An unchanged backup copy will be created first.",
     "Original: ": "Original: ",
