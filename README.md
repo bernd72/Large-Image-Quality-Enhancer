@@ -49,6 +49,10 @@ The Windows executable can be launched multiple times to process jobs in paralle
 
 According to developer experience, **processing one complete Insta360 X5 JPEG image of approximately 71 MP takes about 45–50 minutes on an Intel Core i5-14400**. This is a **reported real-world observation, not a standardized benchmark or a guaranteed runtime**. The effect of concurrent instances, RAM configuration, model/settings, and EXE build on this timing has not been systematically recorded.
 
+## Language of the Windows build tools
+
+The automatic launcher [`AUTO_BUILD_WINDOWS_EXE.bat`](windows/offline-v4.1.1/AUTO_BUILD_WINDOWS_EXE.bat) and the PowerShell build steps now display prompts, progress messages and errors **in English**, including Python installation and model-download consent. This is separate from the application's German/English GUI selector. The English build prompts have been reviewed in source code, but the full build has not yet been rerun on an English Windows installation.
+
 ## Automatic Windows build without pre-installed Python
 
 **New: one-click build for Windows 11 x64.** In the [Windows build kit](windows/offline-v4.1.1/), double-click **[`AUTO_BUILD_WINDOWS_EXE.bat`](windows/offline-v4.1.1/AUTO_BUILD_WINDOWS_EXE.bat)**. The launcher checks for Python 3.12, installs a per-user copy if needed, asks permission to download the third-party DPRNet and SCUNet AI models from the referenced third-party hosts (Raspberry Pi's repository and Heliosoph's converted SCUNet model on Hugging Face), installs build dependencies, and builds the portable EXE. Internet access is needed for missing components **during the build**, and a corporate proxy may block downloads. No administrator privileges are normally needed, although organizational policies may restrict installation. The resulting EXE runs offline on target PCs and needs no Python installation.
