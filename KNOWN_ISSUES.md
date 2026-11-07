@@ -2,6 +2,13 @@
 
 ## Deutsch
 
+### Windows-Version: Bildformat derzeit offenbar auf Seitenverhältnis 2:1 beschränkt
+
+**Beobachtung (Entwicklertest):** Die aktuelle Windows-Version verarbeitet nach bisherigen Tests nur Bilder mit einem **Breiten-Höhen-Verhältnis von 2:1** (beispielsweise 11.904 × 5.952 Pixel). Bei abweichenden Seitenverhältnissen tritt im weiteren Verarbeitungsablauf eine Fehlermeldung auf. **Das betrifft sowohl die Einzelbild- als auch die Stapelverarbeitung.**
+
+**Vorläufige Empfehlung:** Bis zur Fehlerbehebung nur 2:1-Bilder verarbeiten. Die genaue Fehlermeldung, die Ursache im Programmcode und die betroffenen Komponenten sind noch nicht ermittelt. Das Hochskalieren, Beschneiden oder Verzerren anderer Bilder zur Umgehung wurde nicht als zuverlässige Lösung getestet.
+
+
 ### Windows-Version: Probleme bei langen Verzeichnispfaden
 
 **Beobachtung:** Die Windows-EXE funktioniert nach Angaben des Entwicklers unter Windows 11 auch vollständig **ohne Internetverbindung**. Beim Entpacken oder Ausführen aus einem tief verschachtelten Verzeichnis kam es allerdings zu Problemen. Lange Pfade innerhalb des Installationsordners können die Nutzung beeinträchtigen.
@@ -23,6 +30,13 @@ Der Offlinebetrieb bezieht sich auf die **Nutzung einer bereits lauffähigen Win
 Das automatische Windows-Bauskript kontrolliert die Dateigrößen, aber aktuell nur für `scunet_color_real_psnr.onnx` auch eine feste SHA-256-Prüfsumme. Für `DPRNet_1024.tflite` und `scunet_color_real_psnr.onnx.data` fehlt noch eine fest hinterlegte Prüfsumme. Daher ist die vollständige Integrität aller heruntergeladenen Modellgewichte noch nicht kryptografisch abgesichert. Die genaue Herkunft und Lizenz jeder Modelldatei sind zusätzlich zu prüfen. Siehe [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## English
+
+### Windows edition: processing currently appears limited to 2:1 aspect-ratio images
+
+**Observed in developer testing:** The current Windows version has so far processed only images with a **2:1 width-to-height ratio** (for example, 11,904 × 5,952 pixels). Images with other aspect ratios result in an error during processing. **This affects both single-image processing and batch processing.**
+
+**Temporary guidance:** Use 2:1 images until the problem is fixed. The exact error message, root cause and affected code paths have not yet been established. Resizing, cropping or stretching non-2:1 images has not been verified as a workaround.
+
 
 ### Windows edition: problems with long directory paths
 
