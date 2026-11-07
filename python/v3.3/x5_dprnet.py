@@ -132,7 +132,7 @@ def insert_xmp(path: Path, xmp_segments):
 
 def compute_gain_field(src: Image.Image, model_path: Path, strength: float, max_gain: float,
                        progress) -> np.ndarray:
-    """Run REAL pretrained DPRNet on whole panorama (only once), at model input size.
+    """Run REAL pretrained DPRNet on the whole image (once), at model input size.
     Return a smooth global RGB gain field. Full-resolution pixels are never inferred in tiles.
     """
     from ai_edge_litert.interpreter import Interpreter
@@ -148,8 +148,25 @@ def compute_gain_field(src: Image.Image, model_path: Path, strength: float, max_
     if inp['dtype'] != np.float32:
         raise RuntimeError(f'Unerwarteter KI-Eingabedatentyp: {inp["dtype"]}')
     interp.allocate_tensors()
-    progress(17, '360°-Gesamtbild als KI-Eingabe vorbereiten')
-    small = np.asarray(src.convert('RGB').resize((w, h), Image.Resampling.BICUBIC), dtype=np.float32) / 255.0
+    progress(17, 'Gesamtbild als KI-Eingabe vorbereiten')
+    # Preserve the established DPRNet input for 2:1 panoramas. For ordinary
+    # camera photos, fit without stretching and extend border pixels instead
+    # of distorting the image to the model's square input tensor.
+    is_panorama = src.width == 2 * src.height
+    if is_panorama:
+        small = np.asarray(src.convert('RGB').resize((w, h), Image.Resampling.BICUBIC),
+                           dtype=np.float32) / 255.0
+        content_box = (0, 0, w, h)
+    else:
+        fitted = ImageOps.contain(src.convert('RGB'), (w, h),
+                                  method=Image.Resampling.BICUBIC)
+        left = (w - fitted.width) // 2
+        top = (h - fitted.height) // 2
+        content_box = (left, top, left + fitted.width, top + fitted.height)
+        pixels = np.asarray(fitted, dtype=np.uint8)
+        small = np.pad(pixels, ((top, h - fitted.height - top),
+                                (left, w - fitted.width - left), (0, 0)),
+                       mode='edge').astype(np.float32) / 255.0
     net_input = np.transpose(small, (2, 0, 1))[np.newaxis, ...].copy()
     interp.set_tensor(inp['index'], net_input)
     progress(32, 'Neuronale DPRNet-KI berechnet das Gesamtbild')
@@ -173,13 +190,18 @@ def compute_gain_field(src: Image.Image, model_path: Path, strength: float, max_
     ratio = 0.75 * lum_ratio + 0.25 * rgb_ratio
     ratio = np.clip(ratio, 1.0, max_gain)
     ratio = 1.0 + strength * (ratio - 1.0)
-    # Equirectangular 360° left/right edges join; force correction to be identical there.
-    edge = max(12, round(w * 0.055))
-    avg = (ratio[:, 0:1, :] + ratio[:, -1:, :]) * 0.5
-    for j in range(edge):
-        a = 1.0 - j / edge
-        ratio[:, j:j+1, :] = ratio[:, j:j+1, :] * (1.0 - a) + avg * a
-        ratio[:, -1-j:w-j, :] = ratio[:, -1-j:w-j, :] * (1.0 - a) + avg * a
+    if is_panorama:
+        # Only equirectangular panoramas have joined left/right edges.
+        edge = max(12, round(w * 0.055))
+        avg = (ratio[:, 0:1, :] + ratio[:, -1:, :]) * 0.5
+        for j in range(edge):
+            a = 1.0 - j / edge
+            ratio[:, j:j+1, :] = ratio[:, j:j+1, :] * (1.0 - a) + avg * a
+            ratio[:, -1-j:w-j, :] = ratio[:, -1-j:w-j, :] * (1.0 - a) + avg * a
+    else:
+        # Map only the actual photo, excluding the model's padded margins.
+        left, top, right, bottom = content_box
+        ratio = ratio[top:bottom, left:right, :]
     progress(100, 'Globale KI-Korrektur bereit')
     return ratio.astype(np.float32)
 
@@ -226,8 +248,6 @@ def export_full(original_path: Path, ratio: np.ndarray, dest: Path, extra_exposu
     import gc
     with Image.open(original_path) as im:
         w, h = im.size
-        if w / h != 2.0:
-            raise RuntimeError(f'Das Bild hat kein 2:1-Seitenverhältnis: {w}x{h}')
         exif = im.info.get('exif')
         icc = im.info.get('icc_profile')
         xmp = extract_original_xmp_segments(original_path)
@@ -437,7 +457,7 @@ class Gui:
         actions.pack(fill='x',pady=(6,3))
         self.btn_preview=B(actions,text='KI-VERGLEICH STARTEN',command=self._comparison)
         self.btn_preview.pack(side='left',padx=(0,7))
-        self.btn_export=B(actions,text='GESAMTES 360°-BILD OPTIMIEREN',command=self._export)
+        self.btn_export=B(actions,text='GESAMTES BILD OPTIMIEREN',command=self._export)
         self.btn_export.pack(side='left',padx=(0,7))
         self.btn_batch=B(actions,text='STAPELVERARBEITUNG ...',command=self._batch_dialog)
         self.btn_batch.pack(side='left',padx=(0,7))
@@ -451,9 +471,9 @@ class Gui:
         self.progress.pack(fill='x',pady=(4,2))
         L(frm,textvariable=self.eta,foreground='#444').pack(anchor='w')
         L(frm,textvariable=self.status,wraplength=980).pack(anchor='w',pady=(0,2))
-        L(frm,text='Erst Testbereich im Panorama anklicken, dann oben KI-VERGLEICH STARTEN.  Strg+P: Vergleich · Strg+E: Export',foreground='#555',wraplength=690).pack(anchor='w',pady=(0,3))
+        L(frm,text='Erst Testbereich im Bild anklicken, dann oben KI-VERGLEICH STARTEN.  Strg+P: Vergleich · Strg+E: Export',foreground='#555',wraplength=690).pack(anchor='w',pady=(0,3))
 
-        imgframe=LF(frm,text='6. Gewuenschten Testbereich im 360°-Panorama anklicken',padding=5)
+        imgframe=LF(frm,text='6. Gewuenschten Testbereich im Bild anklicken',padding=5)
         imgframe.pack(fill='both',expand=True,pady=(1,0))
         self.preview=tk.Canvas(imgframe,background='#202020',highlightthickness=0,height=210)
         self.preview.pack(fill='both',expand=True)
@@ -494,8 +514,6 @@ class Gui:
         self.ratio=None
         with Image.open(s) as im:
             self.full_dimensions=im.size
-            if im.width!=im.height*2:
-                self._message('showwarning','Kein 360°-Panorama','Das Bild hat nicht das für equirektanguläre 360°-Bilder typische 2:1-Format.')
             thumb=im.convert('RGB');thumb.thumbnail((955,390))
             self.thumb=thumb
         self.info.set(f'{self.file.name} · {self.full_dimensions[0]:,} × {self.full_dimensions[1]:,} Pixel')
@@ -666,7 +684,7 @@ class Gui:
                     amount=float(self.denoise_strength.get()), sharp=float(self.detail_strength.get()))
 
     def _render_one(self, src: Path, dest: Path, cfg: dict, session, report):
-        """Full 360 export into a caller-supplied temporary destination."""
+        """Export an image at its native dimensions to a temporary destination."""
         ratio=self._ratio_for_job(cfg['strength'],cfg['maxgain'],
                                   lambda p,m:report(p*0.07,m), source=src)
         if self.cancelled:
@@ -854,8 +872,6 @@ class Gui:
                     fraction=(completed + weight*max(0,min(100,pct))/100)/total_weight
                     self._progress(100*fraction,f'Bild {idx+1}/{n} – {src.name}: {msg}')
                 try:
-                    if wh[0] != 2*wh[1]:
-                        raise ValueError(f'Kein equirektanguläres 2:1-Panorama: {wh[0]}x{wh[1]}')
                     dest=result_path(src,folder if folder is not None else src.parent,mode,reserved)
                     if mode=='replace_results' and dest in reserved:
                         raise ValueError('Gleichnamige Bilder aus verschiedenen Ordnern: Bitte getrennt verarbeiten.')
