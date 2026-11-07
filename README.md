@@ -2,7 +2,7 @@
 
 **Open-source AI image-quality enhancement for large, high-resolution photographs.**
 
-[Deutsch](README.de.md) · [Contributing](CONTRIBUTING.md) · [Third-party licenses](THIRD_PARTY_NOTICES.md) · [Testing status](TESTING.md)
+[Deutsch](README.de.md) · [Contributing](CONTRIBUTING.md) · [Third-party licenses](THIRD_PARTY_NOTICES.md) · [Testing status](TESTING.md) · [Known issues](KNOWN_ISSUES.md)
 
 > **Project setup / no release yet.** This repository currently contains documentation, not a downloadable or functioning application. The existing Python and Windows sources, model files, and Windows executable have not yet been added or legally cleared for public distribution. An existing Windows EXE build has been reported as working on two additional Windows 11 PCs; this is user-reported testing, not a release verification.
 
@@ -14,7 +14,11 @@ Large Image Quality Enhancer is intended to improve image quality rather than en
 
 **So far, the software has only been tested with JPEG photographs from an Insta360 X5, up to approximately 71 megapixels (11,904 × 5,952 pixels).** The software is intended to be camera-agnostic, but **other cameras, other image formats, and images larger than 71 MP have not been verified**. No maximum supported image size is claimed.
 
-A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and any offline-without-network conditions remain to be documented. This does **not** establish compatibility with other Windows versions or input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
+A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and details of the offline test environment remain to be documented; the developer reports that the existing Windows EXE works without internet access. This does **not** establish compatibility with other Windows versions or input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
+
+## Known limitation: long Windows paths
+
+The Windows EXE reportedly runs **fully offline** on Windows 11, but problems have occurred when extracting or using it from deeply nested folders. **Workaround:** unpack it to a short path such as `C:\LIQE\` and run it there. The underlying cause and exact path-length limit are not yet confirmed. See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
 ## Running multiple instances
 
@@ -30,7 +34,7 @@ According to developer experience, **processing one complete Insta360 X5 JPEG im
 - **Windows offline edition v4.1.1:** intended portable Windows build. A Windows EXE build has been reported working on two additional Windows 11 PCs; the precise tested build/version has not yet been recorded and must not be assumed to be v4.1.1.
 - Older versions should remain unchanged when the source is imported.
 
-The intended offline processing does not require cloud image uploads. This does not imply that installation and building can be performed without an internet connection.
+Offline use has been reported for an existing Windows EXE, and photos are processed locally without cloud uploads. This does not imply that installing dependencies or building the application can be performed without an internet connection.
 
 ## Open source and contributions
 
