@@ -9,7 +9,7 @@
 ## Schnellstart unter Windows 11 (64 Bit)
 
 1. Auf GitHub **Code → Download ZIP** auswählen und das Repository in einen kurzen Pfad entpacken, beispielsweise `C:\\LIQE\\`.
-2. Den Ordner `windows/offline-v4.1.1/` öffnen und **[ALLES_AUTOMATISCH_BAUEN.bat](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)** starten. Das Skript kann Python 3.12 für den aktuellen Benutzer installieren, nach Zustimmung benötigte KI-Modelle herunterladen, Python-Bibliotheken einrichten und die portable Windows-Version bauen. **Für den ersten Bau ist normalerweise Internet erforderlich.**
+2. Den Ordner `windows/offline-v4.1.1/` öffnen und **[AUTO_BUILD_WINDOWS_EXE.bat](windows/offline-v4.1.1/AUTO_BUILD_WINDOWS_EXE.bat)** starten. Das Skript kann Python 3.12 für den aktuellen Benutzer installieren, nach Zustimmung benötigte KI-Modelle herunterladen, Python-Bibliotheken einrichten und die portable Windows-Version bauen. **Für den ersten Bau ist normalerweise Internet erforderlich.**
 3. Alternativ **Python 3.12 (64 Bit)** selbst installieren, die drei benötigten Modelldateien rechtmäßig im lokalen Ordner `models` bereitstellen und `BAUE_WINDOWS_EXE.bat` ausführen.
 4. Nach erfolgreichem Bau den **gesamten** Ordner `dist/Insta360_X5_KI_Offline/` auf den Ziel-PC kopieren. Zum Ausführen der EXE sind dort weder Python noch eine Internetverbindung nötig.
 
@@ -51,7 +51,7 @@ Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPE
 
 ## Automatischer Windows-Bau ohne vorherige Python-Installation
 
-Das Baupaket enthält **`ALLES_AUTOMATISCH_BAUEN.bat`**. Es erkennt vorhandenes Python 3.12 oder installiert es nach Zustimmung für den aktuellen Benutzer. Anschließend können die externen KI-Modelle mit Zustimmung heruntergeladen und die benötigten Pakete für den EXE-Bau eingerichtet werden. **Python wird für den Bau weiterhin benötigt**, muss aber nicht vorher installiert sein. Der automatische Ablauf ist noch nicht auf einem frischen Windows-System verifiziert; Netzwerksperren oder Unternehmensrichtlinien können ihn verhindern.
+Das Baupaket enthält **`AUTO_BUILD_WINDOWS_EXE.bat`**. Es erkennt vorhandenes Python 3.12 oder installiert es nach Zustimmung für den aktuellen Benutzer. Anschließend können die externen KI-Modelle mit Zustimmung heruntergeladen und die benötigten Pakete für den EXE-Bau eingerichtet werden. **Python wird für den Bau weiterhin benötigt**, muss aber nicht vorher installiert sein. Der automatische Ablauf ist noch nicht auf einem frischen Windows-System verifiziert; Netzwerksperren oder Unternehmensrichtlinien können ihn verhindern.
 
 Die **manuelle Alternative** bleibt `BAUE_WINDOWS_EXE.bat` mit bereits vorhandenem Python 3.12 und den lokal bereitgestellten Modelldateien. Siehe [Windows-Bauanleitung](windows/offline-v4.1.1/README_OFFLINE.txt).
 
