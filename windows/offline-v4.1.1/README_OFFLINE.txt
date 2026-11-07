@@ -6,9 +6,28 @@ DPRNet + SCUNet, Vergleich, 360-Export, Stapelverarbeitung und Restzeit,
 OHNE Internetverbindung auf dem Ziel-PC. Keine Proxy-/Zertifikatabfragen.
 Die bisherige Python-Version 3.3 und die fruehere Proxy-Version bleiben unberuehrt.
 
+AUTOMATISCHER WEG (AUCH OHNE VORHER INSTALLIERTES PYTHON)
+1. GitHub-Repository herunterladen (Code -> Download ZIP), z. B. nach C:\LIQE entpacken.
+2. In windows\offline-v4.1.1 die Datei ALLES_AUTOMATISCH_BAUEN.bat starten.
+3. Den Download von Python 3.12 (falls nicht vorhanden) und den externen
+   DPRNet-/SCUNet-Modellen bestaetigen. Die Lizenzbedingungen der Modelle gelten.
+4. Das Skript laedt fehlende Dateien, richtet die Werkzeuge ein und startet
+   automatisch den EXE-Bau. Ein Internetzugang ist dafuer beim ersten Mal erforderlich.
+5. Die Ausgabe liegt unter dist\Insta360_X5_KI_Offline\.
+   Den kompletten Ordner auf den Ziel-PC kopieren; dort ist kein Python noetig.
+
+Python wird bei Bedarf lokal im Benutzerprofil installiert, nicht systemweit
+und ohne PATH-Aenderung. Es ist damit keine Python-VORINSTALLATION noetig.
+Das ist keine Garantie fuer Administratorfreiheit in verwalteten Firmen-PCs.
+Der automatisierte Build muss noch auf einem frischen Windows-PC erprobt werden.
+Bei Proxy-407-Fehlern oder Netzsperren ggf. Python und Modelle manuell beschaffen.
+PowerShell prueft die digitale Signatur des Python-Installers; Zertifikats-
+pruefungen werden nicht deaktiviert.
+
 WICHTIG
 Dieses Baupaket enthaelt noch KEINE fertige Windows-EXE und KEINE KI-Gewichte.
-Die Modelle muessen vor dem Bau als KOPIEN in models\ abgelegt werden.
+Beim MANUELLEN Bau muessen die Modelle als KOPIEN in models\ abgelegt werden.
+Beim neuen automatischen Bau werden sie nach Zustimmung direkt geladen.
 
 MODELLDATEIEN (aus deinem bereits funktionierenden v3.3-Ordner):
 models\DPRNet_1024.tflite
@@ -20,7 +39,7 @@ Bitte kein altes SCUNet-.pth statt der .onnx/.onnx.data-Dateien verwenden.
 Die Modelldateien werden im fertigen portablen Programmordner mitgefuehrt.
 Auf dem Ziel-PC sucht die EXE sie ausschliesslich lokal im models-Ordner.
 
-BAUEN AUF DEINEM WINDOWS-RECHNER
+MANUELLES BAUEN AUF DEINEM WINDOWS-RECHNER (ALTERNATIVE)
 1. Dieses ZIP in einen eigenen, NEUEN Ordner entpacken.
 2. Die obigen Modell-Dateien aus dem bisherigen v3.3-Ordner in den NEUEN
    Unterordner models kopieren (NICHT verschieben).
