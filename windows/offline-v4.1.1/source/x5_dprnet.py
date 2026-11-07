@@ -21,6 +21,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageTk, ImageOps
 from x5_denoise import MODEL_BASENAME, model_valid, load_session, denoise_rgb, denoise_full_export
 from x5_batch import safe_export, result_path, eta_text
+from x5_i18n import translate
 
 try:
     import tkinter as tk
@@ -30,7 +31,7 @@ except ImportError:
     raise
 
 
-APP_TITLE = 'Insta360 X5 – KI Offline v4.1'
+APP_TITLE = 'Insta360 X5 – KI Offline v4.1.1'
 HERE = Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parent
 MODEL_SIZES = (512, 1024)
 Image.MAX_IMAGE_PIXELS = None
@@ -254,6 +255,11 @@ class Gui:
         root.title(APP_TITLE)
         root.geometry('1100x795')
         root.minsize(760,590)
+        self.locale='de'
+        self._localized_widgets=[]
+        self._batch_window=None
+        self._batch_count_refresh=None
+        self.language_choice=tk.StringVar(value='Deutsch')
         self.file=None
         self.ratio=None
         self.center=(0.5,0.5)
@@ -271,15 +277,57 @@ class Gui:
         self.denoise_strength=tk.DoubleVar(value=0.60)
         self.detail_strength=tk.DoubleVar(value=0.08)
         self.preview_size=tk.IntVar(value=1024)
-        self.status=tk.StringVar(value='Bitte ein JPG-Bild auswählen.')
+        self.status=tk.StringVar(value=self._t('Bitte ein JPG-Bild auswählen.'))
         self.info=tk.StringVar(value='')
-        self.eta=tk.StringVar(value='Restzeit: --')
+        self.eta=tk.StringVar(value=self._t('Restzeit: --'))
         self.overwrite_original=tk.BooleanVar(value=False)
         self.job_start=None
         self._widgets()
         root.after(100,self._poll)
 
+    def _t(self, message):
+        """Translate displayed text; processing algorithms and paths remain unchanged."""
+        return translate(self.locale, message)
+
+    def _make_localized(self, widget_type, *args, **kwargs):
+        original = kwargs.get('text')
+        if isinstance(original, str):
+            kwargs['text'] = self._t(original)
+        widget = widget_type(*args, **kwargs)
+        if isinstance(original, str):
+            self._localized_widgets.append((widget, original))
+        return widget
+
+    def _message(self, kind, title, message, **kwargs):
+        """Use the selected GUI language for dialogs, including confirmations."""
+        return getattr(messagebox, kind)(self._t(title), self._t(message), **kwargs)
+
+    def _change_language(self, event=None):
+        self.locale = 'en' if self.language_choice.get() == 'English' else 'de'
+        live = []
+        for widget, german_text in self._localized_widgets:
+            try:
+                if widget.winfo_exists():
+                    widget.configure(text=self._t(german_text))
+                    live.append((widget, german_text))
+            except tk.TclError:
+                pass
+        self._localized_widgets = live
+        if self._batch_window is not None and self._batch_window.winfo_exists():
+            self._batch_window.title(self._t('Stapelverarbeitung – mehrere Insta360 JPGs'))
+            if self._batch_count_refresh is not None:
+                self._batch_count_refresh()
+        self.status.set(self._t('Sprache geändert.'))
+        if not self.busy:
+            self.eta.set(self._t('Restzeit: --'))
+
     def _widgets(self):
+        # Keep a record of visible strings for immediate language switching.
+        L=lambda *a, **kw:self._make_localized(ttk.Label,*a,**kw)
+        LF=lambda *a, **kw:self._make_localized(ttk.LabelFrame,*a,**kw)
+        B=lambda *a, **kw:self._make_localized(ttk.Button,*a,**kw)
+        CB=lambda *a, **kw:self._make_localized(ttk.Checkbutton,*a,**kw)
+        RB=lambda *a, **kw:self._make_localized(ttk.Radiobutton,*a,**kw)
         # Die Hauptaktionen stehen bewusst OBERHALB der Panorama-Vorschau.
         # Sonst verschwinden sie auf Notebooks oder bei 125-150% Windows-Skalierung.
         # Scrollbare Hauptansicht: auf kleineren Windows-Displays bleiben auch
@@ -297,73 +345,78 @@ class Gui:
         self.root.bind('<MouseWheel>',lambda e:self.main_canvas.yview_scroll(-int(e.delta/120),'units'))
         self.root.bind('<Button-4>',lambda e:self.main_canvas.yview_scroll(-1,'units'))
         self.root.bind('<Button-5>',lambda e:self.main_canvas.yview_scroll(1,'units'))
-        ttk.Label(frm,text='Insta360 X5 · KI Offline · DPRNet + SCUNet',font=('Segoe UI',14,'bold')).pack(anchor='w')
-        ttk.Label(frm,text='DPRNet fuer Helligkeit + SCUNet fuer Rauschen. Beide sind trainierte KI-Modelle.',foreground='#444').pack(anchor='w',pady=(1,5))
+        L(frm,text='Insta360 X5 · KI Offline · DPRNet + SCUNet',font=('Segoe UI',14,'bold')).pack(anchor='w')
+        lang_row=ttk.Frame(frm);lang_row.pack(fill='x',pady=(1,5))
+        L(lang_row,text='Sprache / Language:').pack(side='left',padx=(0,7))
+        language_menu=ttk.Combobox(lang_row,textvariable=self.language_choice,values=('Deutsch','English'),state='readonly',width=12)
+        language_menu.pack(side='left')
+        language_menu.bind('<<ComboboxSelected>>',self._change_language)
+        L(frm,text='DPRNet fuer Helligkeit + SCUNet fuer Rauschen. Beide sind trainierte KI-Modelle.',foreground='#444').pack(anchor='w',pady=(1,5))
 
         row=ttk.Frame(frm);row.pack(fill='x',pady=(0,3))
-        self.btn_file=ttk.Button(row,text='1. Original-JPG öffnen',command=self._pick_file)
+        self.btn_file=B(row,text='1. Original-JPG öffnen',command=self._pick_file)
         self.btn_file.pack(side='left',padx=(0,8))
-        ttk.Label(row,textvariable=self.info).pack(side='left')
+        L(row,textvariable=self.info).pack(side='left')
 
-        ttk.Label(frm, text='Offline-Betrieb: lokale KI-Modelle – kein Internet, kein Proxy, keine Anmeldung.',
+        L(frm, text='Offline-Betrieb: lokale KI-Modelle – kein Internet, kein Proxy, keine Anmeldung.',
                   foreground='#3d693d').pack(anchor='w',pady=(0,4))
 
-        opts=ttk.LabelFrame(frm,text='2. Vortrainiertes KI-Modell',padding=6);opts.pack(fill='x',pady=3)
+        opts=LF(frm,text='2. Vortrainiertes KI-Modell',padding=6);opts.pack(fill='x',pady=3)
         row2=ttk.Frame(opts);row2.pack(fill='x')
         for n in MODEL_SIZES:
-            ttk.Radiobutton(row2,text=f'DPRNet {n}',variable=self.size,value=n).pack(side='left',padx=(0,7))
-        ttk.Label(row2,text='KI-Gewichte sind im models-Ordner enthalten.',foreground='#444').pack(side='left',padx=(6,0))
+            RB(row2,text=f'DPRNet {n}',variable=self.size,value=n).pack(side='left',padx=(0,7))
+        L(row2,text='KI-Gewichte sind im models-Ordner enthalten.',foreground='#444').pack(side='left',padx=(6,0))
 
-        settings=ttk.LabelFrame(frm,text='3. KI-Belichtung + gezielte Schattenaufhellung',padding=6)
+        settings=LF(frm,text='3. KI-Belichtung + gezielte Schattenaufhellung',padding=6)
         settings.pack(fill='x',pady=3)
         for label,var,a,b in [('KI-Korrektur übernehmen',self.strength,0.2,1.0),
                               ('Maximale lokale Aufhellung',self.maxgain,1.2,5.0),
                               ('Zusätzliche Belichtung',self.exposure,1.0,1.6),
                               ('Schatten gezielt aufhellen',self.shadow_lift,0.0,1.0)]:
             line=ttk.Frame(settings);line.pack(fill='x',pady=1)
-            ttk.Label(line,text=label,width=27).pack(side='left')
+            L(line,text=label,width=27).pack(side='left')
             ttk.Scale(line,from_=a,to=b,variable=var).pack(side='left',fill='x',expand=True,padx=5)
-            ttk.Label(line,textvariable=var,width=18).pack(side='left')
+            L(line,textvariable=var,width=18).pack(side='left')
 
-        denoise=ttk.LabelFrame(frm,text='4. Zweites trainiertes KI-Modell: SCUNet (Rauschunterdrueckung)',padding=6)
+        denoise=LF(frm,text='4. Zweites trainiertes KI-Modell: SCUNet (Rauschunterdrueckung)',padding=6)
         denoise.pack(fill='x',pady=3)
         line=ttk.Frame(denoise);line.pack(fill='x')
-        ttk.Checkbutton(line,text='SCUNet bei Vergleich und Export anwenden',variable=self.use_denoise).pack(side='left',padx=(0,9))
-        ttk.Label(line,text='SCUNet ist lokal im Programmordner enthalten.',foreground='#444').pack(side='left')
+        CB(line,text='SCUNet bei Vergleich und Export anwenden',variable=self.use_denoise).pack(side='left',padx=(0,9))
+        L(line,text='SCUNet ist lokal im Programmordner enthalten.',foreground='#444').pack(side='left')
         controls=ttk.Frame(denoise);controls.pack(fill='x')
         for label,var,a,b in [('KI-Entrauschung',self.denoise_strength,0.0,1.0),
                               ('Dezente Nachschaerfung',self.detail_strength,0.0,0.40)]:
             line=ttk.Frame(controls);line.pack(side='left',fill='x',expand=True,padx=(0,8))
-            ttk.Label(line,text=label,width=23).pack(side='left')
+            L(line,text=label,width=23).pack(side='left')
             ttk.Scale(line,from_=a,to=b,variable=var).pack(side='left',fill='x',expand=True,padx=4)
-            ttk.Label(line,textvariable=var,width=10).pack(side='left')
+            L(line,textvariable=var,width=10).pack(side='left')
         hint=ttk.Frame(denoise);hint.pack(fill='x')
-        ttk.Label(hint,text='Testgroesse (Originalpixel):').pack(side='left')
+        L(hint,text='Testgroesse (Originalpixel):').pack(side='left')
         ttk.Combobox(hint,textvariable=self.preview_size,values=(768,1024,1600),width=7,state='readonly').pack(side='left',padx=7)
-        ttk.Label(hint,text='Tipp: erst 768 px testen; Vollbild mit SCUNet dauert auf CPU wesentlich laenger.',foreground='#555').pack(side='left')
+        L(hint,text='Tipp: erst 768 px testen; Vollbild mit SCUNet dauert auf CPU wesentlich laenger.',foreground='#555').pack(side='left')
 
         # Wichtig: immer vor dem dynamisch großen Canvas anzeigen.
-        actions=ttk.LabelFrame(frm,text='5. KI-Optimierung STARTEN',padding=6)
+        actions=LF(frm,text='5. KI-Optimierung STARTEN',padding=6)
         actions.pack(fill='x',pady=(6,3))
-        self.btn_preview=ttk.Button(actions,text='KI-VERGLEICH STARTEN',command=self._comparison)
+        self.btn_preview=B(actions,text='KI-VERGLEICH STARTEN',command=self._comparison)
         self.btn_preview.pack(side='left',padx=(0,7))
-        self.btn_export=ttk.Button(actions,text='GESAMTES 360°-BILD OPTIMIEREN',command=self._export)
+        self.btn_export=B(actions,text='GESAMTES 360°-BILD OPTIMIEREN',command=self._export)
         self.btn_export.pack(side='left',padx=(0,7))
-        self.btn_batch=ttk.Button(actions,text='STAPELVERARBEITUNG ...',command=self._batch_dialog)
+        self.btn_batch=B(actions,text='STAPELVERARBEITUNG ...',command=self._batch_dialog)
         self.btn_batch.pack(side='left',padx=(0,7))
         mode_row=ttk.Frame(actions);mode_row.pack(fill='x',pady=(5,0))
-        ttk.Checkbutton(mode_row,
+        CB(mode_row,
             text='Beim einzelnen Speichern Original-JPG ersetzen (mit Sicherungskopie)',
             variable=self.overwrite_original).pack(side='left')
-        self.btn_cancel=ttk.Button(actions,text='Abbrechen',command=lambda:setattr(self,'cancelled',True),state='disabled')
+        self.btn_cancel=B(actions,text='Abbrechen',command=lambda:setattr(self,'cancelled',True),state='disabled')
         self.btn_cancel.pack(side='right',padx=(5,0))
         self.progress=ttk.Progressbar(frm,maximum=100)
         self.progress.pack(fill='x',pady=(4,2))
-        ttk.Label(frm,textvariable=self.eta,foreground='#444').pack(anchor='w')
-        ttk.Label(frm,textvariable=self.status,wraplength=980).pack(anchor='w',pady=(0,2))
-        ttk.Label(frm,text='Erst Testbereich im Panorama anklicken, dann oben KI-VERGLEICH STARTEN.  Strg+P: Vergleich · Strg+E: Export',foreground='#555',wraplength=690).pack(anchor='w',pady=(0,3))
+        L(frm,textvariable=self.eta,foreground='#444').pack(anchor='w')
+        L(frm,textvariable=self.status,wraplength=980).pack(anchor='w',pady=(0,2))
+        L(frm,text='Erst Testbereich im Panorama anklicken, dann oben KI-VERGLEICH STARTEN.  Strg+P: Vergleich · Strg+E: Export',foreground='#555',wraplength=690).pack(anchor='w',pady=(0,3))
 
-        imgframe=ttk.LabelFrame(frm,text='6. Gewuenschten Testbereich im 360°-Panorama anklicken',padding=5)
+        imgframe=LF(frm,text='6. Gewuenschten Testbereich im 360°-Panorama anklicken',padding=5)
         imgframe.pack(fill='both',expand=True,pady=(1,0))
         self.preview=tk.Canvas(imgframe,background='#202020',highlightthickness=0,height=210)
         self.preview.pack(fill='both',expand=True)
@@ -398,18 +451,18 @@ class Gui:
         c.create_line(x,y-9,x,y+9,fill='#00e5ff',width=2)
 
     def _pick_file(self):
-        s=filedialog.askopenfilename(filetypes=[('JPG Bilder','*.jpg *.jpeg'),('Alle Dateien','*.*')])
+        s=filedialog.askopenfilename(filetypes=[(self._t('JPG Bilder'),'*.jpg *.jpeg'),(self._t('Alle Dateien'),'*.*')])
         if not s:return
         self.file=Path(s)
         self.ratio=None
         with Image.open(s) as im:
             self.full_dimensions=im.size
             if im.width!=im.height*2:
-                messagebox.showwarning('Kein 360°-Panorama','Das Bild hat nicht das für equirektanguläre 360°-Bilder typische 2:1-Format.')
+                self._message('showwarning','Kein 360°-Panorama','Das Bild hat nicht das für equirektanguläre 360°-Bilder typische 2:1-Format.')
             thumb=im.convert('RGB');thumb.thumbnail((955,390))
             self.thumb=thumb
         self.info.set(f'{self.file.name} · {self.full_dimensions[0]:,} × {self.full_dimensions[1]:,} Pixel')
-        self.status.set('Original geladen. Lokale KI-Modelle bereit – KI-Vergleich starten.')
+        self.status.set(self._t('Original geladen. Lokale KI-Modelle bereit – KI-Vergleich starten.'))
         self.root.after(100,self._redraw)
 
     def _progress(self,pct,msg):
@@ -419,7 +472,7 @@ class Gui:
         if self.busy:return
         self.busy=True;self.cancelled=False
         self.job_start=time.monotonic()
-        self.eta.set('Restzeit: wird ermittelt ...')
+        self.eta.set(self._t('Restzeit: wird ermittelt ...'))
         self.progress['value']=0
         for b in (self.btn_file,self.btn_preview,self.btn_export,self.btn_batch):b.configure(state='disabled')
         self.btn_cancel.configure(state='normal')
@@ -438,25 +491,25 @@ class Gui:
             while True:
                 x=self.queue.get_nowait()
                 if x[0]=='progress':
-                    self.progress['value']=x[1];self.status.set(x[2])
+                    self.progress['value']=x[1];self.status.set(self._t(x[2]))
                     if self.job_start is not None:
                         elapsed=time.monotonic()-self.job_start
                         pct=float(x[1])
                         if pct >= 100:
-                            self.eta.set('Restzeit: 0 Min.')
+                            self.eta.set(self._t('Restzeit: 0 Min.'))
                         elif elapsed >= 8 and pct >= 2.5:
                             seconds=elapsed * (100.0 - pct) / max(pct, 1e-6)
-                            self.eta.set(eta_text(seconds))
+                            self.eta.set(self._t(eta_text(seconds)))
                 elif x[0]=='error':
-                    self.status.set('Fehler: '+x[1]); messagebox.showerror('KI-Verarbeitung fehlgeschlagen',x[1]+'\n\nFür Details siehe Terminalfenster.')
+                    self.status.set(self._t('Fehler: '+x[1])); self._message('showerror','KI-Verarbeitung fehlgeschlagen',self._t(x[1])+'\n\n'+self._t('Für Details siehe Terminalfenster.'))
                     print(x[2],file=sys.stderr)
                 elif x[0]=='done':
-                    self.status.set(x[1]);messagebox.showinfo('Fertig',x[1])
+                    self.status.set(self._t(x[1]));self._message('showinfo','Fertig',x[1])
                 elif x[0]=='comparison':
-                    self.status.set(x[1]); messagebox.showinfo('KI-Vergleich',x[1])
+                    self.status.set(self._t(x[1])); self._message('showinfo','KI-Vergleich',x[1])
                 elif x[0]=='cancelled':
-                    self.status.set(x[1]);self.eta.set('Abgebrochen')
-                    messagebox.showinfo('Abgebrochen',x[1])
+                    self.status.set(self._t(x[1]));self.eta.set(self._t('Abgebrochen'))
+                    self._message('showinfo','Abgebrochen',x[1])
                 elif x[0]=='end':
                     self.busy=False;self.btn_cancel.configure(state='disabled')
                     self.job_start=None
@@ -484,7 +537,7 @@ class Gui:
 
     def _comparison(self):
         if not self.file:
-            messagebox.showwarning('Bild fehlt','Bitte zuerst ein JPG auswaehlen.');return
+            self._message('showwarning','Bild fehlt','Bitte zuerst ein JPG auswaehlen.');return
         strength,maxgain,exposure=float(self.strength.get()),float(self.maxgain.get()),float(self.exposure.get())
         shadow=float(self.shadow_lift.get())
         apply_scunet=bool(self.use_denoise.get())
@@ -518,10 +571,10 @@ class Gui:
             if session is not None:
                 result.paste(Image.fromarray(enhanced),(2*cw,60))
             d=ImageDraw.Draw(result)
-            d.text((15,21),'1: ORIGINAL',fill=(0,0,0))
-            d.text((cw+15,21),'2: DPRNet + SCHATTEN',fill=(0,0,0))
+            d.text((15,21),self._t('1: ORIGINAL'),fill=(0,0,0))
+            d.text((cw+15,21),self._t('2: DPRNet + SCHATTEN'),fill=(0,0,0))
             if session is not None:
-                d.text((2*cw+15,21),'3: DPRNet + SCUNet',fill=(0,0,0))
+                d.text((2*cw+15,21),self._t('3: DPRNet + SCUNet'),fill=(0,0,0))
             dest=self.file.with_name(self.file.stem+'_DPRNet_SCUNet_Vergleich.jpg')
             result.save(dest,quality=95,subsampling=0)
             self._progress(100,'KI-Vergleich fertig')
@@ -559,34 +612,34 @@ class Gui:
 
     def _export(self):
         if not self.file:
-            messagebox.showwarning('Bild fehlt','Bitte zuerst ein JPG auswählen.');return
+            self._message('showwarning','Bild fehlt','Bitte zuerst ein JPG auswählen.');return
         src=self.file.resolve()
         overwrite=bool(self.overwrite_original.get())
         if overwrite:
             dest=src
-            if not messagebox.askyesno('Original-JPG wirklich ersetzen?',
+            if not self._message('askyesno','Original-JPG wirklich ersetzen?',
                 'Die bearbeitete Datei ersetzt das Original-JPG.\n'
                 'Vorher wird automatisch eine unveränderte Sicherungskopie erstellt.\n\n'
                 'Original: '+str(src)+'\n\nFortfahren?',icon='warning'):
                 return
         else:
             chosen=filedialog.asksaveasfilename(defaultextension='.jpg',
-                initialfile=src.stem+'_X5_Offline_KI.jpg',filetypes=[('JPG-Bild','*.jpg')])
+                initialfile=src.stem+'_X5_Offline_KI.jpg',filetypes=[(self._t('JPG-Bild'),'*.jpg')])
             if not chosen:return
             dest=Path(chosen).resolve()
             if dest==src:
-                if not messagebox.askyesno('Original-JPG ersetzen?',
+                if not self._message('askyesno','Original-JPG ersetzen?',
                     'Du hast das Original als Speicherziel ausgewählt.\n'
                     'Soll es wirklich durch das KI-Bild ersetzt werden?\n'
                     'Eine Sicherungskopie wird automatisch angelegt.',icon='warning'):
                     return
                 overwrite=True
-            elif dest.exists() and not messagebox.askyesno('Vorhandenes Bild ersetzen?',
+            elif dest.exists() and not self._message('askyesno','Vorhandenes Bild ersetzen?',
                 f'Eine Datei mit dem Namen {dest.name} existiert bereits.\n\n'
                 'Soll die vorhandene Ergebnisdatei überschrieben werden?',icon='warning'):
                 return
         cfg=self._current_settings()
-        if cfg['scunet'] and not messagebox.askyesno('Vollbild-KI auf CPU',
+        if cfg['scunet'] and not self._message('askyesno','Vollbild-KI auf CPU',
             'SCUNet kann bei 71 MP sehr lange benötigen.\n'
             'Hast du zuerst einen Testausschnitt geprüft und möchtest du jetzt exportieren?'):
             return
@@ -604,8 +657,15 @@ class Gui:
     def _batch_dialog(self):
         """Separate dialog keeps the existing single-image UI compact."""
         if self.busy:return
+        # Keep a record of visible strings for immediate language switching.
+        L=lambda *a, **kw:self._make_localized(ttk.Label,*a,**kw)
+        LF=lambda *a, **kw:self._make_localized(ttk.LabelFrame,*a,**kw)
+        B=lambda *a, **kw:self._make_localized(ttk.Button,*a,**kw)
+        CB=lambda *a, **kw:self._make_localized(ttk.Checkbutton,*a,**kw)
+        RB=lambda *a, **kw:self._make_localized(ttk.Radiobutton,*a,**kw)
         d=tk.Toplevel(self.root)
-        d.title('Stapelverarbeitung – mehrere Insta360 JPGs')
+        d.title(self._t('Stapelverarbeitung – mehrere Insta360 JPGs'))
+        self._batch_window=d
         d.geometry('760x565')
         d.minsize(600,470)
         d.transient(self.root)
@@ -614,22 +674,22 @@ class Gui:
         backup=tk.BooleanVar(value=True)
         out_dir=tk.StringVar(value=str(self.file.parent if self.file else Path.home()))
         frm=ttk.Frame(d,padding=12);frm.pack(fill='both',expand=True)
-        ttk.Label(frm,text='Stapelverarbeitung mit DPRNet + SCUNet',font=('Segoe UI',13,'bold')).pack(anchor='w')
-        ttk.Label(frm,text='Alle gewählten JPGs werden mit denselben aktuellen KI-Einstellungen verarbeitet.',
+        L(frm,text='Stapelverarbeitung mit DPRNet + SCUNet',font=('Segoe UI',13,'bold')).pack(anchor='w')
+        L(frm,text='Alle gewählten JPGs werden mit denselben aktuellen KI-Einstellungen verarbeitet.',
                   wraplength=700).pack(anchor='w',pady=(2,8))
         lb_frame=ttk.Frame(frm);lb_frame.pack(fill='both',expand=True)
         lb=tk.Listbox(lb_frame,selectmode='extended',height=10)
         sb=ttk.Scrollbar(lb_frame,orient='vertical',command=lb.yview)
         lb.configure(yscrollcommand=sb.set)
         lb.pack(side='left',fill='both',expand=True);sb.pack(side='right',fill='y')
-        count=tk.StringVar(value='0 Bilder ausgewählt')
+        count=tk.StringVar(value=self._t('{count} Bilder ausgewählt').format(count=0))
         def refresh():
             lb.delete(0,'end')
             for f in files:lb.insert('end',str(f))
-            count.set(f'{len(files)} Bilder ausgewählt')
+            count.set(self._t('{count} Bilder ausgewählt').format(count=len(files)))
         def add():
-            new=filedialog.askopenfilenames(parent=d,title='JPG-Dateien zur Stapelverarbeitung',
-                            filetypes=[('JPG-Bilder','*.jpg *.jpeg'),('Alle Dateien','*.*')])
+            new=filedialog.askopenfilenames(parent=d,title=self._t('JPG-Dateien zur Stapelverarbeitung'),
+                            filetypes=[(self._t('JPG-Bilder'),'*.jpg *.jpeg'),(self._t('Alle Dateien'),'*.*')])
             seen=set(files)
             for name in new:
                 p=Path(name).resolve()
@@ -641,27 +701,27 @@ class Gui:
             for i in reversed(lb.curselection()):del files[i]
             refresh()
         buttons=ttk.Frame(frm);buttons.pack(fill='x',pady=(6,8))
-        ttk.Button(buttons,text='JPGs hinzufügen ...',command=add).pack(side='left',padx=(0,8))
-        ttk.Button(buttons,text='Markierte entfernen',command=remove).pack(side='left',padx=(0,8))
-        ttk.Button(buttons,text='Liste leeren',command=lambda:(files.clear(),refresh())).pack(side='left')
-        ttk.Label(buttons,textvariable=count).pack(side='right')
-        options=ttk.LabelFrame(frm,text='Speichern',padding=8);options.pack(fill='x',pady=(0,7))
+        B(buttons,text='JPGs hinzufügen ...',command=add).pack(side='left',padx=(0,8))
+        B(buttons,text='Markierte entfernen',command=remove).pack(side='left',padx=(0,8))
+        B(buttons,text='Liste leeren',command=lambda:(files.clear(),refresh())).pack(side='left')
+        L(buttons,textvariable=count).pack(side='right')
+        options=LF(frm,text='Speichern',padding=8);options.pack(fill='x',pady=(0,7))
         for label, val in [
             ('Neue Dateien mit Zusatz _X5_Offline_KI erzeugen (empfohlen)', 'new'),
             ('Vorhandene KI-Ergebnisdateien ersetzen; Originale behalten', 'replace_results'),
             ('Original-JPGs direkt überschreiben (nur nach Sicherheitsabfrage)', 'replace_originals')]:
-            ttk.Radiobutton(options,text=label,variable=mode,value=val).pack(anchor='w')
-        backup_ck=ttk.Checkbutton(options,text='Vor Überschreiben der Originale unveränderte Sicherung anlegen (empfohlen)',
+            RB(options,text=label,variable=mode,value=val).pack(anchor='w')
+        backup_ck=CB(options,text='Vor Überschreiben der Originale unveränderte Sicherung anlegen (empfohlen)',
                                    variable=backup)
         backup_ck.pack(anchor='w',padx=18,pady=(2,0))
         dest_frame=ttk.Frame(options);dest_frame.pack(fill='x',pady=(5,0))
-        ttk.Label(dest_frame,text='Ausgabeordner:').pack(side='left')
+        L(dest_frame,text='Ausgabeordner:').pack(side='left')
         out_entry=ttk.Entry(dest_frame,textvariable=out_dir)
         out_entry.pack(side='left',fill='x',expand=True,padx=7)
         def browse():
-            p=filedialog.askdirectory(parent=d,title='Ausgabeordner wählen',initialdir=out_dir.get())
+            p=filedialog.askdirectory(parent=d,title=self._t('Ausgabeordner wählen'),initialdir=out_dir.get())
             if p:out_dir.set(p)
-        out_button=ttk.Button(dest_frame,text='Durchsuchen ...',command=browse)
+        out_button=B(dest_frame,text='Durchsuchen ...',command=browse)
         out_button.pack(side='left')
         def change_mode(*_):
             orig=mode.get()=='replace_originals'
@@ -670,17 +730,17 @@ class Gui:
             backup_ck.configure(state='normal' if orig else 'disabled')
         mode.trace_add('write',change_mode);change_mode()
         footer=ttk.Frame(frm);footer.pack(fill='x',pady=(4,0))
-        ttk.Button(footer,text='Schließen',command=d.destroy).pack(side='right',padx=(8,0))
+        B(footer,text='Schließen',command=d.destroy).pack(side='right',padx=(8,0))
         def start():
             if not files:
-                messagebox.showwarning('Keine Bilder','Bitte zuerst JPG-Dateien hinzufügen.',parent=d);return
+                self._message('showwarning','Keine Bilder','Bitte zuerst JPG-Dateien hinzufügen.',parent=d);return
             paths=list(files)
             selected_mode=mode.get()
             if selected_mode!='replace_originals' and not out_dir.get().strip():
-                messagebox.showerror('Ausgabeordner fehlt','Bitte einen Ausgabeordner wählen.',parent=d);return
+                self._message('showerror','Ausgabeordner fehlt','Bitte einen Ausgabeordner wählen.',parent=d);return
             folder=Path(out_dir.get()).resolve() if selected_mode!='replace_originals' else None
             if selected_mode=='replace_originals':
-                confirm=messagebox.askyesno('Achtung: Originale überschreiben',
+                confirm=self._message('askyesno','Achtung: Originale überschreiben',
                     f'{len(paths)} ORIGINAL-JPG-Dateien werden nach erfolgreicher KI-Verarbeitung ersetzt.\n'
                     + ('Für jede Datei wird zuvor eine unveränderte Sicherung erstellt.\n' if backup.get()
                        else 'DU HAST DIE SICHERUNGSKOPIEN DEAKTIVIERT!\n')
@@ -688,12 +748,13 @@ class Gui:
                 if not confirm:return
             if selected_mode=='replace_results':
                 existing=sum((folder / (p.stem+'_X5_Offline_KI.jpg')).exists() for p in paths)
-                if existing and not messagebox.askyesno('Vorhandene KI-Bilder ersetzen',
+                if existing and not self._message('askyesno','Vorhandene KI-Bilder ersetzen',
                     f'{existing} bereits vorhandene KI-Ergebnisdateien werden ersetzt. Fortfahren?',
                     icon='warning',parent=d):return
             d.destroy()
             self._batch_export(paths,selected_mode,folder,bool(backup.get()))
-        ttk.Button(footer,text='STAPELVERARBEITUNG STARTEN',command=start).pack(side='right')
+        B(footer,text='STAPELVERARBEITUNG STARTEN',command=start).pack(side='right')
+        self._batch_count_refresh=refresh
         refresh()
 
     def _batch_export(self, paths: list[Path], mode: str, folder: Path | None, backup: bool):
