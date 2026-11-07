@@ -8,7 +8,7 @@ Die bisherige Python-Version 3.3 und die fruehere Proxy-Version bleiben unberueh
 
 AUTOMATISCHER WEG (AUCH OHNE VORHER INSTALLIERTES PYTHON)
 1. GitHub-Repository herunterladen (Code -> Download ZIP), z. B. nach C:\LIQE entpacken.
-2. In windows\offline-v4.1.1 die Datei ALLES_AUTOMATISCH_BAUEN.bat starten.
+2. In windows\offline-v4.1.1 die Datei AUTO_BUILD_WINDOWS_EXE.bat starten.
 3. Den Download von Python 3.12 (falls nicht vorhanden) und den externen
    DPRNet-/SCUNet-Modellen bestaetigen. Die Lizenzbedingungen der Modelle gelten.
 4. Das Skript laedt fehlende Dateien, richtet die Werkzeuge ein und startet
