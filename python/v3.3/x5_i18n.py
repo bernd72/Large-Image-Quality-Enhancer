@@ -2,6 +2,11 @@
 from __future__ import annotations
 
 EN_TEXT = {
+    "DPRNet_512.tflite auswählen": "Select DPRNet_512.tflite",
+    "DPRNet_1024.tflite auswählen": "Select DPRNet_1024.tflite",
+    "SCUNet-Modell unvollständig. Beide Dateien müssen im selben Ordner liegen.": "SCUNet model incomplete. Both files must be in the same folder.",
+    "JPG in 71-MP-Originalauflösung speichern": "Saving JPEG at original 71 MP resolution",
+    "Manuell hinzugefügtes KI-Modell:": "Manually added AI model:",
     "Insta360 X5 · Low-Light-KI · DPRNet + SCUNet": "Insta360 X5 · Low-Light AI · DPRNet + SCUNet",
     "Modell herunterladen": "Download model",
     "Modelldatei auswählen": "Select model file",
@@ -131,6 +136,11 @@ EN_TEXT = {
 # Phrase substitutions also translate messages containing filenames, counts and paths.
 # Exact translations above take precedence. Image data and filenames are never changed.
 EN_PHRASES = {
+    "Modell-Download abgebrochen": "Model download cancelled",
+    "Originalpixel erhalten und KI-Korrektur übertragen: ": "Preserving original pixels and applying AI correction: ",
+    "SCUNet-Kacheln: ": "SCUNet tiles: ",
+    "Vortrainiertes DPRNet-": "Pretrained DPRNet-",
+    "Fehler: ": "Error: ",
     "Manuell hinzugefügtes KI-Modell: ": "Manually added AI model: ",
     "Vortrainiertes DPRNet-": "Pretrained DPRNet-",
     "-Modell bereits vorhanden": " model already present",
