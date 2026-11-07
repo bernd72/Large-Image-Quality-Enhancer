@@ -29,15 +29,13 @@ Large Image Quality Enhancer is intended to improve image quality rather than en
 
 ## Compatibility and testing
 
-**So far, the software has only been tested with JPEG photographs from an Insta360 X5, up to approximately 71 megapixels (11,904 × 5,952 pixels).** The software is intended to be camera-agnostic, but **other cameras, other image formats, and images larger than 71 MP have not been verified**. No maximum supported image size is claimed.
+Tests now include Insta360 X5 JPEG photographs (up to approximately 71 MP) and a **smartphone JPEG around 4:3**, reportedly processed on Windows 11. Other file formats and images above 71 MP remain unverified; no maximum image size is guaranteed.
 
-A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and details of the offline test environment remain to be documented; the developer reports that the existing Windows EXE works without internet access. This does **not** establish compatibility with other Windows versions or input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
+A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and details of the offline test environment remain to be documented; the developer reports that the existing Windows EXE works without internet access. This does **not** establish compatibility with other Windows versions or non-JPEG input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
 
-## Other aspect ratios: source code fix (2026-11-07)
+## Image aspect ratios
 
-The previous **2:1-only** checks have been removed in the current source code of **both editions**. Regular **4:3, 3:2, 1:1 and portrait JPEG photographs** can now enter both individual and batch processing. Normal photos are fitted to the AI model input **without stretching**, while output files retain the **original width and height**. The joined-edge treatment remains for 2:1 panoramas only.
-
-**Not yet confirmed end to end:** This change still needs testing with the real AI weights and a newly built Windows 11 executable. Existing EXE files are not updated automatically: [download the latest source](https://github.com/bernd72/Large-Image-Quality-Enhancer) and run `AUTO_BUILD_WINDOWS_EXE.bat` again. Input is still **JPEG/JPG only**; native HEIC, RAW and PNG input is not provided. See [testing](TESTING.md) and [known issues](KNOWN_ISSUES.md).
+The previous **2:1-only** restriction has been fixed in both source editions. On **Windows 11**, a smartphone JPEG (approximately **4:3**) was reportedly processed in **single-image and batch modes**. Other aspect ratios are supported by the code but need further real-world testing; the Python edition has not yet been tested. Input remains **JPG/JPEG** (not native HEIC, RAW or PNG). Older EXEs require a rebuild. See [testing](TESTING.md).
 
 ## Known limitation: long Windows paths
 
