@@ -27,11 +27,11 @@ function Assert-File {
 function Fetch-File {
     param([string]$Url, [string]$Dest, [long]$MinBytes, [string]$ExpectedSha256 = '')
     if (Assert-File $Dest $MinBytes $ExpectedSha256) {
-        Write-Host ("Bereits vorhanden: " + (Split-Path $Dest -Leaf))
+        Write-Host ("Already present: " + (Split-Path $Dest -Leaf))
         return
     }
     if (Test-Path -LiteralPath $Dest) {
-        Write-Host ("Vorhandene Datei ist unvollstaendig / unerwartet: " + $Dest) -ForegroundColor Yellow
+        Write-Host ("Existing file is incomplete or unexpected: " + $Dest) -ForegroundColor Yellow
         Remove-Item -LiteralPath $Dest -Force
     }
     New-Item -Path (Split-Path $Dest -Parent) -ItemType Directory -Force | Out-Null
@@ -39,19 +39,19 @@ function Fetch-File {
     for ($attempt = 1; $attempt -le 3; $attempt++) {
         try {
             if (Test-Path -LiteralPath $part) { Remove-Item -LiteralPath $part -Force }
-            Write-Host ("Lade: " + (Split-Path $Dest -Leaf) + " (Versuch $attempt/3)")
+            Write-Host ("Downloading: " + (Split-Path $Dest -Leaf) + " (attempt $attempt/3)")
             Invoke-WebRequest -Uri $Url -OutFile $part -UseBasicParsing -TimeoutSec 600 -MaximumRedirection 10
             if (-not (Assert-File $part $MinBytes $ExpectedSha256)) {
-                throw 'Datei zu klein oder SHA256-Pruefung fehlgeschlagen.'
+                throw 'File too small or SHA-256 verification failed.'
             }
             Move-Item -LiteralPath $part -Destination $Dest -Force
             $mb = [math]::Round((Get-Item -LiteralPath $Dest).Length / 1MB, 1)
             Write-Host ("Download OK: " + (Split-Path $Dest -Leaf) + " ($mb MB)") -ForegroundColor Green
             return
         } catch {
-            Write-Host ("Download fehlgeschlagen: " + $_.Exception.Message) -ForegroundColor Yellow
+            Write-Host ("Download failed: " + $_.Exception.Message) -ForegroundColor Yellow
             if ($attempt -eq 3) {
-                throw ("Download gescheitert: " + $Url + ". Bitte Internet-/Proxy-Zugang pruefen oder die Datei manuell im vorgesehenen Ordner ablegen.")
+                throw ("Download failed after 3 attempts: " + $Url + ". Check internet/proxy access or place the file manually in the specified folder.")
             }
             Start-Sleep -Seconds (2 * $attempt)
         } finally {
@@ -69,26 +69,26 @@ function Test-Python312 {
 }
 
 Write-Host ''
-Write-Host 'Large Image Quality Enhancer - automatischer EXE-Bau'
+Write-Host 'Large Image Quality Enhancer - automatic EXE build'
 Write-Host '----------------------------------------------------'
-Write-Host 'Dieses Skript kann Python 3.12, Python-Bibliotheken und KI-Modelle herunterladen.'
-Write-Host 'Python wird bei Bedarf nur fuer den aktuellen Benutzer eingerichtet.'
-Write-Host 'Der PATH wird nicht geaendert; Administratorrechte sind normalerweise nicht noetig.'
-Write-Host 'Die fertige EXE benoetigt anschliessend weder Python noch Internet.'
+Write-Host 'This script can download Python 3.12, Python packages, and AI models.'
+Write-Host 'If needed, Python is installed for the current user only.'
+Write-Host 'The PATH is not modified; administrator rights are normally not required.'
+Write-Host 'The finished EXE requires neither Python nor internet access.'
 Write-Host ''
 if ($root.Length -gt 95) {
-    Write-Warning 'Sehr langer Verzeichnispfad. Bitte ggf. nach C:\LIQE entpacken.'
+    Write-Warning 'Directory path is very long. Consider extracting to C:\LIQE.'
 }
-if (-not [Environment]::Is64BitOperatingSystem) { throw 'Windows 64 Bit wird benoetigt.' }
+if (-not [Environment]::Is64BitOperatingSystem) { throw '64-bit Windows is required.' }
 
 # An existing Python installation can be used; otherwise install into LocalAppData.
 $usePython = ''
 if (Test-Python312 $privatePython) {
     $usePython = $privatePython
-    Write-Host 'Geeignete private Python-Installation bereits vorhanden.'
+    Write-Host 'A suitable private Python installation is already available.'
 } elseif (Get-Command py -ErrorAction SilentlyContinue) {
     if (Test-Python312 'py' @('-3.12')) {
-        Write-Host 'Python 3.12 ist bereits installiert. Keine Neuinstallation noetig.'
+        Write-Host 'Python 3.12 is already installed. No reinstallation is needed.'
     }
 }
 if (-not $usePython) {
@@ -98,26 +98,26 @@ if (-not $usePython) {
     }
     if (-not $hasPy) {
         Write-Host ''
-        Write-Host 'Python 3.12 wird vom offiziellen python.org-Server geladen.'
-        Write-Host 'Es wird lokal fuer den Benutzer installiert (ohne PATH-Aenderung).'
-        $answer = Read-Host 'Python jetzt automatisch installieren? [J/n]'
-        if ($answer -match '^[nN]') { throw 'Abbruch: Python 3.12 wird zum Erstellen einer EXE benoetigt.' }
+        Write-Host 'Python 3.12 will be downloaded from the official python.org server.'
+        Write-Host 'It will be installed for the current user without changing PATH.'
+        $answer = Read-Host 'Install Python automatically now? [Y/n]'
+        if ($answer -match '^[nN]') { throw 'Cancelled: Python 3.12 is required to build the EXE.' }
         Fetch-File $pythonUrl $pythonInstaller 20000000
         $signature = Get-AuthenticodeSignature -LiteralPath $pythonInstaller
         if ($signature.Status -ne 'Valid' -or
             -not $signature.SignerCertificate -or
             $signature.SignerCertificate.Subject -notmatch 'Python Software Foundation') {
-            throw 'Sicherheitspruefung fehlgeschlagen: Python-Installer hat keine gueltige PSF-Signatur.'
+            throw 'Security check failed: the Python installer has no valid PSF signature.'
         }
-        Write-Host 'Signatur des offiziellen Python-Installers geprueft.'
+        Write-Host 'Official Python installer signature verified.'
         New-Item -Path $privateDir -ItemType Directory -Force | Out-Null
         $args = ('/quiet InstallAllUsers=0 TargetDir="{0}" Include_pip=1 Include_tcltk=1 Include_dev=1 Include_launcher=0 Include_test=0 Include_doc=0 Shortcuts=0 AssociateFiles=0 PrependPath=0 AppendPath=0' -f $privateDir)
         $proc = Start-Process -FilePath $pythonInstaller -ArgumentList $args -Wait -PassThru
         if ($proc.ExitCode -ne 0 -or -not (Test-Python312 $privatePython)) {
-            throw ("Die lokale Python-Installation ist fehlgeschlagen (Exit-Code " + $proc.ExitCode + "). Windows-Sicherheitsrichtlinien oder ein Proxy koennten den Installer blockieren.")
+            throw ("Private Python installation failed (exit code " + $proc.ExitCode + "). Windows security policies or a proxy might be blocking the installer.")
         }
         $usePython = $privatePython
-        Write-Host 'Python wurde lokal eingerichtet.' -ForegroundColor Green
+        Write-Host 'Python was installed for the current user.' -ForegroundColor Green
     }
 }
 
@@ -130,30 +130,30 @@ $manifest = @(
 $missing = @($manifest | Where-Object { -not (Assert-File (Join-Path $models $_.Name) $_.Min $_.Hash) })
 if ($missing.Count -gt 0) {
     Write-Host ''
-    Write-Host 'Die folgenden trainierten Modelle fehlen:'
+    Write-Host 'The following pretrained models are missing:'
     $missing | ForEach-Object { Write-Host (' - ' + $_.Name) }
-    Write-Host 'Quellen: raspberrypi/AI_enhance (BSD-2-Clause), Heliosoph/scunet-onnx (Apache-2.0).'
-    Write-Host 'Die Dateien sind urheberrechtlich fremd und unterliegen ihren eigenen Bedingungen.'
-    Write-Host 'Informationen: THIRD_PARTY_NOTICES.md im Hauptverzeichnis des Repositories.'
-    $consent = Read-Host 'Diese Modell-Dateien direkt beim jeweiligen Anbieter herunterladen? [J/n]'
+    Write-Host 'Sources: raspberrypi/AI_enhance (BSD-2-Clause), Heliosoph/scunet-onnx (Apache-2.0).'
+    Write-Host 'These third-party files are subject to their respective license terms.'
+    Write-Host 'See THIRD_PARTY_NOTICES.md in the repository root for details.'
+    $consent = Read-Host 'Download these model files directly from their providers? [Y/n]'
     if ($consent -match '^[nN]') {
-        throw 'Es fehlen KI-Modelle. Kopiere die drei Dateien manuell nach models und starte erneut.'
+        throw 'AI models are missing. Copy the three files into the models folder manually and retry.'
     }
     foreach ($model in $missing) {
         Fetch-File $model.Url (Join-Path $models $model.Name) $model.Min $model.Hash
     }
 }
-Write-Host 'Alle erforderlichen Modelle sind vorhanden.' -ForegroundColor Green
+Write-Host 'All required model files are present.' -ForegroundColor Green
 
 $builder = Join-Path $root 'BAUE_WINDOWS_EXE.ps1'
 Write-Host ''
-Write-Host 'Starte jetzt die EXE-Erstellung. Das kann mehrere Minuten dauern.'
+Write-Host 'Starting the EXE build. This may take several minutes.'
 if ($usePython) {
     & $builder -PythonExe $usePython
 } else {
     & $builder
 }
-if ($LASTEXITCODE -ne 0) { throw ('EXE-Erstellung fehlgeschlagen (Exit-Code ' + $LASTEXITCODE + ').') }
+if ($LASTEXITCODE -ne 0) { throw ('EXE build failed (exit code ' + $LASTEXITCODE + ').') }
 Write-Host ''
-Write-Host ('Fertig! Portable Anwendung: ' + (Join-Path $root 'dist\Insta360_X5_KI_Offline')) -ForegroundColor Green
-Write-Host 'Der komplette dist-Unterordner muss auf den Ziel-PC kopiert werden.'
+Write-Host ('Done! Portable application: ' + (Join-Path $root 'dist\Insta360_X5_KI_Offline')) -ForegroundColor Green
+Write-Host 'Copy the entire dist application folder to the destination PC.'
