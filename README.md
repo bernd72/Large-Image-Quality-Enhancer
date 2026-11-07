@@ -16,6 +16,10 @@ Large Image Quality Enhancer is intended to improve image quality rather than en
 
 A Windows EXE build was successfully run on a second and third PC, both running Windows 11 (as reported by the developer). The exact EXE build/version and any offline-without-network conditions remain to be documented. This does **not** establish compatibility with other Windows versions or input formats. Tests at approximately 100, 200, and 500 megapixels are planned, not completed. See [TESTING.md](TESTING.md).
 
+## Running multiple instances
+
+The Windows executable can be launched multiple times to process jobs in parallel, provided the computer has sufficient resources. According to developer experience, **two instances run simultaneously on an office PC**, and **five to six instances are possible on a more powerful machine**. These are example configurations, **not guaranteed performance figures or a fixed software limit**. Effective parallelism depends on CPU load, available RAM, disk throughput, image size, and settings. Monitor resource use; more instances may reduce performance or cause memory pressure.
+
 ## Editions (not published yet)
 
 - **Python edition v3.3:** existing version to be imported after source review.
