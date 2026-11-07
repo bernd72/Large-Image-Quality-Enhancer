@@ -1,6 +1,6 @@
 # Third-party projects, model provenance, and license review / Fremdsoftware und Lizenzen
 
-**Status: preliminary inventory, not a completed legal clearance.** No third-party binaries, models, or adapted source code are currently included in this repository. This page does not change the respective owners' licenses.
+**Status: preliminary inventory, not a completed legal clearance.** This repository now contains the application's Python source code and Windows build scripts. **No third-party model weights, compiled third-party runtime binaries, or finished Windows EXE are included.** The precise origin and licensing of any external code portions, dependencies, and model conversions still need to be verified before binary/model redistribution. This page does not change the respective owners' licenses.
 
 | Project / Projekt | Upstream / Quelle | Upstream license / Lizenz | Status |
 |---|---|---|---|
@@ -20,6 +20,6 @@
 5. Scan for credentials, proxy information, private certificates, machine-specific paths, private images and other confidential content.
 6. Check the Windows release on a clean offline computer and describe any prerequisites accurately.
 
-**Deutsch:** Diese Übersicht ist eine vorläufige Lizenzbestandsaufnahme, **keine Rechtsfreigabe**. Vor dem Hochladen von Quellcode, KI-Modellen oder Windows-Binärdateien müssen deren genaue Herkunft, Weitergabeberechtigung und erforderliche Lizenztexte überprüft werden. Die MIT-Lizenz dieses Repositories ersetzt keine Fremdlizenzen.
+**Deutsch:** Diese Übersicht ist eine vorläufige Lizenzbestandsaufnahme, **keine Rechtsfreigabe**. Python-Quellcode und Windows-Bauskripte sind jetzt veröffentlicht; **Modellgewichte und fertige EXE nicht**. Die Herkunft und Lizenzen der Modelle, aller Fremdcode-Bestandteile und später gebündelter Bibliotheken müssen geprüft werden, bevor sie öffentlich weitergegeben werden. Die MIT-Lizenz dieses Repositories ersetzt keine Fremdlizenzen.
 
 **Trademark / Markenhinweis:** Insta360 is a trademark/name of its respective owner. This project is independent and is not endorsed by the manufacturer. / Dieses Projekt ist unabhängig und wird vom Hersteller nicht unterstützt.
