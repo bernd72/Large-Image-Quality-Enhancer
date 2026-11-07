@@ -33,9 +33,11 @@ Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößer
 
 Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und die Einzelheiten der Offline-Testumgebung müssen noch dokumentiert werden; laut Entwickler funktioniert die vorhandene Windows-EXE auch ohne Internetverbindung. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder Bildformaten. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
 
-## Bekannte Einschränkung: nur Bilder im Seitenverhältnis 2:1
+## Andere Seitenverhältnisse: Korrektur im Quellcode (07.11.2026)
 
-Nach aktuellen Entwicklertests verarbeitet die Windows-Version **nur Bilder mit dem Breiten-Höhen-Verhältnis 2:1** (zum Beispiel 11.904 × 5.952 Pixel). **Bei anderen Seitenverhältnissen tritt während der Verarbeitung eine Fehlermeldung auf, sowohl bei Einzelbildern als auch bei der Stapelverarbeitung.** Die Ursache ist noch ungeklärt. Bis zur Behebung sind nur 2:1-Bilder als funktionierend gemeldet. Siehe [bekannte Fehler](KNOWN_ISSUES.md).
+Die bisherige Beschränkung auf **2:1-Bilder** ist im aktuellen Quellcode **für beide Ausgaben** entfernt. Auch normale **JPEG-Fotos im Format 4:3, 3:2, 1:1 und Hochformat** können nun bei Einzelbild- und Stapelverarbeitung verwendet werden. Die KI-Vorbereitung passt normale Fotos **ohne Verzerrung** in das Modellformat ein; der Export behält **Breite und Höhe des Originals**. Für 2:1-Panoramen bleibt die bisherige Rundum-Randbehandlung bestehen, bei normalen Fotos wird sie deaktiviert.
+
+**Noch nicht praktisch bestätigt:** Diese Änderung wurde noch nicht mit den echten KI-Modellen und einer neu gebauten Windows-EXE unter Windows 11 getestet. Bereits gebaute EXE-Dateien enthalten die Korrektur nicht: [Repository neu herunterladen](https://github.com/bernd72/Large-Image-Quality-Enhancer) und `AUTO_BUILD_WINDOWS_EXE.bat` erneut ausführen. Unterstützte Eingaben bleiben derzeit **JPEG/JPG**, keine native HEIC-, RAW- oder PNG-Verarbeitung. Siehe [Teststand](TESTING.md) und [bekannte Fehler](KNOWN_ISSUES.md).
 
 ## Bekannte Einschränkung: lange Verzeichnispfade unter Windows
 
