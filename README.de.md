@@ -6,9 +6,18 @@
 
 > **Quellcode vorhanden – noch keine fertige EXE zum Herunterladen.** Die Python-Version 3.3 und die Windows-Bauskripte für v4.1.1 sind veröffentlicht. **KI-Modellgewichte und eine fertige EXE sind nicht enthalten.** Für die Modelle sind die Nutzungs- und Weitergaberechte gesondert zu beachten. Eine bestehende Windows-EXE wurde laut Entwickler auf zwei weiteren Windows-11-PCs getestet; ein unabhängig überprüfter Build aus diesem Repository liegt noch nicht vor.
 
+## Schnellstart unter Windows 11 (64 Bit)
+
+1. Auf GitHub **Code → Download ZIP** auswählen und das Repository in einen kurzen Pfad entpacken, beispielsweise `C:\\LIQE\\`.
+2. Den Ordner `windows/offline-v4.1.1/` öffnen und **[ALLES_AUTOMATISCH_BAUEN.bat](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)** starten. Das Skript kann Python 3.12 für den aktuellen Benutzer installieren, nach Zustimmung benötigte KI-Modelle herunterladen, Python-Bibliotheken einrichten und die portable Windows-Version bauen. **Für den ersten Bau ist normalerweise Internet erforderlich.**
+3. Alternativ **Python 3.12 (64 Bit)** selbst installieren, die drei benötigten Modelldateien rechtmäßig im lokalen Ordner `models` bereitstellen und `BAUE_WINDOWS_EXE.bat` ausführen.
+4. Nach erfolgreichem Bau den **gesamten** Ordner `dist/Insta360_X5_KI_Offline/` auf den Ziel-PC kopieren. Zum Ausführen der EXE sind dort weder Python noch eine Internetverbindung nötig.
+
+**Wichtiger Teststand:** Der automatische Bau wurde auf einem frisch eingerichteten Windows-PC noch **nicht** praktisch verifiziert. Eine funktionierende EXE lässt sich daher noch nicht garantieren. Die Modellgewichte und die fertige EXE liegen **nicht** im Repository. Das automatische Skript lädt die Modelle nach Zustimmung von **externen Drittanbietern** herunter: DPRNet aus dem Repository von Raspberry Pi und die konvertierte SCUNet-ONNX-Version von Heliosoph auf Hugging Face, nicht vom ursprünglichen SCUNet-Projekt. Siehe [Lizenzhinweise](THIRD_PARTY_NOTICES.md) und [Windows-Bauanleitung](windows/offline-v4.1.1/README_OFFLINE.txt).
+
 ## Ziel
 
-Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößert**. Die bisherige Entwicklung konzentriert sich auf Aufhellung dunkler Bereiche, Rauschreduzierung und Stapelverarbeitung hochauflösender Fotos. Eine Python-Ausgabe und eine offline verwendbare Windows-Ausgabe sind vorgesehen.
+Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößert**. Die bisherige Entwicklung konzentriert sich auf Aufhellung dunkler Bereiche, Rauschreduzierung und Stapelverarbeitung hochauflösender Fotos. Zwei Quellcode-Ausgaben sind bereits vorhanden: Python v3.3 und das Windows-Offline-Baupaket v4.1.1. Eine fertige Windows-Version zum direkten Herunterladen gibt es derzeit nicht.
 
 ## Kompatibilität und Teststand
 
@@ -20,6 +29,10 @@ Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten
 
 Die Windows-EXE funktioniert laut Entwickler unter Windows 11 **vollständig ohne Internetverbindung**. Beim Entpacken oder Ausführen aus sehr tief verschachtelten Ordnern traten jedoch Probleme auf. **Vorläufige Lösung:** Das Programm unter einem möglichst kurzen Pfad wie `C:\LIQE\` entpacken und von dort aus starten. Die genaue Ursache und eine mögliche Pfadlängengrenze sind noch nicht geklärt. Weitere Hinweise: [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
+## Sicherheit und Einschränkungen beim Bau
+
+Beide Quellcode-Versionen deaktivieren derzeit die automatische Bildgrößen-Schutzprüfung von Pillow (`Image.MAX_IMAGE_PIXELS = None`), damit sehr große Fotos geöffnet werden können. **Bis zur Einführung eigener Größen- und Speicherprüfungen sollten nur vertrauenswürdige Bilddateien geöffnet werden.** Das automatische Downloadskript prüft bei allen drei Modelldateien die Mindestgröße, vergleicht aber nur für **eine** SCUNet-Datei einen festen SHA-256-Prüfwert. Die übrigen Modelldateien sind somit nicht vollständig per Prüfsumme abgesichert. Siehe [bekannte Einschränkungen](KNOWN_ISSUES.md). Die erzeugte Windows-EXE ist nicht digital signiert.
+
 ## Mehrere Instanzen parallel verwenden
 
 Die Windows-EXE kann mehrfach gestartet werden, sodass mehrere Bildverarbeitungen gleichzeitig laufen können, sofern ausreichend Rechnerressourcen vorhanden sind. Nach Angaben des Entwicklers laufen **zwei Instanzen parallel auf einem Rechner mit Intel Core i5-14400**; auf einem **leistungsstärkeren Rechner sind fünf bis sechs Instanzen möglich**. Diese Werte sind Erfahrungsbeispiele, **keine garantierte Leistung und keine feststehende Softwaregrenze**. Wie viele Instanzen sinnvoll sind, hängt unter anderem von CPU-Auslastung, verfügbarem Arbeitsspeicher, Datenträgergeschwindigkeit, Bildgröße und Einstellungen ab. Die Systemauslastung sollte beobachtet werden; zusätzliche Instanzen können die Verarbeitung auch verlangsamen oder zu Speichermangel führen.
@@ -30,11 +43,9 @@ Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPE
 
 ## Automatischer Windows-Bau ohne vorherige Python-Installation
 
-**Neu: Ein-Klick-Baupaket fuer Windows 11 (64 Bit).** Wer noch kein Python installiert hat, kann im [Windows-Baupaket](windows/offline-v4.1.1/) die Datei **[`ALLES_AUTOMATISCH_BAUEN.bat`](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)** doppelt anklicken.
+Das Baupaket enthält **`ALLES_AUTOMATISCH_BAUEN.bat`**. Es erkennt vorhandenes Python 3.12 oder installiert es nach Zustimmung für den aktuellen Benutzer. Anschließend können die externen KI-Modelle mit Zustimmung heruntergeladen und die benötigten Pakete für den EXE-Bau eingerichtet werden. **Python wird für den Bau weiterhin benötigt**, muss aber nicht vorher installiert sein. Der automatische Ablauf ist noch nicht auf einem frischen Windows-System verifiziert; Netzwerksperren oder Unternehmensrichtlinien können ihn verhindern.
 
-Das Skript prueft Python 3.12, installiert es bei Bedarf automatisch fuer den aktuellen Benutzer (ohne Administratorrechte in normalen Windows-Umgebungen), fordert die Zustimmung zum Download der externen DPRNet- und SCUNet-Modelle an, installiert die Python-Bibliotheken und erstellt die EXE. Die Modelle werden **direkt von den Originalanbietern** heruntergeladen, nicht ueber dieses Repository verteilt. **Fuer den ersten Bau sind Internetzugang und je nach Netzwerk Proxyfreigaben erforderlich.** Die fertige EXE ist anschliessend offline lauffaehig und benoetigt auf anderen PCs weder Python noch die Bauwerkzeuge. Der automatisierte Build ist auf einem frischen Windows-Rechner noch nicht unabhaengig getestet.
-
-Hinweis: Das Skript richtet Python zwar automatisch ein, installiert es fuer den Bau aber tatsaechlich lokal auf dem Rechner. Es ist **keine** vollstaendig pythonfreie Build-Technik. Fuer den manuellen Weg kann weiterhin `BAUE_WINDOWS_EXE.bat` genutzt werden. Details: [Windows-Bauanleitung](windows/offline-v4.1.1/README_OFFLINE.txt).
+Die **manuelle Alternative** bleibt `BAUE_WINDOWS_EXE.bat` mit bereits vorhandenem Python 3.12 und den lokal bereitgestellten Modelldateien. Siehe [Windows-Bauanleitung](windows/offline-v4.1.1/README_OFFLINE.txt).
 
 ## Programmquellen und EXE-Bau
 
