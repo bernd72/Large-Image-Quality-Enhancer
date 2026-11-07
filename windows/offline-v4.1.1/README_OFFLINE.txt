@@ -1,4 +1,4 @@
-INSTA360 X5 – OFFLINE KI-OPTIMIERER v4.1 (eigenstaendige EXE-Version)
+INSTA360 X5 – OFFLINE KI-OPTIMIERER v4.1.1 (eigenstaendige EXE-Version)
 ================================================================
 
 ZIEL
@@ -86,3 +86,16 @@ DPRNet: Raspberry Pi Ltd., AI_enhance, BSD-2-Clause
 SCUNet: Architektur https://github.com/cszn/SCUNet
   ONNX-Gewichte siehe Heliosoph/scunet-onnx (dessen Lizenz beachten)
 Vor Weitergabe an andere Personen die jeweiligen Lizenzen pruefen.
+
+SICHERHEIT / NOCH OFFENE PRUEFUNGEN
+- Im Quellcode steht Image.MAX_IMAGE_PIXELS = None. Dadurch entfällt die
+  Pillow-Schutzpruefung fuer extrem grosse / manipulierte Bilddateien.
+  Bis zu einer eigenen Eingabevalidierung nur vertraute JPEGs verarbeiten.
+- Das automatische Skript prueft die Groesse aller Modelldateien. Eine feste
+  SHA-256-Pruefsumme ist derzeit nur fuer das SCUNet-ONNX-Hauptmodell hinterlegt,
+  nicht fuer DPRNet und die SCUNet-.onnx.data-Datei.
+- Die SCUNet-ONNX-Konvertierung wird beim automatischen Bau von Heliosoph auf
+  Hugging Face heruntergeladen, nicht unmittelbar vom urspruenglichen
+  SCUNet-Projekt. Modell-Lizenz und Weitergaberechte individuell pruefen.
+- Das gesamte Build-Skript wurde noch nicht auf einem frischen Windows-11-PC
+  praktisch durchgetestet. Keine Funktionsgarantie fuer diesen Buildpfad.
