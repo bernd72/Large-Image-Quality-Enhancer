@@ -28,6 +28,14 @@ Die Windows-EXE kann mehrfach gestartet werden, sodass mehrere Bildverarbeitunge
 
 Nach Erfahrung des Entwicklers dauert die **vollständige Verarbeitung eines JPEG-Bildes der Insta360 X5 mit rund 71 Megapixeln auf einem Intel Core i5-14400 etwa 45–50 Minuten**. Dies ist ein **berichteter Praxiswert, kein standardisierter Benchmark und keine garantierte Laufzeit**. Der Einfluss gleichzeitig gestarteter Instanzen, der RAM-Ausstattung, der Modelle/Einstellungen und der EXE-Version wurde für diese Zeitangabe noch nicht systematisch dokumentiert.
 
+## Automatischer Windows-Bau ohne vorherige Python-Installation
+
+**Neu: Ein-Klick-Baupaket fuer Windows 11 (64 Bit).** Wer noch kein Python installiert hat, kann im [Windows-Baupaket](windows/offline-v4.1.1/) die Datei **[`ALLES_AUTOMATISCH_BAUEN.bat`](windows/offline-v4.1.1/ALLES_AUTOMATISCH_BAUEN.bat)** doppelt anklicken.
+
+Das Skript prueft Python 3.12, installiert es bei Bedarf automatisch fuer den aktuellen Benutzer (ohne Administratorrechte in normalen Windows-Umgebungen), fordert die Zustimmung zum Download der externen DPRNet- und SCUNet-Modelle an, installiert die Python-Bibliotheken und erstellt die EXE. Die Modelle werden **direkt von den Originalanbietern** heruntergeladen, nicht ueber dieses Repository verteilt. **Fuer den ersten Bau sind Internetzugang und je nach Netzwerk Proxyfreigaben erforderlich.** Die fertige EXE ist anschliessend offline lauffaehig und benoetigt auf anderen PCs weder Python noch die Bauwerkzeuge. Der automatisierte Build ist auf einem frischen Windows-Rechner noch nicht unabhaengig getestet.
+
+Hinweis: Das Skript richtet Python zwar automatisch ein, installiert es fuer den Bau aber tatsaechlich lokal auf dem Rechner. Es ist **keine** vollstaendig pythonfreie Build-Technik. Fuer den manuellen Weg kann weiterhin `BAUE_WINDOWS_EXE.bat` genutzt werden. Details: [Windows-Bauanleitung](windows/offline-v4.1.1/README_OFFLINE.txt).
+
 ## Programmquellen und EXE-Bau
 
 - **[Python-Version 3.3](python/v3.3/):** Quellcode, `requirements.txt` und `STARTEN.bat`. Benötigt eine geeignete 64-Bit-Python-Version, die Python-Bibliotheken sowie lokal bereitgestellte DPRNet-/SCUNet-Modelldateien im Unterordner `models`. Einzelheiten: [`README_START_HIER.txt`](python/v3.3/README_START_HIER.txt).
