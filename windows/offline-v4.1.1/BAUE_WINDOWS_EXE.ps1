@@ -69,7 +69,7 @@ if ($PythonExe) {
 try {
     & $pythonCommand @pythonCommandArgs -c 'import sys; assert sys.version_info[:2] == (3, 12) and sys.maxsize > 2**32; print(sys.version)'
 }
-catch { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht. Nutze ALLES_AUTOMATISCH_BAUEN.bat.' 3 }
+catch { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht. Nutze AUTO_BUILD_WINDOWS_EXE.bat.' 3 }
 if ($LASTEXITCODE -ne 0) { Fail 'Python 3.12 (64 Bit) fehlt oder startet nicht.' 3 }
 
 if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
