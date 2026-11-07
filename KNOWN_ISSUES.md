@@ -2,13 +2,6 @@
 
 ## Deutsch
 
-### Seitenverhältnis 2:1: Fehler im Quellcode behoben, Windows-EXE noch ungetestet
-
-**Ursache ermittelt (07.11.2026):** Der Export und die Stapelverarbeitung enthielten ausdrückliche 2:1-Prüfungen. Auch die SCUNet-Rauschunterdrückung setzte Panorama-Randbedingungen voraus. Diese Sperren wurden in **Windows v4.1.1 und Python v3.3** aus dem Quellcode entfernt. Die DPRNet-Vorbereitung erhält bei normalen Fotos das Seitenverhältnis durch Einpassen mit Randpixeln, entfernt anschließend die Ränder aus dem Korrekturfeld und behält die native Ausgabegröße bei.
-
-**Status:** Für 3:2-, 4:3-, quadratische und Hochformat-JPEGs stehen neue Regressionstests mit simulierten Modellaufrufen im Repository. Ein vollständiger Test mit echten KI-Modellgewichten bzw. einer neu gebauten Windows-EXE ist **noch offen**. Frühere EXE-Dateien enthalten die Behebung nicht; bitte neu bauen. Es werden weiterhin nur JPG/JPEG als Eingaben angeboten. 2:1-Panoramen behalten die spezielle Nahtbehandlung.
-
-
 ### Windows-Version: Probleme bei langen Verzeichnispfaden
 
 **Beobachtung:** Die Windows-EXE funktioniert nach Angaben des Entwicklers unter Windows 11 auch vollständig **ohne Internetverbindung**. Beim Entpacken oder Ausführen aus einem tief verschachtelten Verzeichnis kam es allerdings zu Problemen. Lange Pfade innerhalb des Installationsordners können die Nutzung beeinträchtigen.
@@ -30,13 +23,6 @@ Der Offlinebetrieb bezieht sich auf die **Nutzung einer bereits lauffähigen Win
 Das automatische Windows-Bauskript kontrolliert die Dateigrößen, aber aktuell nur für `scunet_color_real_psnr.onnx` auch eine feste SHA-256-Prüfsumme. Für `DPRNet_1024.tflite` und `scunet_color_real_psnr.onnx.data` fehlt noch eine fest hinterlegte Prüfsumme. Daher ist die vollständige Integrität aller heruntergeladenen Modellgewichte noch nicht kryptografisch abgesichert. Die genaue Herkunft und Lizenz jeder Modelldatei sind zusätzlich zu prüfen. Siehe [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## English
-
-### Aspect ratio 2:1: source-code issue fixed; updated Windows EXE not yet tested
-
-**Root cause identified (2026-11-07):** Export and batch paths contained explicit 2:1 restrictions, and SCUNet used panorama-specific horizontal wrapping. These constraints have been removed in the **Windows v4.1.1 and Python v3.3 source code**. For ordinary photos, DPRNet input uses aspect-preserving fitting with replicated edge padding, then crops the resulting gain field back to the photo area; the exported image retains the input pixel dimensions.
-
-**Verification still needed:** Mock-model regression tests have been added for 3:2, 4:3, square and portrait JPEGs. A full run with actual model weights and a rebuilt Windows EXE **has not been verified**. Existing EXE builds must be rebuilt. Input remains JPEG/JPG; 2:1 panoramas retain special seam handling.
-
 
 ### Windows edition: problems with long directory paths
 
