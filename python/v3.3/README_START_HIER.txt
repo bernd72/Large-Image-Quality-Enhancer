@@ -69,6 +69,8 @@ MODELLE / BIBLIOTHEKEN
 - Die KI läuft lokal; kein Abo und kein Upload deiner Fotos nötig.
 
 BEKANNTE EINSCHRÄNKUNGEN
+- Die fruehere 2:1-Beschraenkung ist im Quellcode behoben. Weitere Fotoformate
+  sind bei dieser Python-Version noch nicht praktisch getestet.
 - Die vollständige Bearbeitung eines 71-MP-Panoramas mit SCUNet kann auf CPU
   sehr lange dauern. Bei der Vorschau zuerst die Wirkung testen.
 - Teststand: GUI, Stapel, sichere Speicherung und Abbruch wurden mit
