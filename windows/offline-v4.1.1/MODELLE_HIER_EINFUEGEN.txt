@@ -1,0 +1,12 @@
+Fuer den offline lauffaehigen EXE-Ordner vor BAUE_WINDOWS_EXE.bat diese
+DREI Dateien aus der bereits funktionierenden Version 3.3 als KOPIEN
+in den Unterordner models legen:
+
+DPRNet_1024.tflite
+scunet_color_real_psnr.onnx
+scunet_color_real_psnr.onnx.data
+
+Optional: DPRNet_512.tflite
+
+Der EXE-Bau prueft Dateigroessen und DPRNet-Kennung. Fehlen Gewichte,
+bricht das Skript VOR jeder Paketinstallation ab.
