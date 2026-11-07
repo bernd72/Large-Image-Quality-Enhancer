@@ -172,6 +172,7 @@ def translate(language: str, message: str) -> str:
         return message
     if message in EN_TEXT:
         return EN_TEXT[message]
-    for source, translated in EN_PHRASES.items():
+    # Match longer, specific messages before short words like 'Bild '.
+    for source, translated in sorted(EN_PHRASES.items(), key=lambda item: len(item[0]), reverse=True):
         message = message.replace(source, translated)
     return message
