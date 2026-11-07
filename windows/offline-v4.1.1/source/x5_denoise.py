@@ -171,7 +171,7 @@ def denoise_full_export(original_path: Path, ratio, dest: Path, exposure: float,
                 prior_halo = filtered[end:min(end+halo,filtered.shape[0])].copy()
                 del bright,filtered,core
             mm.flush()
-            progress(91,'JPG in 71-MP-Originalauflösung speichern')
+            progress(91,'JPG in voller Auflösung schreiben')
             opts=dict(format='JPEG',quality=95,subsampling=0)
             if exif: opts['exif']=exif
             if icc: opts['icc_profile']=icc
