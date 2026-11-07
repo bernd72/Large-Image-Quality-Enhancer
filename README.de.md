@@ -29,15 +29,13 @@ Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößer
 
 ## Kompatibilität und Teststand
 
-**Bisher wurde die Software ausschließlich mit JPEG-Aufnahmen einer Insta360 X5 bis etwa 71 Megapixel (11.904 × 5.952 Pixel) getestet.** Sie soll grundsätzlich herstellerunabhängig einsetzbar sein; **andere Kameras, andere Bildformate und Bilder über 71 MP sind bisher nicht verifiziert**. Eine garantierte maximale Bildgröße wird ausdrücklich nicht angegeben.
+Getestet wurden bisher JPEG-Aufnahmen der Insta360 X5 (bis etwa 71 MP) sowie ein **Smartphone-JPEG im ungefähren 4:3-Format** unter Windows 11. Andere Dateiformate und Bilder über 71 MP sind noch nicht verifiziert; eine maximale Auflösung wird nicht garantiert.
 
-Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und die Einzelheiten der Offline-Testumgebung müssen noch dokumentiert werden; laut Entwickler funktioniert die vorhandene Windows-EXE auch ohne Internetverbindung. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder Bildformaten. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
+Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und die Einzelheiten der Offline-Testumgebung müssen noch dokumentiert werden; laut Entwickler funktioniert die vorhandene Windows-EXE auch ohne Internetverbindung. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder anderen Dateiformaten als JPEG. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
 
-## Andere Seitenverhältnisse: Korrektur im Quellcode (07.11.2026)
+## Bildformate und Seitenverhältnisse
 
-Die bisherige Beschränkung auf **2:1-Bilder** ist im aktuellen Quellcode **für beide Ausgaben** entfernt. Auch normale **JPEG-Fotos im Format 4:3, 3:2, 1:1 und Hochformat** können nun bei Einzelbild- und Stapelverarbeitung verwendet werden. Die KI-Vorbereitung passt normale Fotos **ohne Verzerrung** in das Modellformat ein; der Export behält **Breite und Höhe des Originals**. Für 2:1-Panoramen bleibt die bisherige Rundum-Randbehandlung bestehen, bei normalen Fotos wird sie deaktiviert.
-
-**Noch nicht praktisch bestätigt:** Diese Änderung wurde noch nicht mit den echten KI-Modellen und einer neu gebauten Windows-EXE unter Windows 11 getestet. Bereits gebaute EXE-Dateien enthalten die Korrektur nicht: [Repository neu herunterladen](https://github.com/bernd72/Large-Image-Quality-Enhancer) und `AUTO_BUILD_WINDOWS_EXE.bat` erneut ausführen. Unterstützte Eingaben bleiben derzeit **JPEG/JPG**, keine native HEIC-, RAW- oder PNG-Verarbeitung. Siehe [Teststand](TESTING.md) und [bekannte Fehler](KNOWN_ISSUES.md).
+Die frühere **2:1-Beschränkung** wurde im Quellcode beider Versionen behoben. Unter **Windows 11** funktionierten laut Praxistest **Einzelbild- und Stapelverarbeitung** mit einem Smartphone-JPEG (ungefähr **4:3**). Weitere Seitenverhältnisse unterstützt der Code, müssen aber noch breiter praktisch getestet werden; die Python-Version ist noch ungetestet. Eingabe derzeit nur **JPG/JPEG**, nicht HEIC, RAW oder PNG. Ältere EXE-Dateien müssen neu gebaut werden. Siehe [Teststand](TESTING.md).
 
 ## Bekannte Einschränkung: lange Verzeichnispfade unter Windows
 
