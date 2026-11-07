@@ -41,3 +41,9 @@ Thumbs.db
 *.ckpt
 *.exe
 *.zip
+
+# Local bootstrap downloads (never commit installed software or weights)
+.download-cache/
+wheelhouse/
+*.download
+*.part
