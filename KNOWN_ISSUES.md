@@ -2,11 +2,11 @@
 
 ## Deutsch
 
-### Windows-Version: Bildformat derzeit offenbar auf Seitenverhältnis 2:1 beschränkt
+### Seitenverhältnis 2:1: Fehler im Quellcode behoben, Windows-EXE noch ungetestet
 
-**Beobachtung (Entwicklertest):** Die aktuelle Windows-Version verarbeitet nach bisherigen Tests nur Bilder mit einem **Breiten-Höhen-Verhältnis von 2:1** (beispielsweise 11.904 × 5.952 Pixel). Bei abweichenden Seitenverhältnissen tritt im weiteren Verarbeitungsablauf eine Fehlermeldung auf. **Das betrifft sowohl die Einzelbild- als auch die Stapelverarbeitung.**
+**Ursache ermittelt (07.11.2026):** Der Export und die Stapelverarbeitung enthielten ausdrückliche 2:1-Prüfungen. Auch die SCUNet-Rauschunterdrückung setzte Panorama-Randbedingungen voraus. Diese Sperren wurden in **Windows v4.1.1 und Python v3.3** aus dem Quellcode entfernt. Die DPRNet-Vorbereitung erhält bei normalen Fotos das Seitenverhältnis durch Einpassen mit Randpixeln, entfernt anschließend die Ränder aus dem Korrekturfeld und behält die native Ausgabegröße bei.
 
-**Vorläufige Empfehlung:** Bis zur Fehlerbehebung nur 2:1-Bilder verarbeiten. Die genaue Fehlermeldung, die Ursache im Programmcode und die betroffenen Komponenten sind noch nicht ermittelt. Das Hochskalieren, Beschneiden oder Verzerren anderer Bilder zur Umgehung wurde nicht als zuverlässige Lösung getestet.
+**Status:** Für 3:2-, 4:3-, quadratische und Hochformat-JPEGs stehen neue Regressionstests mit simulierten Modellaufrufen im Repository. Ein vollständiger Test mit echten KI-Modellgewichten bzw. einer neu gebauten Windows-EXE ist **noch offen**. Frühere EXE-Dateien enthalten die Behebung nicht; bitte neu bauen. Es werden weiterhin nur JPG/JPEG als Eingaben angeboten. 2:1-Panoramen behalten die spezielle Nahtbehandlung.
 
 
 ### Windows-Version: Probleme bei langen Verzeichnispfaden
@@ -31,11 +31,11 @@ Das automatische Windows-Bauskript kontrolliert die Dateigrößen, aber aktuell 
 
 ## English
 
-### Windows edition: processing currently appears limited to 2:1 aspect-ratio images
+### Aspect ratio 2:1: source-code issue fixed; updated Windows EXE not yet tested
 
-**Observed in developer testing:** The current Windows version has so far processed only images with a **2:1 width-to-height ratio** (for example, 11,904 × 5,952 pixels). Images with other aspect ratios result in an error during processing. **This affects both single-image processing and batch processing.**
+**Root cause identified (2026-11-07):** Export and batch paths contained explicit 2:1 restrictions, and SCUNet used panorama-specific horizontal wrapping. These constraints have been removed in the **Windows v4.1.1 and Python v3.3 source code**. For ordinary photos, DPRNet input uses aspect-preserving fitting with replicated edge padding, then crops the resulting gain field back to the photo area; the exported image retains the input pixel dimensions.
 
-**Temporary guidance:** Use 2:1 images until the problem is fixed. The exact error message, root cause and affected code paths have not yet been established. Resizing, cropping or stretching non-2:1 images has not been verified as a workaround.
+**Verification still needed:** Mock-model regression tests have been added for 3:2, 4:3, square and portrait JPEGs. A full run with actual model weights and a rebuilt Windows EXE **has not been verified**. Existing EXE builds must be rebuilt. Input remains JPEG/JPG; 2:1 panoramas retain special seam handling.
 
 
 ### Windows edition: problems with long directory paths
