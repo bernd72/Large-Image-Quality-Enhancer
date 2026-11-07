@@ -27,9 +27,15 @@ Reported concurrent use is **not** a guaranteed capacity or a measured throughpu
 
 Die gemeldete parallele Nutzung ist **keine** garantierte Kapazität oder gemessene Beschleunigung. Die Anzahl sinnvoller Instanzen hängt von CPU, RAM, Massenspeicher und Bild- bzw. Modelllast ab. Bei künftigen Tests bitte CPU-Auslastung, maximalen Arbeitsspeicher, Gesamtlaufzeit und Fehler bei einer, zwei und mehr Instanzen erfassen.
 
+## Source review: image validation / Quellcode-Prüfung: Eingabevalidierung
+
+The current Python v3.3 and Windows v4.1.1 entry points set `Image.MAX_IMAGE_PIXELS = None`. This allows very large images, but disables Pillow's default decompression-bomb size safeguard. It is **not** a measured failure in existing tests. Until appropriate explicit pixel/memory validation is implemented, test with trusted inputs only. See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
+
+Die aktuellen Python-Einstiegspunkte in v3.3 und Windows v4.1.1 setzen `Image.MAX_IMAGE_PIXELS = None`. Damit lassen sich große Bilder öffnen, aber Pillow prüft die Bildgröße nicht mehr standardmäßig auf ungewöhnlich hohe Speicheranforderungen. Das ist **kein** nachgewiesener Fehler bei den bisherigen Bildern. Bis zu einer eigenen Eingabeprüfung nur vertrauenswürdige Bilder verwenden.
+
 ## Planned large-image stress test / Geplanter Belastungstest
 
-Target sizes / Zielgrößen: **100 MP, 200 MP and 500 MP**. When working code becomes available, record:
+Target sizes / Zielgrößen: **100 MP, 200 MP and 500 MP**. For future reproducible tests with the published source, record:
 
 1. exact image dimensions and file type / Auflösung und Dateiformat;
 2. software version, model versions and hashes / Programm- und Modellversionen;
