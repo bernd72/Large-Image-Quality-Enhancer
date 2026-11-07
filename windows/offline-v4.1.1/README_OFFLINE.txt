@@ -6,6 +6,17 @@ DPRNet + SCUNet, Vergleich, 360-Export, Stapelverarbeitung und Restzeit,
 OHNE Internetverbindung auf dem Ziel-PC. Keine Proxy-/Zertifikatabfragen.
 Die bisherige Python-Version 3.3 und die fruehere Proxy-Version bleiben unberuehrt.
 
+BILDFORMATE (QUELLCODESTAND 07.11.2026)
+Die harte 2:1-Beschraenkung ist im Quellcode entfernt.
+Auch uebliche JPG-Fotos in 4:3, 3:2, quadratisch und Hochformat sind
+jetzt fuer Einzelbild- und Stapelverarbeitung vorgesehen.
+Die Aufloesung und das Seitenverhaeltnis der Ausgabedatei bleiben erhalten.
+Fuer 2:1-Panoramen bleibt die spezielle Rand-/Nahtbehandlung erhalten.
+Der neue Bildformat-Code ist mit echten KI-Modellen und Windows 11 noch
+nicht vollstaendig getestet. Bestehende EXE-Dateien enthalten die Aenderung
+erst nach einem vollstaendigen Neubau mit den aktualisierten Quellen.
+Eingaben bleiben JPG/JPEG; HEIC, RAW und PNG sind nicht direkt unterstuetzt.
+
 HINWEIS ZUR SPRACHE DES BAUPROGRAMMS
 Die Startdatei AUTO_BUILD_WINDOWS_EXE.bat sowie die Meldungen und Rueckfragen
 beim automatischen Bau sind nun auf Englisch. Die fertige Anwendung hat davon
