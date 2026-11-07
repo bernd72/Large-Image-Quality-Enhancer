@@ -14,9 +14,11 @@
 - **Other Windows versions / Andere Windows-Versionen:** Not verified / Nicht verifiziert.
 - **Parallel runs / Gleichzeitige Instanzen:** Two on a computer with an Intel Core i5-14400; reportedly up to five or six on a stronger computer (developer experience, not a benchmark) / Zwei auf einem Rechner mit Intel Core i5-14400; nach Erfahrungswerten bis zu fünf oder sechs auf leistungsfähigerem Rechner (keine Benchmarkmessung).
 
-These entries reflect the **previously reported development tests**, including Windows 11 tests on two additional PCs, not reproducible tests executed in this GitHub repository. No benchmark results, processing time, memory ceiling, or supported maximum resolution are currently claimed.
+- **Reported time per complete image / Berichtete Zeit pro vollständig verarbeitetem Bild:** Approx. **45–50 minutes** for an Insta360 X5 JPEG image (~71 MP) on an **Intel Core i5-14400**, per developer experience / Ca. **45–50 Minuten** für ein Insta360-X5-JPEG (~71 MP) auf einem **Intel Core i5-14400**, laut Entwicklererfahrung.
 
-Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
+These entries reflect the **previously reported development tests**, including Windows 11 tests on two additional PCs, not reproducible tests executed in this GitHub repository. The processing time above is an approximate user-reported observation, not a standardized benchmark. No verified memory ceiling or supported maximum resolution is claimed.
+
+Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Die oben genannte Bearbeitungszeit ist ein ungefährer Praxiswert, kein standardisierter Benchmark. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
 
 ## Parallel-instance test guidance / Hinweise zu Tests mit mehreren Instanzen
 
