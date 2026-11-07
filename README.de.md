@@ -4,7 +4,7 @@
 
 [English](README.md) · [Mitarbeit / Contributing](CONTRIBUTING.md) · [Fremdlizenzen](THIRD_PARTY_NOTICES.md) · [Teststand](TESTING.md)
 
-> **Projektaufbau / noch keine Veröffentlichung der Software.** Dieses Repository enthält derzeit nur Dokumentation. Die vorhandenen Python- und Windows-Programmdateien, KI-Modelle und die Windows-EXE wurden noch nicht hochgeladen oder vollständig für eine öffentliche Weitergabe geprüft.
+> **Projektaufbau / noch keine Veröffentlichung der Software.** Dieses Repository enthält derzeit nur Dokumentation. Die vorhandenen Python- und Windows-Programmdateien, KI-Modelle und die Windows-EXE wurden noch nicht hochgeladen oder vollständig für eine öffentliche Weitergabe geprüft. Eine bestehende Windows-EXE wurde nach Angabe des Entwicklers erfolgreich auf zwei weiteren PCs unter Windows 11 verwendet; dies ist noch keine Freigabe eines öffentlichen Releases.
 
 ## Ziel
 
@@ -14,12 +14,16 @@ Die Bildqualität soll verbessert werden, **nicht die Bildauflösung vergrößer
 
 **Bisher wurde die Software ausschließlich mit JPEG-Aufnahmen einer Insta360 X5 bis etwa 71 Megapixel (11.904 × 5.952 Pixel) getestet.** Sie soll grundsätzlich herstellerunabhängig einsetzbar sein; **andere Kameras, andere Bildformate und Bilder über 71 MP sind bisher nicht verifiziert**. Eine garantierte maximale Bildgröße wird ausdrücklich nicht angegeben.
 
-Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
+Eine Windows-EXE wurde nach Angabe des Entwicklers auf einem zweiten und dritten PC erfolgreich unter Windows 11 getestet. Die genaue EXE-Version und ein gesonderter Test ohne Netzwerkverbindung müssen noch dokumentiert werden. Daraus ergibt sich **keine** bestätigte Kompatibilität mit anderen Windows-Versionen oder Bildformaten. Belastungstests mit ungefähr 100, 200 und 500 Megapixeln sind geplant, aber noch nicht abgeschlossen. Näheres unter [TESTING.md](TESTING.md).
+
+## Mehrere Instanzen parallel verwenden
+
+Die Windows-EXE kann mehrfach gestartet werden, sodass mehrere Bildverarbeitungen gleichzeitig laufen können, sofern ausreichend Rechnerressourcen vorhanden sind. Nach Angaben des Entwicklers laufen **zwei Instanzen parallel auf einem Büro-PC**; auf einem **leistungsstärkeren Rechner sind fünf bis sechs Instanzen möglich**. Diese Werte sind Erfahrungsbeispiele, **keine garantierte Leistung und keine feststehende Softwaregrenze**. Wie viele Instanzen sinnvoll sind, hängt unter anderem von CPU-Auslastung, verfügbarem Arbeitsspeicher, Datenträgergeschwindigkeit, Bildgröße und Einstellungen ab. Die Systemauslastung sollte beobachtet werden; zusätzliche Instanzen können die Verarbeitung auch verlangsamen oder zu Speichermangel führen.
 
 ## Vorgesehene Ausgaben (noch nicht hochgeladen)
 
 - **Python-Version v3.3:** bestehende Version, deren Quellen nach Prüfung übernommen werden sollen.
-- **Windows-Offline-Version v4.1.1:** als portable Windows-Ausgabe vorgesehen; ein vollständiger, erfolgreicher EXE-Test auf einem zweiten Rechner ist noch nicht bestätigt.
+- **Windows-Offline-Version v4.1.1:** als portable Windows-Ausgabe vorgesehen. Eine bestehende Windows-EXE lief auf zwei weiteren Windows-11-PCs; die genaue getestete Build-Version ist noch nicht dokumentiert und darf daher nicht automatisch v4.1.1 zugeordnet werden.
 - Bestehende ältere Versionen sollen bei der Übernahme unverändert bleiben.
 
 Die vorgesehene lokale Bildverarbeitung benötigt keinen Cloud-Upload der Fotos. Für Installation und Erstellung der Software kann dennoch Internet erforderlich sein.
