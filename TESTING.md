@@ -22,6 +22,14 @@ These entries reflect the **previously reported development tests**, including W
 
 Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Windows-11-Tests auf zwei weiteren PCs, nicht auf in diesem Repository reproduzierten Messungen. Die oben genannte Bearbeitungszeit ist ein ungefährer Praxiswert, kein standardisierter Benchmark. Es gibt derzeit keine belegte maximale Auflösung oder garantierte Speicheranforderung.
 
+## Latest developer feedback: Windows test / Aktuelle Entwicklerrueckmeldung: Windows-Test
+
+- **Date / Datum:** 2026-11-07.
+- **Tested edition / Getestete Ausgabe:** Windows application on **Windows 11** only / Ausschliesslich die **Windows-Version unter Windows 11**.
+- **Preliminary result / Vorlaeufiges Ergebnis:** Developer reports that the Windows application **appears to work** during an ongoing test; this is **not** yet confirmation of a complete image-processing run, all features, or the language switch / Der Entwickler berichtet, dass die Windows-Anwendung beim laufenden Test **zu funktionieren scheint**. Dies bestaetigt noch **keinen** vollstaendigen Bildverarbeitungslauf, alle Funktionen oder die Sprachumschaltung.
+- **Python edition / Python-Version:** The newly added Python v3.3 language selector was **not tested** in this report / Die neu ergaenzte Sprachumschaltung der Python-Version 3.3 wurde bei diesem Test **nicht geprueft**.
+- **Still needed / Weiterhin offen:** Exact build identifier and explicit confirmation of German/English switching, single-image and batch processing / Genaue Build-Kennung und ausdrueckliche Bestaetigung der Deutsch/Englisch-Umschaltung sowie Einzel- und Stapelverarbeitung.
+
 ## Python v3.3 GUI language selector / Python-v3.3-Sprachumschaltung
 
 - **Implemented / Eingebaut:** A live Deutsch/English selector was added to the Python v3.3 Tkinter GUI, including its model-download buttons and batch dialog / Deutsch-Englisch-Umschaltung in der Python-v3.3-Oberfläche einschließlich Modell-Downloads und Stapeldialog.
@@ -31,7 +39,7 @@ Diese Angaben beruhen auf **bisher berichteten Entwicklungstests**, darunter Win
 ## GUI language selector / Sprachauswahl der Oberfläche
 
 - **Implementation / Umsetzung:** The Windows v4.1.1 source now includes an offline German/English selector that updates interface labels and dialog text without restarting / Der Windows-v4.1.1-Quellcode enthält jetzt eine Offline-Umschaltung Deutsch/Englisch, die Oberfläche und Dialogtexte ohne Neustart aktualisiert.
-- **Verification / Teststand:** Code and translation entries reviewed statically; **no native Windows GUI test or rebuild has yet been performed for this change** / Code und Übersetzungseinträge statisch geprüft; **für diese Änderung wurde noch kein nativer Windows-GUI-Test oder EXE-Neubau durchgeführt**.
+- **Verification / Teststand:** Code and translation entries reviewed statically; on 2026-11-07 the developer reported an ongoing, apparently successful Windows 11 application test, but the language switch, exact build and full processing have **not yet been separately confirmed** / Code und Übersetzungseinträge statisch geprüft; am 07.11.2026 meldete der Entwickler einen laufenden, vorläufig positiv verlaufenden Anwendungstest unter Windows 11. Sprachwechsel, genaue Build-Version und vollständige Verarbeitung sind **noch nicht gesondert bestätigt**.
 - **Existing EXEs / Bestehende EXE-Dateien:** Rebuild required / Neubau erforderlich.
 
 ## Parallel-instance test guidance / Hinweise zu Tests mit mehreren Instanzen
